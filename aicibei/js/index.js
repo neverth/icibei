@@ -46,7 +46,7 @@ $("li").mouseup(function(event) {
 // Synthesis
 function startSound(key) {
     ran = Math.floor((Math.random()*500)+10);
-    var o = osc[key] = new Tone.Oscillator(ran, "triangle")
+    var o = osc[key] = new Tone.Oscillator(ran, "triangle");
     env = new Tone.AmplitudeEnvelope();
         o.connect(env);
         env.toMaster();
