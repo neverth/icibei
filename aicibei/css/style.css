@@ -1,0 +1,103 @@
+html, body {
+  background: rgb(25, 25, 25);
+  color: rgb(75, 75, 75);
+  font-family: Arial, sans-serif;
+  font-size: 2.5vmin;
+  -webkit-font-smoothing: antialiased;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.ex1{
+  font-size: 7rem;
+  color:red;
+}
+
+.key-wrapper {
+  position: absolute;
+  top: calc(50% - 10vmin);
+  left: calc(50% - 60vmin);
+}
+ul {
+  text-align: center;
+  white-space : nowrap;
+}
+li {
+  display: inline-block;
+  margin: -0.5vmin 0.75vmin;
+  width: 5vmin;
+  height: 5vmin;
+  padding: 1vmin;
+  border: 0.25vmin solid rgb(75, 75, 75);
+  border-radius: 1vmin;
+  line-height: 5vmin;
+  text-align: center;
+  text-transform: uppercase;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  transition: .5s;
+}
+li:hover {
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
+[data-code="32"] /*SPACEBAR*/ {
+  width: 40vmin;
+}
+.active {
+  -webkit-transition: 0s;
+  -moz-transition: 0s;
+  -ms-transition: 0s;
+  transition: 0s;
+  transform: scale(1.15);
+}
+.drum {
+  border-color: rgb(0, 255, 100);
+  color: rgb(0, 255, 100);
+} .drum.active {
+  color: rgb(75, 75, 75);
+  background-color: rgb(0, 255, 100);
+}
+.pad {
+  border-color: rgb(255, 225, 0);
+  color: rgb(255, 225, 0);
+} .pad.active {
+  color: rgb(75, 75, 75);
+  background-color: rgb(255, 225, 0);
+}
+.loop {
+  border-color: rgb(255, 100, 0);
+  color: rgb(255, 100, 0);
+} .loop.active {
+  color: rgb(75, 75, 75);
+  background-color: rgb(255, 100, 0);
+}
+.bass {
+  border-color: rgb(255, 0, 75);
+  color: rgb(255, 0, 75);
+} .bass.active {
+  color: rgb(75, 75, 75);
+  background-color: rgb(255, 0, 75);
+}
+.synth {
+  border-color: rgb(150, 0, 255);
+  color: rgb(150, 0, 255);
+} .synth.active {
+  color: rgb(75, 75, 75);
+  background-color: rgb(150, 0, 255);
+}
+.effect {
+  border-color: rgb(0, 150, 255);
+  color: rgb(0, 150, 255);
+} .effect.active {
+  color: rgb(75, 75, 75);
+  background-color: rgb(0, 150, 255);
+}
