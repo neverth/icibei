@@ -8,17 +8,26 @@ html, body {
   height: 100%;
   width: 100%;
   text-align: center;
+  position: fixed;
 }
 
 .ex1{
   font-size: 7rem;
   color:red;
 }
+.ex2{
+  font-size: 3rem;
+  color: white;
+}
+.input-wrapper{
+
+}
 
 .key-wrapper {
   position: absolute;
   top: calc(50% - 10vmin);
   left: calc(50% - 60vmin);
+  text-align: center;
 }
 ul {
   text-align: center;
