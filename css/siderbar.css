@@ -1,0 +1,57 @@
+
+
+.sidebar-wrapper {
+    width: 300px;
+    background: #CE6D39;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    text-align: center;
+}
+
+#toggle-sidebar {
+    position: fixed;
+    top: 13px;
+    left: 25px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.sidebar-wrapper.toggled{
+    left: 0px;
+
+}
+
+.sidebar-wrapper,
+.page-content,
+.page-content.toggled{
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.page-content.toggled{
+    padding-left: 300px;
+}
+
+.siderbar-footer{
+    position: absolute;
+    bottom: 2px;
+    text-align: center;
+    width: 300px;
+    font-size: 12px;
+    font-family: sofia, "Microsoft YaHei";
+}
+.siderbar-footer p{
+    color: white;
+    margin-bottom: 2px;
+ }
+.siderbar-header{
+    padding: 10px;
+}
+.hearder-list{
+    line-height: 40px;
+}
