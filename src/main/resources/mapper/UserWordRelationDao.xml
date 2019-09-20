@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fun.nevertheless.dao.UserWordRelationDao" >
+
+    <resultMap id="BaseResultMap" type="fun.nevertheless.bean.po.UserWordRelation" >
+        <id column="user_word_relation_id" property="user_word_relation_id" />
+        <result column="user_id" property="user_id" />
+        <result column="word_cet4_id" property="word_cet4_id" />
+        <result column="user_word_relation_is_like" property="user_word_relation_is_like" />
+        <result column="user_word_relation_not_like" property="user_word_relation_not_like"  />
+        <result column="user_word_relation_rapc_times" property="user_word_relation_rapc_times" />
+
+    </resultMap>
+
+    <sql id="tb">user_word_relation</sql>
+    <sql id="Base_Column_List">
+        user_id,  word_cet4_id, user_word_relation_is_like, user_word_relation_not_like, user_word_relation_rapc_times
+    </sql>
+
+
+    <select id="selectAllUserWordRelation" resultMap="BaseResultMap">
+        select * from <include refid="tb"></include>
+    </select>
+
+    <select id="selectUserWordRelationById" resultMap="BaseResultMap">
+        select * from <include refid="tb"></include>
+        <where>
+            and user_word_relation_id = #{userWordRelation.user_word_relation_id}
+        </where>
+    </select>
+
+    <select id="selectAllUserWordRelationByUserId" resultMap="BaseResultMap">
+        select * from <include refid="tb"></include>
+        <where>
+            and user_id = #{user.user_id}
+        </where>
+    </select>
+
+    <select id="selectAllUserWordLikeRelationByUserId" resultMap="BaseResultMap">
+        select * from <include refid="tb"></include>
+        <where>
+            and user_id = #{user.user_id} and user_word_relation_is_like = 1
+        </where>
+
+    </select>
+
+
+    <select id="selectAllUserWordRelationByWordId" resultMap="BaseResultMap">
+        select * from <include refid="tb"></include>
+        <where>
+            and word_cet4_id = #{wordCet4.id}
+        </where>
+    </select>
+
+
+    <insert id="insertUserWordRelation"
+            parameterType="fun.nevertheless.bean.po.UserWordRelation"
+            useGeneratedKeys="true" keyProperty="userWordRelation.user_word_relation_id">
+        insert into <include refid="tb"/> ( <include refid="Base_Column_List"/> )
+        values (#{userWordRelation.user_id},
+                #{userWordRelation.word_cet4_id},
+                #{userWordRelation.user_word_relation_is_like},
+                #{userWordRelation.user_word_relation_not_like},
+                #{userWordRelation.user_word_relation_rapc_times})
+    </insert>
+
+    <update id="updateRelationById"
+            parameterType="fun.nevertheless.bean.po.UserWordRelation">
+        update <include refid="tb"></include>
+        <set>
+            user_word_relation_is_like = #{userWordRelation.user_word_relation_is_like} ,
+            user_word_relation_not_like = #{userWordRelation.user_word_relation_is_like} ,
+            user_word_relation_rapc_times = #{userWordRelation.user_word_relation_rapc_times} ,
+        </set>
+        <where>
+            and user_word_relation_id = #{userWordRelation.user_word_relation_id}
+        </where>
+    </update>
+
+</mapper>

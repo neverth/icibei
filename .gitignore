@@ -1,0 +1,10 @@
+/build/
+/out/
+.idea
+/.git/
+/.gradle/
+.idea/encodings.xml
+.idea/aicibei.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml

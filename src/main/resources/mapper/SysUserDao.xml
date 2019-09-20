@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fun.nevertheless.dao.SysUserDao" >
+
+    <resultMap id="BaseResultMap" type="fun.nevertheless.bean.po.SysUser" >
+        <id column="sys_user_id" property="sys_user_id" />
+        <result column="sys_user_account" property="sys_user_account" />
+        <result column="sys_user_passw" property="sys_user_passw" />
+        <result column="sys_user_last_login" property="sys_user_last_login" />
+    </resultMap>
+
+    <sql id="tb">sys_user</sql>
+    <sql id="Base_Column_List">
+        sys_user_account,  sys_user_passw, sys_user_last_login
+    </sql>
+
+
+    <select id="selectAllSysUser" resultMap="BaseResultMap">
+        select * from <include refid="tb"/>
+    </select>
+    <select id="selectSysUserById" resultMap="BaseResultMap" parameterType="fun.nevertheless.bean.po.SysUser">
+        select * from <include refid="tb"/>
+        <where>
+            and sys_user_id = #{sysUser.sys_user_id}
+        </where>
+    </select>
+    <select id="selectSysUserByAccount" resultMap="BaseResultMap" parameterType="fun.nevertheless.bean.po.SysUser">
+        select * from <include refid="tb"/>
+        <where>
+            and sys_user_account = #{sysUser.sys_user_account}
+        </where>
+    </select>
+
+    <insert id="insertSysUser"
+            parameterType="fun.nevertheless.bean.po.SysUser"
+            useGeneratedKeys="true" keyProperty="sysUser.sys_user_id">
+        insert into <include refid="tb"/> ( <include refid="Base_Column_List"/> )
+        values (#{sysUser.sys_user_account}, #{sysUser.sys_user_passw}, #{sysUser.sys_user_last_login})
+    </insert>
+
+    <delete id="deleteSysUserById"
+            parameterType="fun.nevertheless.bean.po.SysUser">
+        delete from <include refid="tb"></include>
+        <where>
+            and sys_user_id = #{sysUser.sys_user_id}
+        </where>
+    </delete>
+
+    <delete id="deleteSysUserByAccount"
+            parameterType="fun.nevertheless.bean.po.SysUser">
+        delete from <include refid="tb"></include>
+        <where>
+            and sys_user_account = #{sysUser.sys_user_account}
+        </where>
+    </delete>
+
+    <update id="updateSysUserById"
+            parameterType="fun.nevertheless.bean.po.SysUser">
+        update <include refid="tb"></include>
+        <set>
+            <if test="sysUser.sys_user_account != sysUser1.sys_user_account">
+                sys_user_account = #{sysUser1.sys_user_account} ,
+            </if>
+            <if test="sysUser.sys_user_passw != sysUser1.sys_user_passw">
+                sys_user_passw = #{sysUser1.sys_user_passw} ,
+            </if>
+            <if test="sysUser.sys_user_last_login != sysUser1.sys_user_last_login">
+                sys_user_last_login = #{sysUser1.sys_user_last_login} ,
+            </if>
+        </set>
+        <where>
+            and sys_user_id = #{sysUser.sys_user_id}
+        </where>
+    </update>
+
+    <update id="updateSysUserByAccount"
+            parameterType="fun.nevertheless.bean.po.SysUser">
+        update <include refid="tb"></include>
+        <set>
+            <if test="sysUser.sys_user_account != sysUser1.sys_user_account">
+                sys_user_account = #{sysUser1.sys_user_account} ,
+            </if>
+            <if test="sysUser.sys_user_passw != sysUser1.sys_user_passw">
+                sys_user_passw = #{sysUser1.sys_user_passw} ,
+            </if>
+            <if test="sysUser.sys_user_last_login != sysUser1.sys_user_last_login">
+                sys_user_last_login = #{sysUser1.sys_user_last_login} ,
+            </if>
+        </set>
+        <where>
+            and sys_user_account = #{sysUser.sys_user_account}
+        </where>
+    </update>
+
+</mapper>
