@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="fun.nevertheless.dao.UserDao" >
+<mapper namespace="fun.neverth.dao.UserDao" >
 
-    <resultMap id="BaseResultMap" type="fun.nevertheless.bean.po.User" >
+    <resultMap id="BaseResultMap" type="fun.neverth.bean.po.User" >
         <id column="user_id" property="user_id" />
         <result column="user_account" property="user_account" />
         <result column="user_passw" property="user_passw" />
@@ -18,13 +18,13 @@
     <select id="selectAllUser" resultMap="BaseResultMap">
         select * from <include refid="tb"/>
     </select>
-    <select id="selectUserById" resultMap="BaseResultMap" parameterType="fun.nevertheless.bean.po.User">
+    <select id="selectUserById" resultMap="BaseResultMap" parameterType="fun.neverth.bean.po.User">
         select * from <include refid="tb"/>
         <where>
             and user_id = #{user.user_id}
         </where>
     </select>
-    <select id="selectUserByAccount" resultMap="BaseResultMap" parameterType="fun.nevertheless.bean.po.User">
+    <select id="selectUserByAccount" resultMap="BaseResultMap" parameterType="fun.neverth.bean.po.User">
         select * from <include refid="tb"/>
         <where>
             and user_account = #{user.user_account}
@@ -32,14 +32,14 @@
     </select>
 
     <insert id="insertUser"
-            parameterType="fun.nevertheless.bean.po.User"
+            parameterType="fun.neverth.bean.po.User"
             useGeneratedKeys="true" keyProperty="user.user_id">
         insert into <include refid="tb"/> ( <include refid="Base_Column_List"/> )
         values (#{user.user_account}, #{user.user_passw}, #{user.user_last_login})
     </insert>
 
     <delete id="deleteUserById"
-            parameterType="fun.nevertheless.bean.po.User">
+            parameterType="fun.neverth.bean.po.User">
         delete from <include refid="tb"></include>
         <where>
             and user_id = #{user.user_id}
@@ -47,7 +47,7 @@
     </delete>
 
     <delete id="deleteUserByAccount"
-            parameterType="fun.nevertheless.bean.po.User">
+            parameterType="fun.neverth.bean.po.User">
         delete from <include refid="tb"></include>
         <where>
             and user_account = #{user.user_account}
@@ -55,7 +55,7 @@
     </delete>
 
     <update id="updateUserById"
-            parameterType="fun.nevertheless.bean.po.User">
+            parameterType="fun.neverth.bean.po.User">
         update <include refid="tb"></include>
         <set>
             user_account = #{user1.user_account} ,
@@ -67,7 +67,7 @@
     </update>
 
     <update id="updateUserByAccount"
-            parameterType="fun.nevertheless.bean.po.User">
+            parameterType="fun.neverth.bean.po.User">
         update <include refid="tb"></include>
         <set>
             <if test="user.user_account != user1.user_account">

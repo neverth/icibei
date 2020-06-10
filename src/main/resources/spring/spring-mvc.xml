@@ -13,9 +13,9 @@
     <mvc:annotation-driven/>
 
     <!--指定需要扫描的包-->
-    <context:component-scan base-package="fun.nevertheless.controller"/>
-    <context:component-scan base-package="fun.nevertheless.service.impl"/>
-    <context:component-scan base-package="fun.nevertheless.dao"/>
+    <context:component-scan base-package="fun.neverth.controller"/>
+    <context:component-scan base-package="fun.neverth.service.impl"/>
+    <context:component-scan base-package="fun.neverth.dao"/>
 
 
 <!--    定义视图解析器-->
@@ -37,7 +37,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="fun.nevertheless.interceptor.HomeResourceInterceptor"/>
+            <bean class="fun.neverth.interceptor.HomeResourceInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

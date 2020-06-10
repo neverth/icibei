@@ -36,7 +36,7 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--如果需要扫描多个包，中间使用半角逗号隔开-->
-        <property name="basePackage" value="fun.nevertheless.dao"/>
+        <property name="basePackage" value="fun.neverth.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="fun.nevertheless.dao.WordCet4Dao" >
+<mapper namespace="fun.neverth.dao.WordCet4Dao" >
 
-    <resultMap id="BaseResultMap" type="fun.nevertheless.bean.po.WordCet4" >
+    <resultMap id="BaseResultMap" type="fun.neverth.bean.po.WordCet4" >
         <id column="id" property="id" />
         <result column="word" property="word" />
         <result column="phonetic" property="phonetic" />
@@ -19,7 +19,7 @@
         <result column="audio" property="audio" />
     </resultMap>
 
-    <sql id="tb">word_dict_cet4</sql>
+    <sql id="tb">cet4_word</sql>
     <sql id="Base_Column_List">
         word,  phonetic, definition, translation, pos, tag, bnc, frq, exchange, detail, audio
     </sql>
@@ -36,7 +36,7 @@
         </where>
     </select>
     <update id="updateWordById"
-            parameterType="fun.nevertheless.bean.po.WordCet4">
+            parameterType="fun.neverth.bean.po.WordCet4">
         update <include refid="tb"></include>
         <set>
             word = #{wordCet4.word} ,
@@ -55,7 +55,7 @@
     </update>
 
     <insert id="insertWord"
-            parameterType="fun.nevertheless.bean.po.WordCet4"
+            parameterType="fun.neverth.bean.po.WordCet4"
             useGeneratedKeys="true" keyProperty="wordCet4.id">
         insert into <include refid="tb"/> ( <include refid="Base_Column_List"/> )
         values (
