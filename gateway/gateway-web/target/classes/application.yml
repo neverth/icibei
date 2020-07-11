@@ -1,0 +1,33 @@
+spring:
+
+  redis:
+    host: ${REDIS_HOST :106.14.44.108}
+    port: ${REDIS_PORT:6379}
+    # password: ${REDIS_PASSWORD:}
+    # Lettuce的连接是基于Netty
+    lettuce:
+      pool:
+        max-active: 300
+
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  hidePackages: fun.neverth
+  local:
+    # 默认永久本地缓存
+    default:
+      type: caffeine
+      keyConvertor: fastjson
+  remote:
+    # 默认永久的远程缓存
+    default:
+      type: redis
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${REDIS_HOST:106.14.44.108}
+      port: ${REDIS_PORT:6379}
