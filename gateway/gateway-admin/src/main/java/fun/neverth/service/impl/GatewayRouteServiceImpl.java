@@ -9,7 +9,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fun.neverth.config.RabbitConfig;
 import fun.neverth.dao.GatewayRouteMapper;
+import fun.neverth.entity.param.GatewayRouteQueryParam;
 import fun.neverth.entity.po.GatewayRoute;
+import fun.neverth.entity.vo.GatewayRouteVO;
 import fun.neverth.events.RabbitEventSender;
 import fun.neverth.service.GatewayRouteService;
 import lombok.extern.slf4j.Slf4j;
@@ -120,5 +122,10 @@ public class GatewayRouteServiceImpl
             log.error("网关路由对象转换失败", e);
         }
         return routeDefinition;
+    }
+
+    @Override
+    public List<GatewayRouteVO> query(GatewayRouteQueryParam gatewayRouteQueryParam) {
+        return null;
     }
 }

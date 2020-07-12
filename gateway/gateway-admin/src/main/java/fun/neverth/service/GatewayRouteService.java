@@ -1,5 +1,6 @@
 package fun.neverth.service;
 
+import fun.neverth.entity.param.GatewayRouteQueryParam;
 import fun.neverth.entity.po.GatewayRoute;
 import fun.neverth.entity.vo.GatewayRouteVO;
 
@@ -22,5 +23,7 @@ public interface GatewayRouteService {
     GatewayRoute get(String id);
 
     boolean overLoadToCache();
+
+    List<GatewayRouteVO> query(GatewayRouteQueryParam gatewayRouteQueryParam);
 
 }

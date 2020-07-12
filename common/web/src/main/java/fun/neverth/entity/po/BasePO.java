@@ -19,10 +19,10 @@ import java.util.Date;
  * @date 2020/7/11 23:11
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class BasePO implements Serializable {
+
     public final static String DEFAULT_USERNAME = "system";
+
     @TableId(type = IdType.ID_WORKER_STR)
     private String id;
 
