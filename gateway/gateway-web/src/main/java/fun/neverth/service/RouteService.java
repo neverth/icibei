@@ -12,11 +12,9 @@ import java.util.Collection;
  */
 public interface RouteService {
 
-    boolean saveRouteDefinition(RouteDefinition routeDefinition);
+    boolean save(RouteDefinition routeDefinition);
 
-    boolean deleteRouteDefinition(String routeId);
-
-    boolean updateRouteDefinition(RouteDefinition routeDefinition);
+    boolean delete(String routeId);
 
     Collection<RouteDefinition> getRouteDefinitions();
 

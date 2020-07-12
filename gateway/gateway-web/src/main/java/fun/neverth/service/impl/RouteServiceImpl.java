@@ -12,6 +12,8 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +43,7 @@ public class RouteServiceImpl implements RouteService {
     @CreateCache(name = GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
     private Cache<String, RouteDefinition> routeCache;
 
-    private Map<String, RouteDefinition> routeDefinitionMaps = new HashMap<>();
+    private final Map<String, RouteDefinition> routeDefinitionMaps = new HashMap<>();
 
     /**
      * 1. 构造函数 -> postConstruct -> init ->
@@ -62,24 +64,33 @@ public class RouteServiceImpl implements RouteService {
 
         Map<String, RouteDefinition> allRoute = routeCache.getAll(routeIds);
 
+        // 以下代码原因是，jetcache将RouteDefinition返序列化后，uri发生变化，
+        // 未初使化，导致路由异常，以下代码是重新初使化uri
+        allRoute.values().forEach(routeDefinition -> {
+            try {
+                routeDefinition.setUri(new URI(routeDefinition.getUri().toASCIIString()));
+            } catch (URISyntaxException e) {
+                log.error("initRouteDefinition 重新初始化url异常：", e);
+            }
+        });
+
         routeDefinitionMaps.putAll(allRoute);
 
         log.info("共初始化路由信息：{}个。", routeDefinitionMaps.size());
     }
 
     @Override
-    public boolean saveRouteDefinition(RouteDefinition routeDefinition) {
-        return false;
+    public boolean save(RouteDefinition routeDefinition) {
+        routeDefinitionMaps.put(routeDefinition.getId(), routeDefinition);
+        log.info("新增路由1条：{},目前路由共{}条", routeDefinition, routeDefinitionMaps.size());
+        return true;
     }
 
     @Override
-    public boolean deleteRouteDefinition(String routeId) {
-        return false;
-    }
-
-    @Override
-    public boolean updateRouteDefinition(RouteDefinition routeDefinition) {
-        return false;
+    public boolean delete(String routeId) {
+        routeDefinitionMaps.remove(routeId);
+        log.info("删除路由1条：{},目前路由共{}条", routeId, routeDefinitionMaps.size());
+        return true;
     }
 
     @Override

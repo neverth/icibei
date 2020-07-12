@@ -9,6 +9,12 @@ spring:
       pool:
         max-active: 300
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 jetcache:
   statIntervalMinutes: 15
   areaInCacheName: false

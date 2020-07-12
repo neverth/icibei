@@ -1,0 +1,16 @@
+server:
+  port: ${SERVER_PORT:8445}
+
+spring:
+  application:
+    name: icibei-gateway-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+      config:
+        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD_HOST:106.14.44.108}:${SENTINEL_DASHBOARD_PORT:8021}
