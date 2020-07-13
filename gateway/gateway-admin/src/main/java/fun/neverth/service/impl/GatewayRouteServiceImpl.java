@@ -93,7 +93,7 @@ public class GatewayRouteServiceImpl
                         gatewayRouteToRouteDefinition(gatewayRoute)
                 )
         );
-        log.info("全局初使化网关路由成功!");
+        log.info("将路由put入全局缓存成功");
         return true;
     }
 

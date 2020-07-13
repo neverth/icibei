@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableMethodCache(basePackages = "com.springboot.cloud")
+@EnableMethodCache(basePackages = "fun.neverth")
 @EnableCreateCacheAnnotation
 public class GatewayAdminMain {
     public static void main(String[] args) {

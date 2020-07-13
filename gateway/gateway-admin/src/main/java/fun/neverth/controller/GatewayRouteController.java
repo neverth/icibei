@@ -28,7 +28,7 @@ public class GatewayRouteController {
     private GatewayRouteService gatewayRouteService;
 
     @PostMapping("")
-    public Result<Object> add(@Valid @RequestBody GatewayRouteForm gatewayRoutForm) {
+    public Result add(@Valid @RequestBody GatewayRouteForm gatewayRoutForm) {
         GatewayRoute gatewayRout = gatewayRoutForm.toPO(GatewayRoute.class);
         return Result.success(gatewayRouteService.add(gatewayRout));
     }

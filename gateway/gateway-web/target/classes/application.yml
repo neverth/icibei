@@ -1,5 +1,15 @@
 spring:
 
+  cloud:
+    gateway:
+      enabled: true
+
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:106.14.44.108}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:123}
+    password: ${RABBIT_MQ_PASSWORD:123}
+
   redis:
     host: ${REDIS_HOST :106.14.44.108}
     port: ${REDIS_PORT:6379}

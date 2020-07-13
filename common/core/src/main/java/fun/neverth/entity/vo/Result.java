@@ -54,41 +54,41 @@ public class Result<T> {
     }
 
 
-    public static Result<Object> success(Object data) {
+    public static Result success(Object data) {
         return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
     }
 
 
-    public static Result<Object> success() {
+    public static Result success() {
         return success(null);
     }
 
 
-    public static Result<Object> fail() {
+    public static Result fail() {
         return new Result(SystemErrorType.SYSTEM_ERROR);
     }
 
 
-    public static Result<Object> fail(BaseException baseException) {
+    public static Result fail(BaseException baseException) {
         return fail(baseException, null);
     }
 
 
-    public static Result<Object> fail(BaseException baseException, Object data) {
+    public static Result fail(BaseException baseException, Object data) {
         return new Result<>(baseException.getErrorType(), data);
     }
 
-    public static Result<Object> fail(ErrorType errorType, Object data) {
+    public static Result fail(ErrorType errorType, Object data) {
         return new Result<>(errorType, data);
     }
 
 
-    public static Result<Object> fail(ErrorType errorType) {
+    public static Result fail(ErrorType errorType) {
         return Result.fail(errorType, null);
     }
 
 
-    public static Result<Object> fail(Object data) {
+    public static Result fail(Object data) {
         return new Result<>(SystemErrorType.SYSTEM_ERROR, data);
     }
 

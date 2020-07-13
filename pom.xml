@@ -13,6 +13,7 @@
         <module>icibei-user</module>
         <module>gateway</module>
         <module>common</module>
+        <module>auth</module>
     </modules>
 
     <properties>
