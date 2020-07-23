@@ -1,6 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.entity.param;
 
 import fun.neverth.icibei.sysadmin.organization.entity.po.Position;
+import fun.neverth.icibei.common.web.param.BaseParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PositionQueryParam extends BaseParam<Position>{
+public class PositionQueryParam extends BaseParam<Position> {
     private String name;
 }

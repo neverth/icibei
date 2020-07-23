@@ -1,6 +1,6 @@
 package fun.neverth.icibei.sysadmin.organization.config;
 
-import fun.neverth.icibei.sysadmin.organization.entity.hander.POMetaObjectHandler;
+import fun.neverth.icibei.common.web.hander.POMetaObjectHandler;
 import org.springframework.stereotype.Component;
 
 /**

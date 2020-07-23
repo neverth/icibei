@@ -5,7 +5,7 @@ import fun.neverth.icibei.sysadmin.organization.entity.form.UserQueryForm;
 import fun.neverth.icibei.sysadmin.organization.entity.form.UserUpdateForm;
 import fun.neverth.icibei.sysadmin.organization.entity.param.UserQueryParam;
 import fun.neverth.icibei.sysadmin.organization.entity.po.User;
-import fun.neverth.icibei.sysadmin.organization.entity.vo.Result;
+import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.sysadmin.organization.service.UserService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;

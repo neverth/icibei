@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.entity.util;
+package fun.neverth.icibei.common.core.util;
 
 import com.google.common.collect.Maps;
 

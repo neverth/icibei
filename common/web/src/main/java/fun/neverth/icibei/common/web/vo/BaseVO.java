@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.entity.vo;
+package fun.neverth.icibei.common.web.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

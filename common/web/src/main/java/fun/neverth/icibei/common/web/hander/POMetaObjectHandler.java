@@ -1,8 +1,8 @@
-package fun.neverth.icibei.sysadmin.organization.entity.hander;
+package fun.neverth.icibei.common.web.hander;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import fun.neverth.icibei.sysadmin.organization.entity.po.BasePO;
-import fun.neverth.icibei.sysadmin.organization.entity.util.UserContextHolder;
+import fun.neverth.icibei.common.web.po.BasePO;
+import fun.neverth.icibei.common.core.util.UserContextHolder;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 

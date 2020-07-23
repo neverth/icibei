@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.entity.po;
+package fun.neverth.icibei.common.web.po;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

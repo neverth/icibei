@@ -3,7 +3,7 @@ package fun.neverth.icibei.sysadmin.organization.controller;
 import fun.neverth.icibei.sysadmin.organization.entity.form.PositionForm;
 import fun.neverth.icibei.sysadmin.organization.entity.param.PositionQueryParam;
 import fun.neverth.icibei.sysadmin.organization.entity.po.Position;
-import fun.neverth.icibei.sysadmin.organization.entity.vo.Result;
+import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.sysadmin.organization.service.PositionService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;

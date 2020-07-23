@@ -3,6 +3,7 @@ package fun.neverth.icibei.sysadmin.organization.entity.vo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fun.neverth.icibei.sysadmin.organization.entity.po.GatewayRoute;
+import fun.neverth.icibei.common.web.vo.BaseVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
-public class GatewayRouteVO extends BaseVO{
+public class GatewayRouteVO extends BaseVO {
     private String id;
     private String routeId;
     private String description;

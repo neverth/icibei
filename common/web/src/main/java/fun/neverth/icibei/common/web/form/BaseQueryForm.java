@@ -1,7 +1,7 @@
-package fun.neverth.icibei.sysadmin.organization.entity.form;
+package fun.neverth.icibei.common.web.form;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import fun.neverth.icibei.sysadmin.organization.entity.param.BaseParam;
+import fun.neverth.icibei.common.web.param.BaseParam;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

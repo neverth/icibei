@@ -2,6 +2,7 @@ package fun.neverth.icibei.sysadmin.organization.entity.form;
 
 
 import fun.neverth.icibei.sysadmin.organization.entity.po.Menu;
+import fun.neverth.icibei.common.web.form.BaseForm;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -1,6 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.*;
 
 /**

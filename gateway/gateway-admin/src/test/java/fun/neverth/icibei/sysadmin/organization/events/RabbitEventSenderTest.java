@@ -1,7 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.events;
 
 import fun.neverth.icibei.sysadmin.organization.config.RabbitConfig;
-import fun.neverth.icibei.sysadmin.organization.entity.po.BasePO;
+import fun.neverth.icibei.common.web.po.BasePO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

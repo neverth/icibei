@@ -1,6 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.entity.form;
 
 import fun.neverth.icibei.sysadmin.organization.entity.param.GatewayRouteQueryParam;
+import fun.neverth.icibei.common.web.form.BaseQueryForm;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GatewayRouteQueryForm extends BaseQueryForm<GatewayRouteQueryParam>{
+public class GatewayRouteQueryForm extends BaseQueryForm<GatewayRouteQueryParam> {
     private String uri;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

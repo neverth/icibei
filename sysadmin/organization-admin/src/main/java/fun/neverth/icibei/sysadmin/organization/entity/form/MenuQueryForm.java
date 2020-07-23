@@ -1,6 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.entity.form;
 
 import fun.neverth.icibei.sysadmin.organization.entity.param.MenuQueryParam;
+import fun.neverth.icibei.common.web.form.BaseQueryForm;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;

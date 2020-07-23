@@ -5,7 +5,7 @@ import fun.neverth.icibei.sysadmin.organization.entity.form.GatewayRouteQueryFor
 import fun.neverth.icibei.sysadmin.organization.entity.param.GatewayRouteQueryParam;
 import fun.neverth.icibei.sysadmin.organization.entity.po.GatewayRoute;
 import fun.neverth.icibei.sysadmin.organization.entity.vo.GatewayRouteVO;
-import fun.neverth.icibei.sysadmin.organization.entity.vo.Result;
+import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.sysadmin.organization.service.GatewayRouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -4,7 +4,7 @@ import fun.neverth.icibei.sysadmin.organization.entity.form.ResourceForm;
 import fun.neverth.icibei.sysadmin.organization.entity.form.ResourceQueryForm;
 import fun.neverth.icibei.sysadmin.organization.entity.param.ResourceQueryParam;
 import fun.neverth.icibei.sysadmin.organization.entity.po.Resource;
-import fun.neverth.icibei.sysadmin.organization.entity.vo.Result;
+import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.sysadmin.organization.service.ResourceService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;

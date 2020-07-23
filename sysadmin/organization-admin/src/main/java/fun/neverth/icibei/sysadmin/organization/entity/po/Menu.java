@@ -1,5 +1,6 @@
 package fun.neverth.icibei.sysadmin.organization.entity.po;
 
+import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.*;
 
 

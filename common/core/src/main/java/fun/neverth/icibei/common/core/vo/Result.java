@@ -1,10 +1,10 @@
-package fun.neverth.icibei.sysadmin.organization.entity.vo;
+package fun.neverth.icibei.common.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fun.neverth.icibei.sysadmin.organization.entity.exception.BaseException;
-import fun.neverth.icibei.sysadmin.organization.entity.exception.ErrorType;
-import fun.neverth.icibei.sysadmin.organization.entity.exception.SystemErrorType;
+import fun.neverth.icibei.common.core.exception.BaseException;
+import fun.neverth.icibei.common.core.exception.ErrorType;
+import fun.neverth.icibei.common.core.exception.SystemErrorType;
 import lombok.Getter;
 
 import java.time.Instant;

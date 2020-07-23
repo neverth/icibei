@@ -3,6 +3,7 @@ package fun.neverth.icibei.sysadmin.organization.entity.form;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fun.neverth.icibei.sysadmin.organization.entity.po.GatewayRoute;
+import fun.neverth.icibei.common.web.form.BaseForm;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
-public class GatewayRouteForm extends BaseForm<GatewayRoute>{
+public class GatewayRouteForm extends BaseForm<GatewayRoute> {
     @NotEmpty(message = "网关断言不能为空")
     private List<PredicateDefinition> predicates = new ArrayList<>();
 

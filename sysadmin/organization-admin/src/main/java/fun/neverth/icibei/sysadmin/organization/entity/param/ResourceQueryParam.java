@@ -1,6 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.entity.param;
 
 import fun.neverth.icibei.sysadmin.organization.entity.po.Resource;
+import fun.neverth.icibei.common.web.param.BaseParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResourceQueryParam extends BaseParam<Resource>{
+public class ResourceQueryParam extends BaseParam<Resource> {
     private String name;
     private String code;
     private String type;

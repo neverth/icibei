@@ -1,7 +1,7 @@
-package fun.neverth.icibei.sysadmin.organization.entity.param;
+package fun.neverth.icibei.common.web.param;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import fun.neverth.icibei.sysadmin.organization.entity.po.BasePO;
+import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.Data;
 
 import java.util.Date;

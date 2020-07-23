@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.entity.exception;
+package fun.neverth.icibei.common.core.exception;
 
 import lombok.Getter;
 

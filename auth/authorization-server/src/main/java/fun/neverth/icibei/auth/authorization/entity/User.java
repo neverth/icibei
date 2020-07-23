@@ -1,6 +1,6 @@
 package fun.neverth.icibei.auth.authorization.entity;
 
-import fun.neverth.icibei.sysadmin.organization.entity.po.BasePO;
+import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

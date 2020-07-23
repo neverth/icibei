@@ -2,6 +2,7 @@ package fun.neverth.icibei.sysadmin.organization.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.*;
 
 import java.util.Set;

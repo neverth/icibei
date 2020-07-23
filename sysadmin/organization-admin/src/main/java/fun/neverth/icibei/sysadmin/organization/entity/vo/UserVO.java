@@ -1,6 +1,7 @@
 package fun.neverth.icibei.sysadmin.organization.entity.vo;
 
 import fun.neverth.icibei.sysadmin.organization.entity.po.User;
+import fun.neverth.icibei.common.web.vo.BaseVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class UserVO extends BaseVO{
+public class UserVO extends BaseVO {
     private String id;
 
     private String name;

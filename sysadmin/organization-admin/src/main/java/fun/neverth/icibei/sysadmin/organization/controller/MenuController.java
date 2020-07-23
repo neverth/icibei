@@ -4,7 +4,7 @@ import fun.neverth.icibei.sysadmin.organization.entity.form.MenuForm;
 import fun.neverth.icibei.sysadmin.organization.entity.form.MenuQueryForm;
 import fun.neverth.icibei.sysadmin.organization.entity.param.MenuQueryParam;
 import fun.neverth.icibei.sysadmin.organization.entity.po.Menu;
-import fun.neverth.icibei.sysadmin.organization.entity.vo.Result;
+import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.sysadmin.organization.service.MenuService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
