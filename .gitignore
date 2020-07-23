@@ -162,4 +162,4 @@ fabric.properties
 .idea
 *.iml
 target
-
+/logs/
