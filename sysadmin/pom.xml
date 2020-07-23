@@ -9,18 +9,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway</artifactId>
+    <artifactId>sysadmin</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>gateway-web</module>
-        <module>gateway-admin</module>
+        <module>organization-admin</module>
     </modules>
-
     <dependencies>
         <!--spring boot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--spring boot test-->
         <dependency>
@@ -48,15 +50,15 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
-        <!--api网关-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
+<!--        &lt;!&ndash;api网关&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-gateway</artifactId>-->
+<!--        </dependency>-->
         <!--redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
         <!--redis依赖 pool 库-->
         <dependency>
@@ -68,7 +70,7 @@
         <dependency>
             <groupId>com.alicp.jetcache</groupId>
             <artifactId>jetcache-starter-redis</artifactId>
-            <version>2.6.0.RC</version>
+            <version>2.6.0</version>
         </dependency>
         <!--消息总线-->
         <dependency>

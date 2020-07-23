@@ -1,5 +1,6 @@
 package fun.neverth.entity.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import fun.neverth.entity.po.BasePO;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("gateway_route")
 public class GatewayRoute extends BasePO {
     private String uri;
     private String routeId;

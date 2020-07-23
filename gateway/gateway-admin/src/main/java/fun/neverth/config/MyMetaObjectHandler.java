@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
  * @date 2020/7/12 17:23
  */
 @Component
-public class GatewayAdminMetaObjectHandler extends POMetaObjectHandler{
+public class MyMetaObjectHandler extends POMetaObjectHandler{
 }

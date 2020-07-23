@@ -83,8 +83,10 @@ public class GatewayRouteServiceImpl
         return this.getById(id);
     }
 
+    /**
+     * \@PostConstruct 可能是由于jetcache的原因，会出现循环依赖的错误
+     */
     @Override
-    @PostConstruct
     public boolean overLoadToCache() {
         List<GatewayRoute> gatewayRoutes = this.list(new QueryWrapper<>());
         gatewayRoutes.forEach(gatewayRoute ->
