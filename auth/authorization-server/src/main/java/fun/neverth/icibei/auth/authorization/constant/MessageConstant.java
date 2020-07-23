@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.constant;
+package fun.neverth.icibei.auth.authorization.constant;
 
 /**
  * todo

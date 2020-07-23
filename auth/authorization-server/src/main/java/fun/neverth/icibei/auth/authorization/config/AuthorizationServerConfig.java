@@ -1,6 +1,6 @@
-package fun.neverth.icibei.sysadmin.organization.config;
+package fun.neverth.icibei.auth.authorization.config;
 
-import fun.neverth.icibei.sysadmin.organization.enhancer.JwtTokenEnhancer;
+import fun.neverth.icibei.auth.authorization.enhancer.JwtTokenEnhancer;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

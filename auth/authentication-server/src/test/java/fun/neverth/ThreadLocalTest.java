@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization;
+package fun.neverth;
 
 /**
  * todo

@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.entity;
+package fun.neverth.icibei.auth.authorization.entity;
 
 import fun.neverth.icibei.sysadmin.organization.entity.po.BasePO;
 import lombok.Data;

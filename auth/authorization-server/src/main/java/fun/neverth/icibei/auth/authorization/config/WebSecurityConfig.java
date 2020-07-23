@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.config;
+package fun.neverth.icibei.auth.authorization.config;
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;

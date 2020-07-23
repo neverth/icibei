@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization.entity;
+package fun.neverth.icibei.auth.authorization.entity;
 
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

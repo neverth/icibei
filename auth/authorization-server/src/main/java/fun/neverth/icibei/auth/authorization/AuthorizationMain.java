@@ -1,4 +1,4 @@
-package fun.neverth.icibei.sysadmin.organization;
+package fun.neverth.icibei.auth.authorization;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

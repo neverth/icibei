@@ -1,9 +1,9 @@
-package fun.neverth.icibei.sysadmin.organization.service.impl;
+package fun.neverth.icibei.auth.authorization.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import fun.neverth.icibei.sysadmin.organization.constant.MessageConstant;
-import fun.neverth.icibei.sysadmin.organization.entity.SecurityUser;
-import fun.neverth.icibei.sysadmin.organization.entity.User;
+import fun.neverth.icibei.auth.authorization.constant.MessageConstant;
+import fun.neverth.icibei.auth.authorization.entity.SecurityUser;
+import fun.neverth.icibei.auth.authorization.entity.User;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
