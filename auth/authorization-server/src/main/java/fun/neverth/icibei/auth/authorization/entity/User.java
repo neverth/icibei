@@ -24,16 +24,12 @@ public class User extends BasePO {
 
     private String password;
 
-    private Boolean enabled = true;
+    private Boolean enabled;
 
-    private Boolean accountNonExpired = true;
+    private Boolean accountNonExpired;
 
-    private Boolean credentialsNonExpired = true;
+    private Boolean credentialsNonExpired;
 
-    private Boolean accountNonLocked = true;
+    private Boolean accountNonLocked;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 }

@@ -14,7 +14,7 @@
         <module>gateway</module>
         <module>common</module>
         <module>auth</module>
-        <module>sysadmin</module>
+        <module>organization</module>
     </modules>
 
     <properties>
