@@ -1,0 +1,19 @@
+
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+
+    compile 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+
+    compile 'org.apache.commons:commons-pool2:2.5.0'
+    compile 'com.alicp.jetcache:jetcache-starter-redis:2.6.0'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+}
