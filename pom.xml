@@ -4,16 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fun.neverth</groupId>
+    <groupId>fun.neverth.icibei</groupId>
     <artifactId>icibei</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
-        <module>icibei-web</module>
-        <module>icibei-user</module>
-        <module>gateway</module>
-        <module>common</module>
-        <module>auth</module>
+        <module>gateway-admin</module>
+        <module>gateway-web</module>
+        <module>authentication-server</module>
+        <module>authorization-server</module>
+        <module>common/core</module>
+        <module>common/web</module>
         <module>organization</module>
     </modules>
 
@@ -64,9 +66,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.3.9</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.6.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -81,7 +90,14 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
         </plugins>
     </build>
-
 </project>
