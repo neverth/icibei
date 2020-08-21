@@ -1,0 +1,29 @@
+
+
+dependencies {
+    // icibei common web模块
+    compile project(':web')
+    // boot
+    compile 'org.springframework.boot:spring-boot-starter'
+    // 自省和监控的集成功能
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    // redis
+    compile 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    // spring boot test
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    // 注册中心
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    // 配置中心
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    // 熔断降级
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    // 消息总线
+    compile 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+    // 缓存
+    compile 'com.alicp.jetcache:jetcache-starter-redis:2.6.0'
+    // redis依赖 pool 库
+    compile 'org.apache.commons:commons-pool2:2.5.0'
+    // Swagger2
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+}
