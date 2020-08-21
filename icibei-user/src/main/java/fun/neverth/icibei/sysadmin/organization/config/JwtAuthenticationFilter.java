@@ -1,6 +1,5 @@
 package fun.neverth.icibei.sysadmin.organization.config;
 
-import com.auth0.jwt.JWT;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            }
 //        }
 
-        JWT.create()
+//        JWT.create()
 
     }
 }

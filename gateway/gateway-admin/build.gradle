@@ -3,5 +3,5 @@
  */
 
 dependencies {
-    compile project(':common:web')
+    implementation project(':common:web')
 }
