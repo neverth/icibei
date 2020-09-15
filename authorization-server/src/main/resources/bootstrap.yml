@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: icibei-authorization-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+      config:
+        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+        file-extension: yml
 
 secure:
   ignore:

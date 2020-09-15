@@ -16,10 +16,10 @@ import java.util.Set;
  * @author NeverTh
  * @date 2020/7/24 15:53
  */
-@FeignClient(name = "organization", fallback = OrganizationProviderFallback.class)
+@FeignClient(name = "icibei-organization", fallback = OrganizationProviderFallback.class)
 public interface OrganizationProvider {
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/user/{uniqueId}")
     Result<User> getUserByUniqueId(@RequestParam("uniqueId") String uniqueId);
 
     @GetMapping(value = "/role/user/{userId}")

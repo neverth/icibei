@@ -51,25 +51,32 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Resource
     private DataSource dataSource;
 
+    @Resource
+    PasswordEncoder passwordEncoder;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
-        // 支持将client参数放在header或body中
-        security.allowFormAuthenticationForClients();
+        // 允许客户端使用client_id和client_secret获取token
+        security.allowFormAuthenticationForClients()
+                // 验证通过返回token信息
+                .tokenKeyAccess("isAuthenticated()")
+                // 获取token的请求不拦截
+                .checkTokenAccess("permitAll()");
     }
 
     /**
-     * clients.inMemory()
-     *         .withClient("client-app")
-     *         .secret(passwordEncoder.encode("123456"))
-     *         .scopes("all")
-     *         .authorizedGrantTypes("password", "refresh_token")
-     *         .accessTokenValiditySeconds(3600)
-     *         .refreshTokenValiditySeconds(86400);
-     *  配置客户端信息，从数据库中读取，对应oauth_client_details表
+     * 配置客户端信息，从数据库中读取，对应oauth_client_details表
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource);
+//        clients.jdbc(dataSource);
+        clients.inMemory()
+                .withClient("client-app")
+                .secret(passwordEncoder.encode("123456"))
+                .scopes("all")
+                .authorizedGrantTypes("password", "refresh_token")
+                .accessTokenValiditySeconds(3600)
+                .refreshTokenValiditySeconds(86400);
     }
 
     @Override
