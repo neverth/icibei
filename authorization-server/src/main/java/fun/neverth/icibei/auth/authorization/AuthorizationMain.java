@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "fun.neverth.icibei.auth.authorization.provider")
 public class AuthorizationMain {
     public static void main(String[] args) {
         SpringApplication.run(AuthorizationMain.class, args);

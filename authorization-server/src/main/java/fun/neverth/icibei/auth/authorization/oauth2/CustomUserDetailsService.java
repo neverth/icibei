@@ -5,6 +5,7 @@ import fun.neverth.icibei.auth.authorization.entity.Role;
 import fun.neverth.icibei.auth.authorization.entity.User;
 import fun.neverth.icibei.auth.authorization.service.RoleService;
 import fun.neverth.icibei.auth.authorization.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,11 +26,14 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Resource
-    private UserService userService;
+    private final UserService userService;
 
-    @Resource
-    private RoleService roleService;
+    private final RoleService roleService;
+
+    public CustomUserDetailsService(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String uniqueId) throws UsernameNotFoundException {

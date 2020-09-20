@@ -20,7 +20,7 @@ import java.util.Set;
 public interface OrganizationProvider {
 
     @GetMapping(value = "/user/{uniqueId}")
-    Result<User> getUserByUniqueId(@RequestParam("uniqueId") String uniqueId);
+    Result<User> getUserByUniqueId(@PathVariable("uniqueId") String uniqueId);
 
     @GetMapping(value = "/role/user/{userId}")
     Result<Set<Role>> queryRolesByUserId(@PathVariable("userId") String userId);
