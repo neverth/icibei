@@ -60,6 +60,7 @@ mybatis-plus:
 
 logging:
   level:
+    org.springframework: debug
     fun.neverth: debug
     java.sql.PreparedStatement: debug
   path: logs/

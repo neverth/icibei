@@ -163,5 +163,6 @@ fabric.properties
 *.iml
 target
 /logs/
-/.gradle/
 /build/
+.gradle
+
