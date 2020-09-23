@@ -1,13 +1,13 @@
 server:
   port: ${SERVER_PORT:8000}
 
-spring:
-  application:
-    name: icibei-authorization-server
-
-secure:
-  ignore:
-    urls: #配置白名单路径
-      - "/actuator/**"
-      - "/oauth/token"
-
+#spring:
+#  application:
+#    name: icibei-authorization-server
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+#      config:
+#        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+#        file-extension: yml
