@@ -1,4 +1,4 @@
-package fun.neverth.icibei.auth.authorization.constant;
+package fun.neverth.icibei.authorization.constant;
 
 /**
  * todo

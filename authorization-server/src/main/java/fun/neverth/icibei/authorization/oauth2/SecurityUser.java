@@ -1,6 +1,6 @@
-package fun.neverth.icibei.auth.authorization.oauth2;
+package fun.neverth.icibei.authorization.oauth2;
 
-import fun.neverth.icibei.auth.authorization.entity.User;
+import fun.neverth.icibei.authorization.entity.IUser;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +16,11 @@ import java.util.Collection;
 @Data
 public class SecurityUser implements UserDetails {
 
-    private User user;
+    private IUser user;
 
     private Collection<SimpleGrantedAuthority> authorities;
 
-    public SecurityUser(User user, Collection<SimpleGrantedAuthority> authorities) {
+    public SecurityUser(IUser user, Collection<SimpleGrantedAuthority> authorities) {
         this.user = user;
         this.authorities = authorities;
     }

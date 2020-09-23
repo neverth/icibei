@@ -1,9 +1,6 @@
-package fun.neverth.icibei.auth.authorization.entity;
+package fun.neverth.icibei.authorization.entity;
 
-import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * todo
@@ -11,10 +8,10 @@ import lombok.NoArgsConstructor;
  * @author NeverTh
  * @date 2020/7/17 16:44
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-public class User extends BasePO {
+public class IUser{
+
+    private String id;
 
     private String name;
 

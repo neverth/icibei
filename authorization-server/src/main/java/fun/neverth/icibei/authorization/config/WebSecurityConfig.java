@@ -1,8 +1,7 @@
-package fun.neverth.icibei.auth.authorization.config;
+package fun.neverth.icibei.authorization.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,13 +10,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * WebSecurityConfigurerAdapter类用于配置spring secure
- * @EnableWebSecurity 启动spring security
+ * /@EnableWebSecurity 启动spring security
  *
  * @author NeverTh
  * @date 2020/7/17 17:14
@@ -26,14 +27,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+    @Qualifier("myInMemoryUserDetailsManager")
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public WebSecurityConfig(@Qualifier("customUserDetailsService") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 用来拦截请求，例如什么需要放行，什么需要验证
@@ -46,9 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 如果不关闭的话每次http请求的表单就需要存在csrf参数，不存在或者是不同就会将改请求过滤掉
         http.csrf().disable();
         http.authorizeRequests()
-//                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-//                .antMatchers("/rsa/publicKey").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/actuator/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll();
 
     }
 
@@ -66,8 +66,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 自定义用户认证服务
+        // 自定义用户认证服务并配置加密
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager myInMemoryUserDetailsManager() {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withUsername("user")
+                .password(passwordEncoder().encode("123"))
+                .authorities("ROLE_USER").build());
+        manager.createUser(User.withUsername("admin")
+                .password(passwordEncoder().encode("admin"))
+                .authorities("ROLE_ADMIN").build());
+        return manager;
     }
 
     /**
