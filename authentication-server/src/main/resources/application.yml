@@ -1,0 +1,43 @@
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:106.14.44.108}:${DATASOURCE_PORT:3306}/sc_auth?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+#    username: ${DATASOURCE_USERNAME:root}
+#    password: ${DATASOURCE_PASSWORD:ly19980911}
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#
+#feign:
+#  okhttp:
+#    enabled: true
+
+logging:
+  level:
+    org.springframework: debug
+
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8000/oauth/check_token
+      id: icibei-resource
+      jwt:
+        key-uri: http://localhost:8000/oauth/token_key
+        # 如果没有配置这项，会自动联网获取
+        key-value: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA57qHqjMMOLIpgnqC66FHFJ7N2LOoHR9pGW3ofdEqCwowzQn+YL6VNLTHqPT6VO9cMLH9keFh4mp4dM2At4l0iuwWyM6w7+kjpze4v0mNj42+eOvjeFQFKedfO15pklC2a43TexOk03HeVdGBeiPODOfKhugw1EBOrWc2MDTXdrpPbwEOkjenkbHmOraLggkNQcpPHxuWl3IKbuhdaK0fRUYNpGhBQ8ojC+V6MddHaCxGABAK6gnHCOzJnAKTBIjGc6Er8izr39YK8MsQvry3Q0SBKmi7VklqxIxpzp/Xk+HqC7LDeLhp1X74bFPrITC1CIbHjTldAgvQmriwf7clRQIDAQAB
+          -----END PUBLIC KEY-----
+    client:
+      access-token-uri: http://localhost:8000/oauth/token
+      client-id: client
+      client-secret: 123
+      grant-type: authorization_code,password,refresh_token
+      scope: all
+
+
+

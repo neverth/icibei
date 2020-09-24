@@ -1,9 +1,9 @@
 server:
-  port: 8443
+  port: 8001
 
-spring:
-  application:
-    name: icibei-gateway-web
+#spring:
+#  application:
+#    name: icibei-authorization-server
 #  cloud:
 #    nacos:
 #      discovery:
@@ -11,6 +11,3 @@ spring:
 #      config:
 #        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
 #        file-extension: yml
-#    sentinel:
-#      transport:
-#        dashboard: ${SENTINEL_DASHBOARD_HOST:106.14.44.108}:${SENTINEL_DASHBOARD_PORT:8021}
