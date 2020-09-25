@@ -69,12 +69,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
-        // 构建一个 id 为 oauth2 的客户端
+        // 构建一个 id 为 client 的客户端
         builder.withClient("client")
                 // 设置她的密钥，加密后的
                 .secret(passwordEncoder.encode("123"))
                 // 设置允许访问的资源 id
-                .resourceIds("icibei-resource")
+                .resourceIds("WEBS")
                 // 授权的类型
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token")
                 // 可以授权的角色

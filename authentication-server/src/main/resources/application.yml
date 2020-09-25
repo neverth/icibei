@@ -23,21 +23,11 @@ logging:
 security:
   oauth2:
     resource:
-      token-info-uri: http://localhost:8000/oauth/check_token
-      id: icibei-resource
+      id: WEBS
       jwt:
-        key-uri: http://localhost:8000/oauth/token_key
-        # 如果没有配置这项，会自动联网获取
         key-value: |
           -----BEGIN PUBLIC KEY-----
           MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA57qHqjMMOLIpgnqC66FHFJ7N2LOoHR9pGW3ofdEqCwowzQn+YL6VNLTHqPT6VO9cMLH9keFh4mp4dM2At4l0iuwWyM6w7+kjpze4v0mNj42+eOvjeFQFKedfO15pklC2a43TexOk03HeVdGBeiPODOfKhugw1EBOrWc2MDTXdrpPbwEOkjenkbHmOraLggkNQcpPHxuWl3IKbuhdaK0fRUYNpGhBQ8ojC+V6MddHaCxGABAK6gnHCOzJnAKTBIjGc6Er8izr39YK8MsQvry3Q0SBKmi7VklqxIxpzp/Xk+HqC7LDeLhp1X74bFPrITC1CIbHjTldAgvQmriwf7clRQIDAQAB
           -----END PUBLIC KEY-----
-    client:
-      access-token-uri: http://localhost:8000/oauth/token
-      client-id: client
-      client-secret: 123
-      grant-type: authorization_code,password,refresh_token
-      scope: all
-
 
 
