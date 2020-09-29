@@ -1,7 +1,5 @@
 package fun.neverth.icibei.organization.service.impl;
 
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,6 +7,7 @@ import fun.neverth.icibei.organization.dao.RoleResourceMapper;
 import fun.neverth.icibei.organization.entity.po.RoleResource;
 import fun.neverth.icibei.organization.service.RoleResourceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.cache.CacheType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +44,6 @@ public class RoleResourceServiceImpl
     }
 
     @Override
-    @Cached(area = "shortTime", name = "resource4role::", key = "#roleId", cacheType = CacheType.BOTH)
     public Set<String> queryByRoleId(String roleId) {
         QueryWrapper<RoleResource> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role_id", roleId);
