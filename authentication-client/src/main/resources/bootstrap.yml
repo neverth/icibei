@@ -1,0 +1,4 @@
+gate:
+  ignore:
+    authentication:
+      startWith: /oauth,/open

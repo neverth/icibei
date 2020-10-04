@@ -18,6 +18,7 @@
         <module>common/web</module>
         <module>organization</module>
         <module>main</module>
+        <module>authentication-client</module>
     </modules>
 
     <properties>

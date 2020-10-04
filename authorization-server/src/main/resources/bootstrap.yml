@@ -1,13 +1,13 @@
 server:
-  port: 8001
+  port: 8000
 
-#spring:
-#  application:
-#    name: icibei-authorization-server
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
-#      config:
-#        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
-#        file-extension: yml
+spring:
+  application:
+    name: icibei-authorization-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.14.44.108:8848
+      config:
+        server-addr: 106.14.44.108:8848
+        file-extension: yml

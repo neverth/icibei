@@ -22,4 +22,14 @@ public class HttpServletRequestAuthWrapper extends HttpServletRequestWrapper {
         this.url = url;
         this.method = method;
     }
+
+    @Override
+    public String getServletPath() {
+        return this.url;
+    }
+
+    @Override
+    public String getMethod() {
+        return this.method;
+    }
 }

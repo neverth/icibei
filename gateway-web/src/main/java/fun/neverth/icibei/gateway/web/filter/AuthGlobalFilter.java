@@ -1,14 +1,17 @@
 package fun.neverth.icibei.gateway.web.filter;
 
+import fun.neverth.icibei.gateway.web.provider.AuthenticationServerProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import javax.annotation.Resource;
 
 /**
  * @author NeverTh
@@ -17,12 +20,16 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
+    @Autowired
+    private AuthenticationServerProvider authenticationServerProvider;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String authentication = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         String method = request.getMethodValue();
         String url = request.getPath().value();
+        authenticationServerProvider.auth(authentication, url, method);
         return chain.filter(exchange);
     }
 
