@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author NeverTh
- * @date 11:34 2020/10/3
+ * @date 13:33 2020/10/6
  */
 @Component
-@FeignClient(name = "icibei-authorization-server")
+@FeignClient(name = "icibei-authentication-server")
 public interface AuthenticationServerProvider {
     /**
      * 调用签权服务，判断用户是否有权限
      */
     @PostMapping(value = "/auth/permission")
-    Result<String> auth(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication, @RequestParam("url") String url, @RequestParam("method") String method);
-
+    Result auth(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication, @RequestParam("url") String url, @RequestParam("method") String method);
 }

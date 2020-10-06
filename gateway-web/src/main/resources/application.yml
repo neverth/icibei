@@ -1,36 +1,15 @@
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: path_route
-          uri: http://localhost:8443
-          order: 0
-          predicates:
-            - Path=/foo/**
-          filters:
-            - StripPrefix=1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.14.44.108:3306/icibei_gateway?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    username: root
+    password: ly19980911
 
 # 网关白名单，无需要签权url
 gate:
   ignore:
     authentication:
       startWith: /oauth,/open,/v2/api-docs
-
-
-#  rabbitmq:
-#    host: ${RABBIT_MQ_HOST:106.14.44.108}
-#    port: ${RABBIT_MQ_PORT:5672}
-#    username: ${RABBIT_MQ_USERNAME:123}
-#    password: ${RABBIT_MQ_PASSWORD:123}
-#
-#  redis:
-#    host: ${REDIS_HOST :106.14.44.108}
-#    port: ${REDIS_PORT:6379}
-#    # password: ${REDIS_PASSWORD:}
-#    # Lettuce的连接是基于Netty
-#    lettuce:
-#      pool:
-#        max-active: 300
 
 management:
   endpoints:

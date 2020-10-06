@@ -1,19 +1,17 @@
-package fun.neverth.icibei.authenticationClient.service.impl;
+package fun.neverth.icibei.gateway.web.service.impl;
 
-import fun.neverth.icibei.authenticationClient.provider.AuthenticationServerProvider;
-import fun.neverth.icibei.authenticationClient.service.IAuthService;
 import fun.neverth.icibei.common.core.vo.Result;
+import fun.neverth.icibei.gateway.web.provider.AuthenticationServerProvider;
+import fun.neverth.icibei.gateway.web.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.AuthProvider;
-
 /**
  * @author NeverTh
- * @date 11:19 2020/10/3
+ * @date 13:36 2020/10/6
  */
 @Service
-public class IAuthServiceImpl implements IAuthService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     /**
      * Authorization认证开头是"bearer "
      */

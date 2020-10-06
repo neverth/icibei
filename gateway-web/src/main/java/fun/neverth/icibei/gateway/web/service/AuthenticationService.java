@@ -1,12 +1,12 @@
-package fun.neverth.icibei.authenticationClient.service;
+package fun.neverth.icibei.gateway.web.service;
 
 import fun.neverth.icibei.common.core.vo.Result;
 
 /**
  * @author NeverTh
- * @date 11:19 2020/10/3
+ * @date 13:36 2020/10/6
  */
-public interface IAuthService {
+public interface AuthenticationService {
     /**
      * 调用签权服务，判断用户是否有权限
      */

@@ -37,11 +37,11 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-<!--        &lt;!&ndash;熔断降级&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>-->
-<!--        </dependency>-->
+        <!--熔断降级-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
         <!--api网关-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -56,19 +56,10 @@
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-openfeign-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>fun.neverth.icibei</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>web</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>fun.neverth.icibei</groupId>-->
-<!--            <artifactId>authentication-client</artifactId>-->
-<!--            <version>1.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
         <!--redis-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: icibei-authorization-server
+    name: icibei-authentication-server
   cloud:
     nacos:
       discovery:

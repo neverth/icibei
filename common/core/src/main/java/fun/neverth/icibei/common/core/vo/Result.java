@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fun.neverth.icibei.common.core.exception.BaseException;
 import fun.neverth.icibei.common.core.exception.ErrorType;
 import fun.neverth.icibei.common.core.exception.SystemErrorType;
+import lombok.Data;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -16,7 +17,7 @@ import java.time.ZonedDateTime;
  * @author NeverTh
  * @date 2020/7/11 23:06
  */
-@Getter
+@Data
 public class Result<T> {
     public static final String SUCCESSFUL_CODE = "000000";
     public static final String SUCCESSFUL_MESG = "处理成功";
@@ -26,7 +27,9 @@ public class Result<T> {
     private String message;
 
     private final Instant time;
-
+    /**
+     * 为null就不序列化
+     */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
@@ -45,7 +48,6 @@ public class Result<T> {
         this.data = data;
     }
 
-
     private Result(String code, String message, T data) {
         this.code = code;
         this.message = message;
@@ -58,7 +60,6 @@ public class Result<T> {
         return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
     }
 
-
     public static Result success() {
         return success(null);
     }
@@ -67,7 +68,6 @@ public class Result<T> {
     public static Result fail() {
         return new Result(SystemErrorType.SYSTEM_ERROR);
     }
-
 
     public static Result fail(BaseException baseException) {
         return fail(baseException, null);

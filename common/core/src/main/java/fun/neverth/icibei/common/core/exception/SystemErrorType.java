@@ -17,6 +17,7 @@ public enum SystemErrorType implements ErrorType{
     GATEWAY_NOT_FOUND_SERVICE("010404", "服务未找到"),
     GATEWAY_ERROR("010500", "网关异常"),
     GATEWAY_CONNECT_TIME_OUT("010002", "网关超时"),
+    GATEWAY_EXCEPTION_HANDLER_ERROR("010600", "网关未找到异常处理类"),
 
     ARGUMENT_NOT_VALID("020000", "请求参数校验不通过"),
     INVALID_TOKEN("020001", "无效token"),
