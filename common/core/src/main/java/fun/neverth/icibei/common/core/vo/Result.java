@@ -2,17 +2,15 @@ package fun.neverth.icibei.common.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fun.neverth.icibei.common.core.exception.BaseException;
 import fun.neverth.icibei.common.core.exception.ErrorType;
 import fun.neverth.icibei.common.core.exception.SystemErrorType;
 import lombok.Data;
-import lombok.Getter;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
 /**
- * todo
+ * 公用结果类
  *
  * @author NeverTh
  * @date 2020/7/11 23:06
@@ -25,13 +23,14 @@ public class Result<T> {
     private String code;
 
     private String message;
-
-    private final Instant time;
     /**
      * 为null就不序列化
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
+
+    private final Instant time;
+
 
     public Result() {
         this.time = ZonedDateTime.now().toInstant();
@@ -55,41 +54,31 @@ public class Result<T> {
         this.time = ZonedDateTime.now().toInstant();
     }
 
-
-    public static Result success(Object data) {
+    /**
+     * 静态方法泛型
+     */
+    public static <T> Result<T> success(T data) {
         return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
     }
 
-    public static Result success() {
+    public static <T> Result<T> success() {
         return success(null);
     }
 
-
-    public static Result fail() {
-        return new Result(SystemErrorType.SYSTEM_ERROR);
+    public static <T> Result<T> fail() {
+        return new Result<>(SystemErrorType.SYSTEM_ERROR);
     }
 
-    public static Result fail(BaseException baseException) {
-        return fail(baseException, null);
+    public static <T> Result<T> fail(T data) {
+        return new Result<>(SystemErrorType.SYSTEM_ERROR, data);
     }
 
-
-    public static Result fail(BaseException baseException, Object data) {
-        return new Result<>(baseException.getErrorType(), data);
-    }
-
-    public static Result fail(ErrorType errorType, Object data) {
+    public static <T> Result<T> fail(ErrorType errorType, T data) {
         return new Result<>(errorType, data);
     }
 
-
-    public static Result fail(ErrorType errorType) {
+    public static <T> Result<T> fail(ErrorType errorType) {
         return Result.fail(errorType, null);
-    }
-
-
-    public static Result fail(Object data) {
-        return new Result<>(SystemErrorType.SYSTEM_ERROR, data);
     }
 
     @JsonIgnore
