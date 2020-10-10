@@ -9,6 +9,8 @@ package fun.neverth.icibei.authorization.constant;
 public class MessageConstant {
     public static final String LOGIN_SUCCESS = "登录成功!";
 
+    public static final String NO_USER = "未找到用户，请再次确认或注册";
+
     public static final String USERNAME_PASSWORD_ERROR = "用户名或密码错误!";
 
     public static final String CREDENTIALS_EXPIRED = "该账户的登录凭证已过期，请重新登录!";

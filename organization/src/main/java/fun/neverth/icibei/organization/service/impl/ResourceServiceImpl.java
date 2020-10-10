@@ -9,6 +9,7 @@ import fun.neverth.icibei.organization.entity.po.Resource;
 import fun.neverth.icibei.organization.entity.po.Role;
 import fun.neverth.icibei.organization.entity.po.RoleResource;
 import fun.neverth.icibei.organization.entity.po.User;
+import fun.neverth.icibei.organization.entity.vo.UserVO;
 import fun.neverth.icibei.organization.service.ResourceService;
 import fun.neverth.icibei.organization.service.RoleResourceService;
 import fun.neverth.icibei.organization.service.RoleService;
@@ -82,7 +83,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource>
     @Override
     public List<Resource> query(String username) {
         //根据用户名查询到用户所拥有的角色
-        User user = userService.getByUniqueId(username);
+        UserVO user = userService.getByUniqueId(username);
         List<Role> roles = roleService.query(user.getId());
         //提取用户所拥有角色id列表
         Set<String> roleIds = roles.stream().map(role -> role.getId()).collect(Collectors.toSet());

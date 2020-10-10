@@ -40,10 +40,15 @@ public class AuthGlobalFilter implements GlobalFilter {
         String authentication = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         String method = request.getMethodValue();
         String url = request.getPath().value();
+        // 不需要鉴权的url
+        if (authenticationService.ignoreAuthentication(url)){
+            return chain.filter(exchange);
+        }
         Result authenticate = authenticationService.authenticate(authentication, url, method);
         if (authenticate.isSuccess()) {
             if ((boolean) authenticate.getData()) {
                 ServerHttpRequest.Builder builder = request.mutate();
+                builder.header("USERID", "");
                 return chain.filter(exchange.mutate().request(builder.build()).build());
             }
         }

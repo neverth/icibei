@@ -15,21 +15,14 @@ import fun.neverth.icibei.organization.entity.param.UserQueryParam;
 public interface UserService {
 
     /**
-     * 获取用户
-     *
-     * @param id 用户id
-     * @return UserVo
+     * 根据用户id获取用户
      */
     UserVO get(String id);
 
     /**
-     * 根据用户唯一标识获取用户信息
-     * 目前用户标识不用户名或mobile
-     *
-     * @param uniqueId
-     * @return
+     * 根据用户名或者手机号获取用户信息
      */
-    User getByUniqueId(String uniqueId);
+    UserVO getByUniqueId(String uniqueId);
 
     /**
      * 新增用户

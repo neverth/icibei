@@ -27,7 +27,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("myInMemoryUserDetailsManager")
+    @Qualifier("customUserDetailsService")
     @Autowired
     private UserDetailsService userDetailsService;
 

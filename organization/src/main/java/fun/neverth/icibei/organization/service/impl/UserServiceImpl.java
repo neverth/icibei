@@ -41,7 +41,7 @@ public class UserServiceImpl
 
     @Override
     public boolean add(User user) {
-        if (StringUtils.isNotBlank(user.getPassword())){
+        if (StringUtils.isNotBlank(user.getPassword())) {
             user.setPassword(passwordEncoder().encode(user.getPassword()));
         }
         boolean inserts = this.save(user);
@@ -67,22 +67,23 @@ public class UserServiceImpl
     @Override
     public UserVO get(String id) {
         User user = this.getById(id);
-        if (Objects.isNull(user)) {
+        if (user != null) {
+            user.setRoleIds(userRoleService.queryByUserId(id));
         }
-        user.setRoleIds(userRoleService.queryByUserId(id));
         return new UserVO(user);
     }
 
     @Override
-    public User getByUniqueId(String uniqueId) {
+    public UserVO getByUniqueId(String uniqueId) {
         User user = this.getOne(new QueryWrapper<User>()
                 .eq("username", uniqueId)
                 .or()
                 .eq("mobile", uniqueId));
-        if (Objects.isNull(user)) {
+        if (user != null) {
+            user.setRoleIds(userRoleService.queryByUserId(user.getId()));
+            return new UserVO(user);
         }
-        user.setRoleIds(userRoleService.queryByUserId(user.getId()));
-        return user;
+        return null;
     }
 
     @Override

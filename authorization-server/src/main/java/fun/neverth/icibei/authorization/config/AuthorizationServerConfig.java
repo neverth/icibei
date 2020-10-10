@@ -42,7 +42,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    @Qualifier("myInMemoryUserDetailsManager")
+    @Qualifier("customUserDetailsService")
     @Autowired
     private UserDetailsService userDetailsService;
 

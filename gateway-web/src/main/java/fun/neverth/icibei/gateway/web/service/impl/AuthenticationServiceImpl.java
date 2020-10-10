@@ -4,7 +4,10 @@ import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.gateway.web.provider.AuthenticationServerProvider;
 import fun.neverth.icibei.gateway.web.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 /**
  * @author NeverTh
@@ -17,6 +20,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     private static final String BEARER = "Bearer ";
 
+    /**
+     * 不需要网关签权的url配置(/oauth,/open)
+     * 默认/oauth开头是不需要的
+     */
+    @Value("${gate.ignore.authentication.startWith}")
+    private String ignoreUrls = "/oauth";
+
     @Autowired
     private AuthenticationServerProvider authenticationServerProvider;
 
@@ -27,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean ignoreAuthentication(String url) {
-        return false;
+        return Arrays.stream(ignoreUrls.split(",")).anyMatch(url::startsWith);
     }
 
     @Override

@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div>
-      <p>hello world</p>
-      <p>你好</p>
-      <p>
-        <i class="fa fa-star fa-2x" style="color: red"></i>
-      </p>
-    </div>
     <div class="key-wrapper">
       <ul>
         <li class="drum" data-key="1" data-code="49">1</li>
@@ -56,51 +49,80 @@
         <li class="drum" data-key="," data-code="188">,</li>
       </ul>
       <ul>
-        <li class="effect" data-key="SPACE" data-code="32">SPACE</li>
+        <li class="effect" data-key="SPACE" data-code="32" style="color: #CE6D39">I C I B E I</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "KeyBoard",
-};
+  import $ from "jquery";
+  export default {
+    name: "KeyBoard",
+  };
 
+  $(window).keydown(function(event) {
+    let code = (event.keyCode ? event.keyCode : event.which);
+    $("li[data-code='" + code + "']").addClass("active")
+  });
+
+  $(window).keyup(function(event) {
+    let code = (event.keyCode ? event.keyCode : event.which);
+    $("li[data-code='" + code + "']").removeClass("active")
+  });
 </script>
 
 <style scoped>
-.key-wrapper {
-  margin: 70px auto 0px;
-  text-align: center;
-  width: 1000px;
-}
-.key-wrapper ul {
-  text-align: center;
-  white-space: nowrap;
-  margin-top: 1em;
-}
-.key-wrapper li {
-  display: inline-block;
-  margin: -0.5vmin 0.75vmin;
-  width: 5vmin;
-  height: 5vmin;
-  padding: 1vmin;
-  border: 0.25vmin solid rgb(75, 75, 75);
-  border-radius: 3vmin;
-  line-height: 5vmin;
-  text-align: center;
-  text-transform: uppercase;
-  user-select: none;
-  transition: 0.5s;
-}
-.key-wrapper li:hover {
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-}
-.key-wrapper [data-code="32"] {
-  width: 40vmin;
-  margin-top: 10px;
-}
+  /* 引入bootstrap之后会会变形 */
+  *,
+  ::after,
+  ::before {
+    box-sizing: unset;
+  }
 
+  .key-wrapper {
+    text-align: center;
+  }
+
+  .key-wrapper ul {
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 1em;
+  }
+
+  .key-wrapper li {
+    display: inline-block;
+    margin: -0.5vmin 0.75vmin;
+    width: 5vmin;
+    height: 5vmin;
+    padding: 1vmin;
+    border: 0.25vmin solid rgb(75, 75, 75);
+    border-radius: 3vmin;
+    line-height: 5vmin;
+    text-align: center;
+    text-transform: uppercase;
+    user-select: none;
+    transition: 0.5s;
+    color: #7f8c8d;
+  }
+
+  .key-wrapper li:hover {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+  }
+
+  .key-wrapper [data-code="32"] {
+    width: 40vmin;
+    margin-top: 10px;
+  }
+
+  .active {
+    transition: 0s;
+    transform: scale(1.10);
+    background-color: rgb(75, 75, 75);
+  }
+
+  .effect.active {
+    background-color: #CE6D39;
+  }
 </style>
