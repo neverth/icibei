@@ -1,4 +1,4 @@
-package fun.neverth.icibei.common.core.util;
+package fun.neverth.icibei.common.web.util;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
