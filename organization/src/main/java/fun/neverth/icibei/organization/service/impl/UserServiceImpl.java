@@ -1,8 +1,5 @@
 package fun.neverth.icibei.organization.service.impl;
 
-import com.alicp.jetcache.anno.CacheInvalidate;
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -38,14 +35,13 @@ public class UserServiceImpl
     @Resource
     private UserRoleService userRoleService;
 
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
     public boolean add(User user) {
-        if (StringUtils.isNotBlank(user.getPassword())){
+        if (StringUtils.isNotBlank(user.getPassword())) {
             user.setPassword(passwordEncoder().encode(user.getPassword()));
         }
         boolean inserts = this.save(user);
@@ -54,14 +50,12 @@ public class UserServiceImpl
     }
 
     @Override
-    @CacheInvalidate(name = "user::", key = "#id")
     public boolean delete(String id) {
         this.removeById(id);
         return userRoleService.removeByUserId(id);
     }
 
     @Override
-    @CacheInvalidate(name = "user::", key = "#user.id")
     public boolean update(User user) {
         if (StringUtils.isNotBlank(user.getPassword()))
             user.setPassword(passwordEncoder().encode(user.getPassword()));
@@ -71,26 +65,25 @@ public class UserServiceImpl
     }
 
     @Override
-    @Cached(name = "user::", key = "#id", cacheType = CacheType.BOTH)
     public UserVO get(String id) {
         User user = this.getById(id);
-        if (Objects.isNull(user)) {
+        if (user != null) {
+            user.setRoleIds(userRoleService.queryByUserId(id));
         }
-        user.setRoleIds(userRoleService.queryByUserId(id));
         return new UserVO(user);
     }
 
     @Override
-    @Cached(name = "user::", key = "#uniqueId", cacheType = CacheType.BOTH)
-    public User getByUniqueId(String uniqueId) {
+    public UserVO getByUniqueId(String uniqueId) {
         User user = this.getOne(new QueryWrapper<User>()
                 .eq("username", uniqueId)
                 .or()
                 .eq("mobile", uniqueId));
-        if (Objects.isNull(user)) {
+        if (user != null) {
+            user.setRoleIds(userRoleService.queryByUserId(user.getId()));
+            return new UserVO(user);
         }
-        user.setRoleIds(userRoleService.queryByUserId(user.getId()));
-        return user;
+        return null;
     }
 
     @Override

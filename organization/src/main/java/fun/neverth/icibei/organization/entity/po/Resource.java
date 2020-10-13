@@ -15,17 +15,33 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Resource extends BasePO {
-
+    /**
+     * 资源code
+     */
     private String code;
 
+    /**
+     * 资源类型
+     */
     private String type;
 
-    private String url;
-
-    private String method;
-
+    /**
+     * 资源名称
+     */
     private String name;
 
-    private String description;
+    /**
+     * 资源url
+     */
+    private String url;
 
+    /**
+     * 资源方法
+     */
+    private String method;
+
+    /**
+     * 简介
+     */
+    private String description;
 }

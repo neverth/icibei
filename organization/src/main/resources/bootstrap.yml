@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8010}
+  port: 8010
 
 spring:
   application:
@@ -7,10 +7,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+        server-addr: 106.14.44.108:8848
       config:
-        server-addr: ${REGISTER_HOST:106.14.44.108}:${REGISTER_PORT:8848}
+        server-addr: 106.14.44.108:8848
         file-extension: yml
-    sentinel:
-      transport:
-        dashboard: ${SENTINEL_DASHBOARD_HOST:106.14.44.108}:${SENTINEL_DASHBOARD_PORT:8021}
+#    sentinel:
+#      transport:
+#        dashboard: 106.14.44.108}:8021

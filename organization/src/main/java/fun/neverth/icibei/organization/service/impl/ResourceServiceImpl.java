@@ -1,18 +1,15 @@
 package fun.neverth.icibei.organization.service.impl;
 
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import fun.neverth.icibei.organization.config.RabbitConfig;
 import fun.neverth.icibei.organization.dao.ResourceMapper;
 import fun.neverth.icibei.organization.entity.po.Resource;
 import fun.neverth.icibei.organization.entity.po.Role;
 import fun.neverth.icibei.organization.entity.po.RoleResource;
 import fun.neverth.icibei.organization.entity.po.User;
-import fun.neverth.icibei.organization.event.EventSender;
+import fun.neverth.icibei.organization.entity.vo.UserVO;
 import fun.neverth.icibei.organization.service.ResourceService;
 import fun.neverth.icibei.organization.service.RoleResourceService;
 import fun.neverth.icibei.organization.service.RoleService;
@@ -46,29 +43,24 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource>
     @javax.annotation.Resource
     private UserService userService;
 
-    @javax.annotation.Resource
-    private EventSender eventSender;
 
     @Override
     public boolean add(Resource resource) {
-        eventSender.send(RabbitConfig.ROUTING_KEY, resource);
+//        eventSender.send(RabbitConfig.ROUTING_KEY, resource);
         return this.save(resource);
     }
 
     @Override
-    @Cached(name = "resource::", key = "#id", cacheType = CacheType.BOTH)
     public boolean delete(String id) {
         return this.removeById(id);
     }
 
     @Override
-    @Cached(name = "resource::", key = "#resource.id", cacheType = CacheType.BOTH)
     public boolean update(Resource resource) {
         return this.updateById(resource);
     }
 
     @Override
-    @Cached(name = "resource::", key = "#id", cacheType = CacheType.BOTH)
     public Resource get(String id) {
         return this.getById(id);
     }
@@ -89,10 +81,9 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource>
     }
 
     @Override
-    @Cached(name = "resource4user::", key = "#username", cacheType = CacheType.BOTH)
     public List<Resource> query(String username) {
         //根据用户名查询到用户所拥有的角色
-        User user = userService.getByUniqueId(username);
+        UserVO user = userService.getByUniqueId(username);
         List<Role> roles = roleService.query(user.getId());
         //提取用户所拥有角色id列表
         Set<String> roleIds = roles.stream().map(role -> role.getId()).collect(Collectors.toSet());

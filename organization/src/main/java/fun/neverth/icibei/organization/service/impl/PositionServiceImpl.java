@@ -1,8 +1,5 @@
 package fun.neverth.icibei.organization.service.impl;
 
-import com.alicp.jetcache.anno.CacheInvalidate;
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import fun.neverth.icibei.organization.dao.PositionMapper;
@@ -32,19 +29,16 @@ public class PositionServiceImpl
     }
 
     @Override
-    @CacheInvalidate(name = "position::", key = "#id")
     public boolean delete(String id) {
         return this.removeById(id);
     }
 
     @Override
-    @CacheInvalidate(name = "position::", key = "#position.id")
     public boolean update(Position position) {
         return this.updateById(position);
     }
 
     @Override
-    @Cached(name = "position::", key = "#id", cacheType = CacheType.BOTH)
     public Position get(String id) {
         return this.getById(id);
     }

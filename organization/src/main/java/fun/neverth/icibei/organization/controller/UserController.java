@@ -62,7 +62,6 @@ public class UserController {
     @ApiResponses(@ApiResponse(code = 200, message = "处理成功", response = Result.class))
     @GetMapping
     public Result query(@RequestParam String uniqueId) {
-        log.debug("query with username or mobile:{}", uniqueId);
         return Result.success(userService.getByUniqueId(uniqueId));
     }
 

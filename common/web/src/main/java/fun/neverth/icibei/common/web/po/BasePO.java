@@ -19,19 +19,29 @@ import java.util.Date;
 public class BasePO implements Serializable {
 
     public final static String DEFAULT_USERNAME = "system";
-
+    /**
+     * id
+     */
     @TableId(type = IdType.ID_WORKER_STR)
     private String id;
-
+    /**
+     * 创建人
+     */
     @TableField(fill = FieldFill.INSERT)
     private String createdBy;
-
+    /**
+     * 创建时间
+     */
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime;
-
+    /**
+     * 更新人
+     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updatedBy;
-
+    /**
+     * 更新时间
+     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updatedTime;
 }

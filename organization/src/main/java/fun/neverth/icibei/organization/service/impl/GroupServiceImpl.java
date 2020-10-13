@@ -1,8 +1,5 @@
 package fun.neverth.icibei.organization.service.impl;
 
-import com.alicp.jetcache.anno.CacheInvalidate;
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import fun.neverth.icibei.organization.dao.GroupMapper;
@@ -32,19 +29,16 @@ public class GroupServiceImpl
     }
 
     @Override
-    @CacheInvalidate(name = "group::", key = "#id")
     public boolean delete(String id) {
         return this.removeById(id);
     }
 
     @Override
-    @CacheInvalidate(name = "group::", key = "#group.id")
     public boolean update(Group group) {
         return this.updateById(group);
     }
 
     @Override
-    @Cached(name = "group::", key = "#id", cacheType = CacheType.BOTH)
     public Group get(String id) {
         return this.getById(id);
     }

@@ -37,11 +37,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String uniqueId) throws UsernameNotFoundException {
         IUser user = userService.getByUniqueId(uniqueId);
-
         if (user == null) {
-            throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
+            throw new UsernameNotFoundException(MessageConstant.NO_USER);
         }
-
         return new SecurityUser(user, obtainGrantedAuthorities(user));
     }
 

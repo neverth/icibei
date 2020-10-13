@@ -16,9 +16,13 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "axios": "^0.20.0",
     "babel-eslint": "^10.1.0",
+    "bootstrap": "^4.5.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "popper.js": "^1.16.1",
+    "vue-axios": "^2.1.4",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

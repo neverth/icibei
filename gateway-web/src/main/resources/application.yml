@@ -1,23 +1,15 @@
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.14.44.108:3306/icibei_gateway?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    username: root
+    password: ly19980911
 
-  cloud:
-    gateway:
-      enabled: true
-
-  rabbitmq:
-    host: ${RABBIT_MQ_HOST:106.14.44.108}
-    port: ${RABBIT_MQ_PORT:5672}
-    username: ${RABBIT_MQ_USERNAME:123}
-    password: ${RABBIT_MQ_PASSWORD:123}
-
-  redis:
-    host: ${REDIS_HOST :106.14.44.108}
-    port: ${REDIS_PORT:6379}
-    # password: ${REDIS_PASSWORD:}
-    # Lettuce的连接是基于Netty
-    lettuce:
-      pool:
-        max-active: 300
+# 网关白名单，无需要签权url
+gate:
+  ignore:
+    authentication:
+      startWith: /oauth,/open,/v2/api-docs
 
 management:
   endpoints:
@@ -25,25 +17,6 @@ management:
       exposure:
         include: '*'
 
-jetcache:
-  statIntervalMinutes: 15
-  areaInCacheName: false
-  hidePackages: fun.neverth
-  local:
-    # 默认永久本地缓存
-    default:
-      type: caffeine
-      keyConvertor: fastjson
-  remote:
-    # 默认永久的远程缓存
-    default:
-      type: redis
-      keyConvertor: fastjson
-      valueEncoder: kryo
-      valueDecoder: kryo
-      poolConfig:
-        minIdle: 5
-        maxIdle: 20
-        maxTotal: 50
-      host: ${REDIS_HOST:106.14.44.108}
-      port: ${REDIS_PORT:6379}
+logging:
+  level:
+    org.springframework: debug
