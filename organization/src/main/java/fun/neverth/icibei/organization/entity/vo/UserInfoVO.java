@@ -3,6 +3,7 @@ package fun.neverth.icibei.organization.entity.vo;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author NeverTh
@@ -13,7 +14,7 @@ public class UserInfoVO {
     /**
      * 唯一Id
      */
-    private String user_id;
+    private String userId;
     /**
      * 账户ID，唯一
      */
@@ -41,5 +42,5 @@ public class UserInfoVO {
     /**
      * 角色
      */
-    private List<String> roles;
+    private Set<String> roles;
 }

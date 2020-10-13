@@ -1,6 +1,8 @@
 package fun.neverth.icibei.gateway.web.service;
 
 import fun.neverth.icibei.common.core.vo.Result;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 /**
  * @author NeverTh
@@ -32,4 +34,10 @@ public interface AuthenticationService {
      * 是否无效authentication
      */
     boolean invalidJwtAccessToken(String authentication);
+
+    /**
+     * 从认证信息中提取jwt token 对象
+     */
+    Jws<Claims> parseJwtToken(String jwtToken);
+
 }

@@ -3,6 +3,11 @@ package fun.neverth.icibei.gateway.web.service.impl;
 import fun.neverth.icibei.common.core.vo.Result;
 import fun.neverth.icibei.gateway.web.provider.AuthenticationServerProvider;
 import fun.neverth.icibei.gateway.web.service.AuthenticationService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -53,5 +58,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public boolean invalidJwtAccessToken(String authentication) {
         return false;
+    }
+
+    @Override
+    public Jws<Claims> parseJwtToken(String jwtToken) {
+        if (jwtToken.startsWith(BEARER)){
+            jwtToken = StringUtils.substring(jwtToken, BEARER.length());
+        }
+        JwtParser parser = Jwts.parser();
+
+        return null;
+
     }
 }
