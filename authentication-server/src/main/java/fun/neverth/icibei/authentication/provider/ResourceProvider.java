@@ -18,6 +18,6 @@ public interface ResourceProvider {
     @GetMapping(value = "/resource/all")
     Result<Set<IResource>> resources();
 
-    @GetMapping(value = "/resource/user/{username}")
-    Result<Set<IResource>> resources(@PathVariable("username") String username);
+    @GetMapping(value = "/resource/user/{userId}")
+    Result<Set<IResource>> resources(@PathVariable("userId") String username);
 }

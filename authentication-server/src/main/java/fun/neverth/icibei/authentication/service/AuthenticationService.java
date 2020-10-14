@@ -10,5 +10,5 @@ public interface AuthenticationService {
     /**
      * 校验权限
      */
-    boolean decide(HttpServletRequest authRequest);
+    String decide(HttpServletRequest authRequest);
 }

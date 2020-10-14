@@ -74,7 +74,7 @@ public class RoleServiceImpl
     @Override
     public List<Role> query(String userId) {
         Set<String> roleIds = userRoleService.queryByUserId(userId);
-        return (List<Role>) this.listByIds(roleIds);
+        return this.listByIds(roleIds);
     }
 
     @Override

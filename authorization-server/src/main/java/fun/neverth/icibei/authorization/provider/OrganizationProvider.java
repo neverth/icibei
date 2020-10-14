@@ -23,6 +23,9 @@ public interface OrganizationProvider {
     @GetMapping(value = "/user")
     Result<IUser> getUserByUniqueId(@RequestParam("uniqueId") String uniqueId);
 
+    @GetMapping(value = "/user/{userId}")
+    Result<IUser> getUserById(@PathVariable("userId") String uniqueId);
+
     @GetMapping(value = "/role/user/{userId}")
     Result<Set<IRole>> queryRolesByUserId(@PathVariable("userId") String userId);
 }

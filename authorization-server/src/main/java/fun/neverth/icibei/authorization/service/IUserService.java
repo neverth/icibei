@@ -12,4 +12,6 @@ import fun.neverth.icibei.authorization.entity.IUser;
 public interface IUserService {
 
     IUser getByUniqueId(String uniqueId);
+
+    IUser getById(String uniqueId);
 }

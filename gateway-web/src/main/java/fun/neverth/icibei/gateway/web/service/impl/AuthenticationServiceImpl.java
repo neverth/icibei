@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AuthenticationServerProvider authenticationServerProvider;
 
     @Override
-    public Result authenticate(String authentication, String url, String method) {
+    public Result<String> authenticate(String authentication, String url, String method) {
         return authenticationServerProvider.auth(authentication, url, method);
     }
 

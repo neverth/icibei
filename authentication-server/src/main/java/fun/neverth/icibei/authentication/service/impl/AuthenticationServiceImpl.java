@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private ResourceService resourceService;
 
     @Override
-    public boolean decide(HttpServletRequest authRequest) {
+    public String decide(HttpServletRequest authRequest) {
         log.debug("正在访问的url是:{}，method:{}", authRequest.getServletPath(), authRequest.getMethod());
         // 获取用户认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -40,17 +40,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             log.debug("url未在资源池中找到，拒绝访问");
         }
         // 获取此访问用户所有角色拥有的权限资源
-        Set<IResource> userResources = findResourcesByUsername(authentication.getName());
+        Set<IResource> userResources = findResourcesByUserId(authentication.getName());
         // 用户拥有权限资源 与 url要求的资源进行对比
-        return isMatch(urlConfigAttribute, userResources);
+        // return isMatch(urlConfigAttribute, userResources) ? authentication.getName(): "-1";
+        return authentication.getName();
     }
 
     /**
      * 根据用户所被授予的角色，查询到用户所拥有的资源
      */
-    private Set<IResource> findResourcesByUsername(String username) {
+    private Set<IResource> findResourcesByUserId(String userId) {
         // 用户被授予的角色资源
-        Set<IResource> resources = resourceService.queryByUsername(username);
+        Set<IResource> resources = resourceService.queryByUserId(userId);
         if (log.isDebugEnabled()) {
             log.debug("用户被授予角色的资源数量是:{}, 资源集合信息为:{}", resources.size(), resources);
         }

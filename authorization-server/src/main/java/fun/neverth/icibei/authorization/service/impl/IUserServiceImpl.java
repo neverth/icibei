@@ -23,4 +23,9 @@ public class IUserServiceImpl implements IUserService {
     public IUser getByUniqueId(String uniqueId) {
         return organizationProvider.getUserByUniqueId(uniqueId).getData();
     }
+
+    @Override
+    public IUser getById(String userId) {
+        return organizationProvider.getUserById(userId).getData();
+    }
 }

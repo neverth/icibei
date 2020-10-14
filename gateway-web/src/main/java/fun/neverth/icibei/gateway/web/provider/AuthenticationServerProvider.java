@@ -19,5 +19,5 @@ public interface AuthenticationServerProvider {
      * 调用签权服务，判断用户是否有权限
      */
     @PostMapping(value = "/auth/permission")
-    Result auth(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication, @RequestParam("url") String url, @RequestParam("method") String method);
+    Result<String> auth(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication, @RequestParam("url") String url, @RequestParam("method") String method);
 }
