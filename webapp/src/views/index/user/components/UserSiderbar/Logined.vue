@@ -2,13 +2,13 @@
   <div>
     <div class="sidebar-header">
       <div class="user-pic">
-        <img src="../../assets/imgs/defaultLogo.jpeg" />
+        <img src="../../assets/imgs/defaultLogo.jpeg">
       </div>
       <div class="user-info">
         <span class="user-name">name</span>
         <span class="user-role">Welcome</span>
       </div>
-      <div style="clear:both;"></div>
+      <div style="clear:both;" />
     </div>
     <div class="sidebar-menu">
       <ul>
@@ -17,7 +17,7 @@
         </li>
         <li class="sidebar-dropdown">
           <a href="#">
-            <i class="fa fa-align-center" aria-hidden="true"></i>
+            <i class="fa fa-align-center" aria-hidden="true" />
             <span>单词本</span>
           </a>
           <div class="sidebar-submenu" style="display: none;">
@@ -42,28 +42,28 @@
         </li>
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+            <i class="fa fa-circle-o-notch" aria-hidden="true" />
             <span>练习统计</span>
           </a>
         </li>
 
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+            <i class="fa fa-circle-o-notch" aria-hidden="true" />
             <span>个性化</span>
           </a>
         </li>
 
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+            <i class="fa fa-circle-o-notch" aria-hidden="true" />
             <span>我的</span>
           </a>
         </li>
 
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+            <i class="fa fa-circle-o-notch" aria-hidden="true" />
             <span>注销</span>
           </a>
         </li>
@@ -74,9 +74,9 @@
 </template>
 
 <script>
-  export default {
-    name: "NavSiderBarLogined",
-  }
+export default {
+  name: 'Logined'
+}
 </script>
 
 <style scoped>
@@ -102,7 +102,7 @@
 
   .sidebar-header .user-pic img{
     border-radius: 6px;
-    width: 100%; 
+    width: 100%;
     height: 100%;
   }
 

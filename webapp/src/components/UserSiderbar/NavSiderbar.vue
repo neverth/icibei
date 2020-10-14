@@ -1,8 +1,8 @@
 <template>
   <div id="nav-siderbar" class="sidebar-wrapper">
     <!-- 侧边栏切换按钮 -->
-    <a @click="toggleSiderbar" id="toggle-sidebar" style="cursor:pointer">
-      <i class="fa fa-bars"></i>
+    <a id="toggle-sidebar" style="cursor:pointer" @click="toggleSiderbar">
+      <i class="fa fa-bars" />
     </a>
     <!-- 侧边栏商标 -->
     <div class="sidebar-brand">
@@ -22,31 +22,31 @@
 </template>
 
 <script>
-  import $ from "jquery";
-  import NavSiderBarLogined from './navSiderbar/Logined'
-  import NavSiderBarLogin from './navSiderbar/Login'
+import $ from 'jquery'
+import NavSiderBarLogined from './navSiderbar/Logined'
+import NavSiderBarLogin from './navSiderbar/Login'
 
-  export default {
-    name: "NavSiderbar",
-    components: {
-      NavSiderBarLogined,
-      NavSiderBarLogin,
-    },
-    data: function() {
-      return {
-        loginInfo: null
-      }
-    },
-    methods: {
-      toggleSiderbar: function() {
-        $("#nav-siderbar").toggleClass("toggled");
-      },
-    },
-    created: function() {
-      this.loginInfo = localStorage.getItem('loginInfo');
-      console.log(this.loginInfo);
+export default {
+  name: 'NavSiderbar',
+  components: {
+    NavSiderBarLogined,
+    NavSiderBarLogin
+  },
+  data: function() {
+    return {
+      loginInfo: null
     }
-  };
+  },
+  created: function() {
+    this.loginInfo = localStorage.getItem('loginInfo')
+    console.log(this.loginInfo)
+  },
+  methods: {
+    toggleSiderbar: function() {
+      $('#nav-siderbar').toggleClass('toggled')
+    }
+  }
+}
 </script>
 
 <style scoped>

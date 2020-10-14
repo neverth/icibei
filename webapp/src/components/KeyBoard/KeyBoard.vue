@@ -56,20 +56,20 @@
 </template>
 
 <script>
-  import $ from "jquery";
-  export default {
-    name: "KeyBoard",
-  };
+import $ from 'jquery'
+export default {
+  name: 'KeyBoard'
+}
 
-  $(window).keydown(function(event) {
-    let code = (event.keyCode ? event.keyCode : event.which);
-    $("li[data-code='" + code + "']").addClass("active")
-  });
+$(window).keydown(function(event) {
+  const code = (event.keyCode ? event.keyCode : event.which)
+  $("li[data-code='" + code + "']").addClass('active')
+})
 
-  $(window).keyup(function(event) {
-    let code = (event.keyCode ? event.keyCode : event.which);
-    $("li[data-code='" + code + "']").removeClass("active")
-  });
+$(window).keyup(function(event) {
+  const code = (event.keyCode ? event.keyCode : event.which)
+  $("li[data-code='" + code + "']").removeClass('active')
+})
 </script>
 
 <style scoped>
