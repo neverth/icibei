@@ -5,7 +5,7 @@
 </template>>
 
 <script>
-import { User } from './user/index'
+import User from './user/index'
 export default {
 
   name: 'Index',

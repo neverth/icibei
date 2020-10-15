@@ -1,16 +1,16 @@
 <template>
-  <div id="nav-siderbar" class="sidebar-wrapper">
+  <div id="nav-siderbar" class="sidebar-wrapper" :class="{toggled: toggled}">
     <!-- 侧边栏切换按钮 -->
-    <a id="toggle-sidebar" style="cursor:pointer" @click="toggleSiderbar">
-      <i class="fa fa-bars" />
+    <a id="toggle-sidebar" style="cursor:pointer" @click="toggled = !toggled">
+      <i class="el-icon-menu" />
     </a>
     <!-- 侧边栏商标 -->
     <div class="sidebar-brand">
       <a href="#">IcIbeI</a>
     </div>
     <!-- 侧边栏实际内容区 -->
-    <Logined v-if="loginInfo != null" />
-    <Login v-if="loginInfo == null" />
+    <Logined v-if="logined" />
+    <Login v-if="!logined" />
     <!-- 底部说明 -->
     <div class="siderbar-footer">
       <p>
@@ -22,9 +22,8 @@
 </template>
 
 <script>
-import $ from 'jquery'
-import Logined from './'
-import Login from './'
+import Logined from './Logined'
+import Login from './Login'
 
 export default {
   name: 'UserSiderbar',
@@ -32,19 +31,22 @@ export default {
     Logined,
     Login
   },
-  data: function() {
+  data() {
     return {
-      loginInfo: null
+      logined: false,
+      toggled: false
     }
   },
-  created: function() {
-    this.loginInfo = localStorage.getItem('loginInfo')
-    console.log(this.loginInfo)
+  created() {
+    this.$store.dispatch('user/getInfo')
+      .then(() => {
+        this.logined = true
+      })
+      .catch((e) => {
+        this.logined = false
+      })
   },
   methods: {
-    toggleSiderbar: function() {
-      $('#nav-siderbar').toggleClass('toggled')
-    }
   }
 }
 </script>

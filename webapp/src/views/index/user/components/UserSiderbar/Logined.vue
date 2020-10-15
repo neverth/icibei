@@ -2,7 +2,7 @@
   <div>
     <div class="sidebar-header">
       <div class="user-pic">
-        <img src="../../assets/imgs/defaultLogo.jpeg">
+        <img src="#">
       </div>
       <div class="user-info">
         <span class="user-name">name</span>

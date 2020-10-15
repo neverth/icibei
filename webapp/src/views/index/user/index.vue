@@ -5,7 +5,7 @@
 </template>>
 
 <script>
-import { UserSiderbar } from './components/UserSiderbar'
+import UserSiderbar from './components/UserSiderbar/index'
 export default {
   name: 'User',
   components: {
@@ -25,6 +25,17 @@ export default {
 }
 </script>
 
-<style lang="style" scope>
+<style scope>
 
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body, html {
+    background-color: #082730;
+    font-family: "Microsoft YaHei";
+    color: white;
+}
 </style>
