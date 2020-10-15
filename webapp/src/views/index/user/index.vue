@@ -35,7 +35,7 @@ export default {
 
 body, html {
     background-color: #082730;
-    font-family: "Microsoft YaHei";
+    font-family: "Microsoft YaHei", serif;
     color: white;
 }
 </style>

@@ -138,7 +138,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public TokenEnhancer jwtTokenEnhancer() {
         return (accessToken, authentication) -> {
             Map<String, Object> additionalInfo = new HashMap<>(1);
-            additionalInfo.put("organization", authentication.getName());
+            additionalInfo.put("userId", authentication.getName());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
         };

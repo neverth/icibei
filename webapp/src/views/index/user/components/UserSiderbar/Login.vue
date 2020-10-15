@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     toggledView() {
-      this.view = 'LoginRegister'
+      this.view = this.view === 'LoginLogin' ? 'LoginRegister' : 'LoginLogin'
     }
   }
 }
