@@ -15,9 +15,9 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo(userId) {
   return request({
-    url: 'http://localhost:8443/organization/userInfo/103',
+    url: 'http://localhost:8443/organization/userInfo/' + userId,
     method: 'get'
   })
 }

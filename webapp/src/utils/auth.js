@@ -1,29 +1,41 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'icibei-token'
-const ReTokenKey = 'icibei-reToken'
+// obj
+const TokenInfoKey = 'token'
+const UserInfoKey = 'userInfo'
 
-export function getToken() {
-  return Cookies.get(TokenKey)
+const CookiesOp = {
+  // 一天
+  expires: 1
 }
 
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+export function getTokenInfo() {
+  if (Cookies.get(TokenInfoKey)) {
+    return JSON.parse(Cookies.get(TokenInfoKey))
+  }
+  return undefined
 }
 
-export function removeToken() {
-  return Cookies.remove(TokenKey)
+export function setTokenInfo(token) {
+  return Cookies.set(TokenInfoKey, JSON.stringify(token), CookiesOp)
 }
 
-export function getReToken() {
-  return Cookies.get(ReTokenKey)
+export function removeTokenInfo() {
+  return Cookies.remove(TokenInfoKey)
 }
 
-export function setReToken(token) {
-  return Cookies.set(ReTokenKey, token)
+export function setUserInfo(userInfo) {
+  return Cookies.set(UserInfoKey, JSON.stringify(userInfo), CookiesOp)
 }
 
-export function removeReToken() {
-  return Cookies.remove(ReTokenKey)
+export function getUserInfo() {
+  if (Cookies.get(UserInfoKey)) {
+    return JSON.parse(Cookies.get(UserInfoKey))
+  }
+  return undefined
+}
+
+export function removeUserInfo() {
+  return Cookies.remove(UserInfoKey)
 }
 

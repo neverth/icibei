@@ -1,17 +1,22 @@
 <template>
   <div class="app-wrapper">
-    <UserSiderbar />
+    <UserSiderbar/>
+    <KeyBoard />
   </div>
 </template>>
 
 <script>
 import UserSiderbar from './components/UserSiderbar/index'
+import KeyBoard from './components/KeyBoard/KeyBoard'
+
 export default {
   name: 'User',
   components: {
-    UserSiderbar
+    UserSiderbar,
+    KeyBoard
   },
   data() {
+    return {}
   },
   created() {
     console.log('created')
@@ -28,14 +33,14 @@ export default {
 <style scope>
 
 * {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 body, html {
-    background-color: #082730;
-    font-family: "Microsoft YaHei", serif;
-    color: white;
+  background-color: #082730;
+  font-family: "Microsoft YaHei", serif;
+  color: white;
 }
 </style>

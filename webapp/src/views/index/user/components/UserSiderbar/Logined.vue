@@ -2,11 +2,11 @@
   <div>
     <div class="sidebar-header">
       <div class="user-pic">
-        <img src="#">
+        <img :src="userInfo['avatar']" alt="">
       </div>
       <div class="user-info">
-        <span class="user-name">name</span>
-        <span class="user-role">Welcome</span>
+        <span class="user-name">{{ userInfo['nickName'] }}</span>
+        <span class="user-role">{{ userInfo['signature'] }}</span>
       </div>
       <div style="clear:both;" />
     </div>
@@ -42,27 +42,27 @@
         </li>
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true" />
+            <i class="fa fa-circle-o-notch" aria-hidden="true"/>
             <span>练习统计</span>
           </a>
         </li>
 
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true" />
+            <i class="fa fa-circle-o-notch" aria-hidden="true"/>
             <span>个性化</span>
           </a>
         </li>
 
         <li>
           <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true" />
+            <i class="fa fa-circle-o-notch" aria-hidden="true"/>
             <span>我的</span>
           </a>
         </li>
 
         <li>
-          <a href="#">
+          <a href="#" @click="logout">
             <i class="fa fa-circle-o-notch" aria-hidden="true" />
             <span>注销</span>
           </a>
@@ -75,72 +75,84 @@
 
 <script>
 export default {
-  name: 'Logined'
+  name: 'Logined',
+  computed: {
+    userInfo() {
+      return this.$store.getters.userInfo
+    }
+  },
+  methods: {
+    async logout() {
+      debugger
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/`)
+    }
+  }
 }
 </script>
 
 <style scoped>
-  .sidebar-header {
-    padding: 20px;
-    overflow: hidden;
-    border-top: 1px solid #b46236;
-  }
+.sidebar-header {
+  padding: 20px;
+  overflow: hidden;
+  border-top: 1px solid #b46236;
+}
 
-  .sidebar-header .user-pic {
-    float: left;
-    width: 60px;
-    padding: 2px;
-    border: 1px solid #585858;
-    border-radius: 8px;
-  }
+.sidebar-header .user-pic {
+  float: left;
+  width: 60px;
+  padding: 2px;
+  border: 1px solid #585858;
+  border-radius: 8px;
+}
 
-  .sidebar-header .user-info {
-    margin-left: 15px;
-    float: left;
-    color: #f8f1f1;
-  }
+.sidebar-header .user-info {
+  margin-left: 15px;
+  float: left;
+  color: #f8f1f1;
+}
 
-  .sidebar-header .user-pic img{
-    border-radius: 6px;
-    width: 100%;
-    height: 100%;
-  }
+.sidebar-header .user-pic img {
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+}
 
-  .sidebar-wrapper .sidebar-header .user-info span {
-    display: block;
-  }
+.sidebar-wrapper .sidebar-header .user-info span {
+  display: block;
+}
 
-  .sidebar-menu {
-    border-top: 1px solid #b46236;
-  }
+.sidebar-menu {
+  border-top: 1px solid #b46236;
+}
 
-  .sidebar-menu .header-menu span {
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #ffc5c5;
-    padding: 10px 20px;
-    display: inline-block;
-  }
+.sidebar-menu .header-menu span {
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #ffc5c5;
+  padding: 10px 20px;
+  display: inline-block;
+}
 
-  .sidebar-menu ul li a {
-    display: inline-block;
-    width: 100%;
-    color: #ffffff;
-    text-decoration: none;
-    transition: color .3s;
-    position: relative;
-    padding: 5px 30px 5px 20px;
-  }
+.sidebar-menu ul li a {
+  display: inline-block;
+  width: 100%;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color .3s;
+  position: relative;
+  padding: 5px 30px 5px 20px;
+}
 
-  .sidebar-menu ul li a i {
-    margin-right: 10px;
-    font-size: 20px;
-    /* background: #94582c; */
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 4px;
-  }
+.sidebar-menu ul li a i {
+  margin-right: 10px;
+  font-size: 20px;
+  /* background: #94582c; */
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 4px;
+}
 </style>

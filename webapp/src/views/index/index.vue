@@ -1,11 +1,12 @@
 <template>
-  <div class="app-wrapper">
-    <User />
+  <div>
+    <User/>
   </div>
 </template>>
 
 <script>
 import User from './user/index'
+
 export default {
 
   name: 'Index',
@@ -13,6 +14,7 @@ export default {
     User
   },
   data() {
+    return {}
   },
   created() {
     console.log('created')

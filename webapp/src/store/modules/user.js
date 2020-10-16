@@ -1,15 +1,11 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, getReToken, setReToken } from '@/utils/auth'
+import { getTokenInfo, getUserInfo, setTokenInfo, removeTokenInfo, setUserInfo, removeUserInfo } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
-    token: getToken(),
-    reToken: getReToken(),
-    name: '',
-    avatar: '',
-    roles: [],
-    userId: ''
+    tokenInfo: getTokenInfo(),
+    userInfo: getUserInfo()
   }
 }
 
@@ -19,42 +15,31 @@ const mutations = {
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
   },
-  SET_TOKEN: (state, token) => {
-    state.token = token
+  SET_TOKEN_INFO: (state, e) => {
+    state.tokenInfo = e
   },
-  SET_NAME: (state, name) => {
-    state.name = name
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
-  },
-  SET_RE_TOKEN: (state, reToken) => {
-    state.reToken = reToken
-  },
-  SET_USER_ID: (state, userId) => {
-    state.userId = userId
+  SET_USER_INFO: (state, e) => {
+    state.userInfo = e
   }
 }
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
-    const { username, password, grant_type } = userInfo
+  login({ commit, state }, loginInfo) {
+    const { username, password, grant_type } = loginInfo
     return new Promise((resolve, reject) => {
       // 立即执行
       login({ username: username.trim(), password: password, grant_type }).then(response => {
-        debugger
         const { data } = response
-        commit('SET_TOKEN', data.access_token)
-        commit('SET_RE_TOKEN', data.refresh_token)
-        commit('SET_USER_ID', data.userId)
-        setToken(data.access_token)
-        setReToken(data.refresh_token)
+
+        if (!data['access_token']) {
+          reject('登录失败')
+        }
+
+        setTokenInfo(data)
+        commit('RESET_STATE')
         // 将状态改为fulfilled 并将参数传递给then中的回调函数
-        resolve()
+        resolve(data)
       }).catch(error => {
         // 将状态改为rejected 并将参数传递给then/catch中的回调函数
         reject(error)
@@ -63,26 +48,16 @@ const actions = {
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getInfo({ commit, state }, userId) {
     return new Promise((resolve, reject) => {
-      getInfo(state.userId).then(response => {
+      getInfo(userId).then(response => {
         const { data } = response
         debugger
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
-        const { roles, nickName, avatar, signature } = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', nickName)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', signature)
+        setUserInfo(data)
+        commit('RESET_STATE')
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -93,21 +68,18 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      removeTokenInfo() // must remove  token  first
+      removeUserInfo()
+      resetRouter()
+      commit('RESET_STATE')
+      resolve()
     })
   },
 
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
-      removeToken() // must remove  token  first
+      removeTokenInfo() // must remove  token  first
       commit('RESET_STATE')
       resolve()
     })

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="key-wrapper">
+    <div class="keyboard-wrapper">
       <ul>
         <li class="drum" data-key="1" data-code="49">1</li>
         <li class="drum" data-key="2" data-code="50">2</li>
@@ -80,17 +80,17 @@ $(window).keyup(function(event) {
     box-sizing: unset;
   }
 
-  .key-wrapper {
+  .keyboard-wrapper {
     text-align: center;
   }
 
-  .key-wrapper ul {
+  .keyboard-wrapper ul {
     text-align: center;
     white-space: nowrap;
     margin-top: 1em;
   }
 
-  .key-wrapper li {
+  .keyboard-wrapper li {
     display: inline-block;
     margin: -0.5vmin 0.75vmin;
     width: 5vmin;
@@ -106,12 +106,12 @@ $(window).keyup(function(event) {
     color: #7f8c8d;
   }
 
-  .key-wrapper li:hover {
+  .keyboard-wrapper li:hover {
     cursor: pointer;
     color: rgb(255, 255, 255);
   }
 
-  .key-wrapper [data-code="32"] {
+  .keyboard-wrapper [data-code="32"] {
     width: 40vmin;
     margin-top: 10px;
   }

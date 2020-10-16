@@ -1,7 +1,7 @@
 <template>
-  <div id="nav-siderbar" class="sidebar-wrapper" :class="{toggled: toggled}">
+  <div class="sidebar-wrapper" :class="{toggled: toggled}">
     <!-- 侧边栏切换按钮 -->
-    <a id="toggle-sidebar" style="cursor:pointer" @click="toggled = !toggled">
+    <a class="toggle-sidebar" style="cursor:pointer" @click="toggled = !toggled">
       <i class="el-icon-menu" />
     </a>
     <!-- 侧边栏商标 -->
@@ -9,8 +9,8 @@
       <a href="#">IcIbeI</a>
     </div>
     <!-- 侧边栏实际内容区 -->
-    <Logined v-if="logined" />
-    <Login v-if="!logined" />
+    <Logined v-if="userInfo" />
+    <Login v-if="!userInfo" />
     <!-- 底部说明 -->
     <div class="siderbar-footer">
       <p>
@@ -37,14 +37,12 @@ export default {
       toggled: false
     }
   },
+  computed: {
+    userInfo() {
+      return this.$store.getters.userInfo
+    }
+  },
   created() {
-    this.$store.dispatch('user/getInfo')
-      .then(() => {
-        this.logined = true
-      })
-      .catch((e) => {
-        this.logined = false
-      })
   },
   methods: {
   }
@@ -64,7 +62,7 @@ export default {
   }
 
   /* 侧边栏切换按钮 */
-  #toggle-sidebar {
+  .toggle-sidebar {
     position: fixed;
     top: 23px;
     left: 25px;

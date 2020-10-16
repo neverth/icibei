@@ -48,13 +48,16 @@ export default {
   methods: {
     handleLogin() {
       debugger
-      // 调取store里的user.js的login方法，
-      this.$store.dispatch('user/login', this.loginForm)
-        .then(() => {
-          this.reload()
+      this.$store.dispatch('user/login', this.loginForm).then((tokenInfo) => {
+        this.$store.dispatch('user/getInfo', tokenInfo['userId']).then((userInfo) => {
+          this.$router.push({ path: this.redirect || '/' })
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
         })
-        .catch(() => {
-        })
+      }).catch(() => {
+        this.loading = false
+      })
     },
     reload() {
       this.isRouterAlive = false
