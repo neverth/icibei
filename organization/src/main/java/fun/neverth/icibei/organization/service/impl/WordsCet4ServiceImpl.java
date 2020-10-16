@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import fun.neverth.icibei.organization.dao.WordsCet4Mapper;
-import fun.neverth.icibei.organization.entity.param.RoleQueryParam;
-import fun.neverth.icibei.organization.entity.po.User;
+import fun.neverth.icibei.organization.entity.param.WordsCet4QueryParam;
 import fun.neverth.icibei.organization.entity.po.WordsCet4;
+import fun.neverth.icibei.organization.entity.vo.WordsCet4Page;
 import fun.neverth.icibei.organization.service.WordsCet4Service;
-import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 /**
  * @author neverth.li
@@ -18,6 +21,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4> implements WordsCet4Service {
+
+    @Autowired
+    private WordsCet4Mapper wordsCet4Mapper;
 
     @Override
     public WordsCet4 get(String id) {
@@ -40,7 +46,20 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
     }
 
     @Override
-    public IPage<WordsCet4> query(Page<WordsCet4> page, RoleQueryParam roleQueryParam) {
+    public WordsCet4Page query(WordsCet4QueryParam param) {
+
+        if (Objects.isNull(param.getUserId())){
+            QueryWrapper<WordsCet4> queryWrapper =  new QueryWrapper<>();
+            queryWrapper.orderByAsc("word");
+            IPage<WordsCet4> page = new Page<>(param.getCurrent(), param.getSize());
+            page = wordsCet4Mapper.selectPage(page, queryWrapper);
+
+            WordsCet4Page wordsCet4Page = new WordsCet4Page();
+            wordsCet4Page.setWordsCet4List(page.getRecords());
+            wordsCet4Page.setPercentage(param.getPercentage());
+            BeanUtils.copyProperties(page, wordsCet4Page);
+            return wordsCet4Page;
+        }
         return null;
     }
 
