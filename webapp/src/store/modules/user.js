@@ -1,6 +1,7 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getTokenInfo, getUserInfo, setTokenInfo, removeTokenInfo, setUserInfo, removeUserInfo } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import {login, logout, getInfo, register} from '@/api/user'
+import {getTokenInfo, getUserInfo, setTokenInfo, removeTokenInfo, setUserInfo, removeUserInfo} from '@/utils/auth'
+import {resetRouter} from '@/router'
+import da from "element-ui/src/locale/lang/da";
 
 const getDefaultState = () => {
   return {
@@ -25,12 +26,12 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit, state }, loginInfo) {
-    const { username, password, grant_type } = loginInfo
+  login({commit, state}, loginInfo) {
+    const {username, password, grant_type} = loginInfo
     return new Promise((resolve, reject) => {
       // 立即执行
-      login({ username: username.trim(), password: password, grant_type }).then(response => {
-        const { data } = response
+      login({username: username.trim(), password: password, grant_type}).then(response => {
+        const {data} = response
 
         if (!data['access_token']) {
           reject('登录失败')
@@ -47,11 +48,31 @@ const actions = {
     })
   },
 
+  register({commit, state}, registerForm) {
+    debugger
+    const {username, password} = registerForm
+    return new Promise((resolve, reject) => {
+      // 立即执行
+      register({username: username.trim(), password: password}).then(response => {
+        debugger
+        const {data} = response
+
+        if (!data) {
+          reject('注册失败')
+        }
+
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
   // get user info
-  getInfo({ commit, state }, userId) {
+  getInfo({commit, state}, userId) {
     return new Promise((resolve, reject) => {
       getInfo(userId).then(response => {
-        const { data } = response
+        const {data} = response
         debugger
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -66,7 +87,7 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout({commit, state}) {
     return new Promise((resolve, reject) => {
       removeTokenInfo() // must remove  token  first
       removeUserInfo()
@@ -77,7 +98,7 @@ const actions = {
   },
 
   // remove token
-  resetToken({ commit }) {
+  resetToken({commit}) {
     return new Promise(resolve => {
       removeTokenInfo() // must remove  token  first
       commit('RESET_STATE')

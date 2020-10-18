@@ -1,5 +1,6 @@
 package fun.neverth.icibei.organization.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,9 +28,9 @@ public class UserRoleServiceImpl
 
     @Override
     public boolean saveBatch(String userId, Set<String> roleIds) {
-        if (CollectionUtils.isEmpty(roleIds)){
-            return false;
-        }
+        Assert.notEmpty(userId, "userId不能为空");
+        Assert.notEmpty(roleIds, "用户角色不能为空");
+        // 将之前的角色删除
         removeByUserId(userId);
         Set<UserRole> userRoles = roleIds.stream().map(roleId -> new UserRole(userId, roleId)).collect(Collectors.toSet());
         return saveBatch(userRoles);

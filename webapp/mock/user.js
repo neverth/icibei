@@ -1,4 +1,3 @@
-
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -29,7 +28,7 @@ module.exports = [
     url: '/vue-admin-template/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
+      const {username} = config.body
       const token = tokens[username]
 
       // mock error
@@ -52,20 +51,22 @@ module.exports = [
     url: '/vue-admin-template/user/info\.*',
     type: 'get',
     response: config => {
-      const { token } = config.query
-      const info = users[token]
-
-      // mock error
-      if (!info) {
-        return {
-          code: 50008,
-          message: 'Login failed, unable to get user details.'
-        }
-      }
-
       return {
-        code: 20000,
-        data: info
+        "code": "000000",
+        "message": "处理成功",
+        "data": {
+          "userId": "116",
+          "accountId": "neverth4",
+          "realName": "",
+          "mobile": "",
+          "nickName": "",
+          "signature": "",
+          "avatar": "",
+          "roles": [
+            "user"
+          ]
+        },
+        "time": "2020-10-18T05:52:24.490Z"
       }
     }
   },

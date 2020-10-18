@@ -15,6 +15,14 @@ export function login(data) {
   })
 }
 
+export function register(data) {
+  return request({
+    url: 'http://localhost:8443/organization/user',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(userId) {
   return request({
     url: 'http://localhost:8443/organization/userInfo/' + userId,

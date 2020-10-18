@@ -5,7 +5,7 @@
         <img :src="userInfo['avatar']" alt="">
       </div>
       <div class="user-info">
-        <span class="user-name">{{ userInfo['nickName'] }}</span>
+        <span class="user-name">{{ userInfo['nickName'] ? userInfo['nickName'] : userInfo['accountId']}}</span>
         <span class="user-role">{{ userInfo['signature'] }}</span>
       </div>
       <div style="clear:both;" />
