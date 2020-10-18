@@ -1,24 +1,26 @@
 <template>
   <div class="app-wrapper">
     <UserSiderbar/>
-    <KeyBoard />
+    <WordDisplay/>
   </div>
 </template>>
 
 <script>
 import UserSiderbar from './components/UserSiderbar/index'
-import KeyBoard from './components/KeyBoard/KeyBoard'
+import WordDisplay from './components/WordDisplay'
 
 export default {
   name: 'User',
   components: {
     UserSiderbar,
-    KeyBoard
+    WordDisplay
   },
   data() {
     return {}
   },
+  computed: {},
   created() {
+
     console.log('created')
   },
   mounted() {
@@ -40,7 +42,7 @@ export default {
 
 body, html {
   background-color: #082730;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   color: white;
 }
 </style>

@@ -59,13 +59,13 @@ import $ from 'jquery'
 export default {
   name: 'KeyBoard'
 }
-
-$(window).keydown(function(event) {
+// only for display
+$(window).keydown(function (event) {
   const code = (event.keyCode ? event.keyCode : event.which)
   $('li[data-code=\'' + code + '\']').addClass('active')
 })
 
-$(window).keyup(function(event) {
+$(window).keyup(function (event) {
   const code = (event.keyCode ? event.keyCode : event.which)
   $('li[data-code=\'' + code + '\']').removeClass('active')
 })
