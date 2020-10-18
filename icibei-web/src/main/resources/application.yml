@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.14.44.108:3306/icibei_gateway?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    username: root
+    password: ly19980911
+
+logging:
+  level:
+    org.springframework: debug
