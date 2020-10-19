@@ -1,18 +1,26 @@
 package fun.neverth.icibei.organization.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import fun.neverth.icibei.organization.dao.WordDetailMapper;
 import fun.neverth.icibei.organization.dao.WordsCet4Mapper;
 import fun.neverth.icibei.organization.entity.param.WordsCet4QueryParam;
+import fun.neverth.icibei.organization.entity.po.WordDetail;
 import fun.neverth.icibei.organization.entity.po.WordsCet4;
 import fun.neverth.icibei.organization.entity.vo.WordsCet4Page;
+import fun.neverth.icibei.organization.entity.vo.WordsCet4VO;
+import fun.neverth.icibei.organization.service.WordDetailService;
 import fun.neverth.icibei.organization.service.WordsCet4Service;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,6 +32,9 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
 
     @Autowired
     private WordsCet4Mapper wordsCet4Mapper;
+
+    @Autowired
+    private WordDetailService wordDetailService;
 
     @Override
     public WordsCet4 get(String id) {
@@ -53,9 +64,29 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
             queryWrapper.orderByAsc("word");
             IPage<WordsCet4> page = new Page<>(param.getCurrent(), param.getSize());
             page = wordsCet4Mapper.selectPage(page, queryWrapper);
+            List<WordsCet4> records = page.getRecords();
 
             WordsCet4Page wordsCet4Page = new WordsCet4Page();
-            wordsCet4Page.setWordsCet4List(page.getRecords());
+            List<WordsCet4VO> wordsCet4VOList = new ArrayList<>();
+            List<String> wordList = new ArrayList<>();
+
+            for (WordsCet4 record : records) {
+                WordsCet4VO wordsCet4VO = new WordsCet4VO();
+                BeanUtils.copyProperties(record, wordsCet4VO);
+                wordsCet4VOList.add(wordsCet4VO);
+                wordList.add(record.getWord());
+            }
+
+            List<WordDetail> wordDetailList = wordDetailService.getByWordList(wordList);
+            for (WordsCet4VO wordsCet4VO : wordsCet4VOList) {
+                for (WordDetail wordDetail : wordDetailList) {
+                    if (StringUtils.equals(wordsCet4VO.getWord(), wordDetail.getWord())){
+                        wordsCet4VO.setBaidu(JSON.parseObject( wordDetail.getBaidu()));
+                        break;
+                    }
+                }
+            }
+            wordsCet4Page.setWordsCet4List(wordsCet4VOList);
             wordsCet4Page.setPercentage(param.getPercentage());
             BeanUtils.copyProperties(page, wordsCet4Page);
             return wordsCet4Page;

@@ -1,6 +1,5 @@
 package fun.neverth.icibei.organization.entity.vo;
 
-import fun.neverth.icibei.organization.entity.po.WordsCet4;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 @Data
 public class WordsCet4Page {
 
-    private List<WordsCet4> wordsCet4List;
+    private List<WordsCet4VO> wordsCet4List;
     /**
      * 总数
      */

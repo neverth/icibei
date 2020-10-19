@@ -1,12 +1,11 @@
 package fun.neverth.icibei.organization.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import fun.neverth.icibei.organization.dao.UserWordMapper;
 import fun.neverth.icibei.organization.entity.form.UserWordForm;
 import fun.neverth.icibei.organization.entity.po.UserWord;
-import fun.neverth.icibei.organization.dao.UserWordMapper;
-import fun.neverth.icibei.organization.entity.po.WordsCet4;
 import fun.neverth.icibei.organization.service.UserWordService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,6 +28,13 @@ public class UserWordServiceImpl extends ServiceImpl<UserWordMapper, UserWord> i
     @Override
     public boolean incrementExeTimes(String userId, String word) {
         UserWord one = this.get(userId, word);
+        if (one == null) {
+            one = new UserWord();
+            one.setUserId(Long.parseLong(userId));
+            one.setWord(word);
+            one.setExeTimes(1L);
+            return this.save(one);
+        }
         one.setExeTimes(one.getExeTimes() + 1);
         return this.updateById(one);
     }

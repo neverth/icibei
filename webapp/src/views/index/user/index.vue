@@ -20,7 +20,6 @@ export default {
   },
   computed: {},
   created() {
-
     console.log('created')
   },
   mounted() {

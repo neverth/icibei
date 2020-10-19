@@ -1,20 +1,16 @@
-package fun.neverth.icibei.organization.entity.po;
+package fun.neverth.icibei.organization.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import fun.neverth.icibei.common.web.po.BasePO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author neverth.li
- * @date 2020/10/10 16:04
+ * @date 2020/10/19 17:35
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("words_cet4")
-public class WordsCet4 {
-    @TableId(type = IdType.AUTO)
-    private String id;
-
+public class WordsCet4VO extends BasePO {
     private String word;
 
     private String sw;
@@ -42,4 +38,9 @@ public class WordsCet4 {
     private String detail;
 
     private String audio;
+
+    /**
+     * 从百度翻译爬取的内容
+     */
+    private Object baidu;
 }

@@ -57,7 +57,7 @@ export default {
     height: 100%;
     position: fixed;
     top: 0;
-    left: -220px;
+    left: -300px;
     transition: all 0.3s;
   }
 
