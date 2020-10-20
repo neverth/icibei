@@ -45,7 +45,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -114,4 +116,55 @@ export function param2Obj(url) {
     }
   })
   return obj
+}
+
+export function wordsCet4ListParse(wordsCet4List) {
+  let wordDetailList = []
+  wordsCet4List.forEach(e => {
+    let wordDetail = []
+    let a = e['baidu']['dict_result']['oxford']['entry'][0]['data']
+    a.forEach(e1 => {
+      if ((a.length === 1 && e1['tag'] === 'h-g') || (e1['tag'] === 'p-g')) {
+        let b = e1['data']
+        // 词型
+        let wp = {}
+        wp['ciyi'] = []
+        b.forEach(e2 => {
+          // 词型，公有
+          if (e2['tag'] === 'p') {
+            wp['cixing'] = e2
+          }
+          // 部分有
+          if (e2['tag'] === 'd') {
+            wp['ciyi'].push(e2)
+            wp['ciyi'][0]['liju'] = []
+          }
+          if (e2['tag'] === 'x') {
+            wp['ciyi'][0]['liju'].push(e2)
+          }
+          // 部分有
+          if (e2['tag'] === 'n-g') {
+            let c = e2['data']
+            // 词义
+            let wd = {}
+            let wx = []
+            wd = {}
+            c.forEach(e3 => {
+              if (e3['tag'] === 'd') {
+                wd = e3
+              }
+              if (e3['tag'] === 'x') {
+                wx.push(e3)
+              }
+            })
+            wd['liju'] = wx
+            wp['ciyi'].push(wd)
+          }
+        })
+        wordDetail.push(wp)
+      }
+    })
+    wordDetailList.push(wordDetail)
+  })
+  return wordDetailList
 }
