@@ -13,9 +13,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    debugger
     // do something before request is sent
-
     if (store.getters.tokenInfo) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -44,7 +42,6 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    debugger
     // res就是原始返回值
     const res = response.data
 
