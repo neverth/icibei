@@ -25,4 +25,9 @@ public class OrganizationProviderFallback implements OrganizationProvider{
     public Result<Set<IRole>> queryRolesByUserId(String userId) {
         return Result.success(new HashSet<IRole>());
     }
+
+    @Override
+    public Result<IUser> getUserById(String uniqueId) {
+        return Result.success(new IUser());
+    }
 }

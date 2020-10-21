@@ -56,8 +56,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer security) {
         // 允许客户端使用client_id和client_secret获取token
         security.allowFormAuthenticationForClients()
-                // /oauth/check_token 端点的开放
-                .tokenKeyAccess("isAuthenticated()")
                 // 获取token的请求不拦截
                 .checkTokenAccess("permitAll()");
     }
@@ -140,7 +138,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public TokenEnhancer jwtTokenEnhancer() {
         return (accessToken, authentication) -> {
             Map<String, Object> additionalInfo = new HashMap<>(1);
-            additionalInfo.put("organization", authentication.getName());
+            additionalInfo.put("userId", authentication.getName());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
         };

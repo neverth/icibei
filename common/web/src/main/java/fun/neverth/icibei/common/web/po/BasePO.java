@@ -22,7 +22,7 @@ public class BasePO implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.AUTO)
     private String id;
     /**
      * 创建人

@@ -2,6 +2,7 @@ package fun.neverth.icibei.organization.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import fun.neverth.icibei.organization.entity.form.UserForm;
 import fun.neverth.icibei.organization.entity.po.User;
 import fun.neverth.icibei.organization.entity.vo.UserVO;
 import fun.neverth.icibei.organization.entity.param.UserQueryParam;
@@ -31,6 +32,8 @@ public interface UserService {
      * @return
      */
     boolean add(User user);
+
+    boolean add(UserForm userForm);
 
     /**
      * 查询用户

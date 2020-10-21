@@ -31,6 +31,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AuthGlobalFilter implements GlobalFilter {
 
+    final public static String NOT_AUTH = "-1";
+
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -44,11 +46,12 @@ public class AuthGlobalFilter implements GlobalFilter {
         if (authenticationService.ignoreAuthentication(url)){
             return chain.filter(exchange);
         }
-        Result authenticate = authenticationService.authenticate(authentication, url, method);
+        // 判断token是否有有效且token所代表的用户有权限访问请求url
+        Result<String> authenticate = authenticationService.authenticate(authentication, url, method);
         if (authenticate.isSuccess()) {
-            if ((boolean) authenticate.getData()) {
+            if (!NOT_AUTH.equals(authenticate.getData())){
                 ServerHttpRequest.Builder builder = request.mutate();
-                builder.header("USERID", "");
+                builder.header("USER_ID", authenticate.getData());
                 return chain.filter(exchange.mutate().request(builder.build()).build());
             }
         }

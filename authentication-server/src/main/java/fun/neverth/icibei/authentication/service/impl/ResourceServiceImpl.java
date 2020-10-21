@@ -68,8 +68,8 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Set<IResource> queryByUsername(String username) {
-        Result<Set<IResource>> resources = resourceProvider.resources(username);
+    public Set<IResource> queryByUserId(String userId) {
+        Result<Set<IResource>> resources = resourceProvider.resources(userId);
         if (resources.isSuccess()) {
             return resources.getData();
         }

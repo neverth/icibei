@@ -12,7 +12,7 @@ public interface AuthenticationService {
     /**
      * 调用签权服务，判断用户是否有权限
      */
-    Result authenticate(String authentication, String url, String method);
+    Result<String> authenticate(String authentication, String url, String method);
 
     /**
      * 判断url是否在忽略的范围内

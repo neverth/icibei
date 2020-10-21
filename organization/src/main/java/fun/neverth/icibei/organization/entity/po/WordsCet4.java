@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @TableName("words_cet4")
 public class WordsCet4 {
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.AUTO)
     private String id;
 
     private String word;

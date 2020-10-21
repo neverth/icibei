@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import fun.neverth.icibei.common.web.po.BasePO;
 import fun.neverth.icibei.organization.dao.ResourceMapper;
 import fun.neverth.icibei.organization.entity.po.Resource;
 import fun.neverth.icibei.organization.entity.po.Role;
@@ -81,17 +82,15 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource>
     }
 
     @Override
-    public List<Resource> query(String username) {
-        //根据用户名查询到用户所拥有的角色
-        UserVO user = userService.getByUniqueId(username);
-        List<Role> roles = roleService.query(user.getId());
-        //提取用户所拥有角色id列表
-        Set<String> roleIds = roles.stream().map(role -> role.getId()).collect(Collectors.toSet());
-        //根据角色列表查询到角色的资源的关联关系
+    public List<Resource> query(String userId) {
+        List<Role> roles = roleService.query(userId);
+        // 提取用户所拥有角色id列表
+        Set<String> roleIds = roles.stream().map(BasePO::getId).collect(Collectors.toSet());
+        // 根据角色列表查询到角色的资源的关联关系
         List<RoleResource> roleResources = roleResourceService.queryByRoleIds(roleIds);
-        //根据资源列表查询出所有资源对象
-        Set<String> resourceIds = roleResources.stream().map(roleResource -> roleResource.getResourceId()).collect(Collectors.toSet());
+        // 根据资源列表查询出所有资源对象
+        Set<String> resourceIds = roleResources.stream().map(RoleResource::getResourceId).collect(Collectors.toSet());
         //根据resourceId列表查询出resource对象
-        return (List<Resource>) this.listByIds(resourceIds);
+        return this.listByIds(resourceIds);
     }
 }

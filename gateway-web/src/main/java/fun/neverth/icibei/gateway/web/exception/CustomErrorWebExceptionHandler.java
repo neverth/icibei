@@ -1,7 +1,7 @@
 package fun.neverth.icibei.gateway.web.exception;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import feign.FeignException;
+import fun.neverth.icibei.common.core.vo.Result;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
@@ -34,7 +34,7 @@ public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
      * 自定义异常处理器
      */
     @Resource
-    private GatewayExceptionHandlerAdvice gateWayExceptionHandlerAdvice;
+    private GatewayExceptionHandlerAdvice handler;
 
     public CustomErrorWebExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties, ErrorProperties errorProperties, ApplicationContext applicationContext) {
         super(errorAttributes, resourceProperties, errorProperties, applicationContext);
@@ -50,11 +50,26 @@ public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
 
     @Override
     protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
+        Result result;
+        HttpStatus errorStatus = null;
+
         Map<String, Object> error = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.ALL));
-        HttpStatus errorStatus = HttpStatus.valueOf(getHttpStatus(error));
         Throwable throwable = getError(request);
+
+        // 需要修改响应status，因此在这
+        if (throwable instanceof FeignException){
+            errorStatus = HttpStatus.resolve(((FeignException) throwable).status());
+            result = handler.handle((FeignException)throwable);
+        }else{
+            result = handler.handle(throwable);
+        }
+
+        if (errorStatus == null){
+            errorStatus = HttpStatus.valueOf(getHttpStatus(error));
+        }
+
         return ServerResponse.status(errorStatus)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(gateWayExceptionHandlerAdvice.handle(throwable)));
+                .body(BodyInserters.fromValue(result));
     }
 }

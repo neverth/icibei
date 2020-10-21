@@ -62,10 +62,10 @@ public class ResourceController {
     @ApiResponses(
             @ApiResponse(code = 200, message = "处理成功", response = Result.class)
     )
-    @GetMapping(value = "/user/{username}")
-    public Result queryByUsername(@PathVariable String username) {
-        log.debug("query with username:{}", username);
-        return Result.success(resourceService.query(username));
+    @GetMapping(value = "/user/{userId}")
+    public Result queryByUsername(@PathVariable String userId) {
+        log.debug("query with username:{}", userId);
+        return Result.success(resourceService.query(userId));
     }
 
     @ApiOperation(value = "查询所有资源", notes = "查询所有资源信息")

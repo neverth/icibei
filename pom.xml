@@ -17,7 +17,7 @@
         <module>common/core</module>
         <module>common/web</module>
         <module>organization</module>
-        <module>main</module>
+        <module>icibei-web</module>
     </modules>
 
     <properties>

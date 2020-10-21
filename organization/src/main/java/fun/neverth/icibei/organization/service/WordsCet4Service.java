@@ -1,9 +1,8 @@
 package fun.neverth.icibei.organization.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import fun.neverth.icibei.organization.entity.param.RoleQueryParam;
+import fun.neverth.icibei.organization.entity.param.WordsCet4QueryParam;
 import fun.neverth.icibei.organization.entity.po.WordsCet4;
+import fun.neverth.icibei.organization.entity.vo.WordsCet4Page;
 
 /**
  * @author neverth.li
@@ -21,6 +20,5 @@ public interface WordsCet4Service {
 
     boolean delete(String id);
 
-    IPage<WordsCet4> query(Page<WordsCet4> page, RoleQueryParam roleQueryParam);
-
+    WordsCet4Page query(WordsCet4QueryParam param);
 }

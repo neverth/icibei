@@ -16,4 +16,6 @@ public interface UserInfoService extends IService<UserInfo> {
     UserInfo getByUserId(String userId);
 
     UserInfoVO getVoByUserId(String userId);
+
+    boolean add(UserInfo userInfo);
 }

@@ -60,4 +60,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         userInfoVO.setRoles(roles);
         return userInfoVO;
     }
+
+    @Override
+    public boolean add(UserInfo userInfo) {
+        return this.save(userInfo);
+    }
 }

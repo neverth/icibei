@@ -1,15 +1,21 @@
 package fun.neverth.icibei.organization.controller;
 
 import fun.neverth.icibei.common.core.vo.Result;
+import fun.neverth.icibei.organization.entity.param.WordsCet4QueryParam;
 import fun.neverth.icibei.organization.entity.po.WordsCet4;
+import fun.neverth.icibei.organization.entity.vo.WordsCet4Page;
 import fun.neverth.icibei.organization.service.WordsCet4Service;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Objects;
 
 /**
+ *
+ * 已经在网管中配置，/words下面的api都不需要鉴权
+ *
  * @author neverth.li
  * @date 2020/10/10 16:20
  */
@@ -27,5 +33,10 @@ public class WordsCet4Controller {
     @GetMapping(value = "/{word}")
     public Result<WordsCet4> get(@PathVariable String word) {
         return Result.success(wordsCet4Service.getByWord(word));
+    }
+
+    @GetMapping("/query")
+    public Result<WordsCet4Page> query(@Valid WordsCet4QueryParam param) {
+        return Result.success(wordsCet4Service.query(param));
     }
 }

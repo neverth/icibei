@@ -14,7 +14,7 @@ public interface ResourceService {
     /**
      * 根据用户名查询 该用户所拥有的角色对应的资源信息
      */
-    Set<IResource> queryByUsername(String username);
+    Set<IResource> queryByUserId(String username);
 
     /**
      * 根据url和method查询到对应的权限信息
