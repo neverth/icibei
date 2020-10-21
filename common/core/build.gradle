@@ -1,7 +1,0 @@
-
-
-dependencies {
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.10.4'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'com.google.guava:guava:29.0-jre'
-}
