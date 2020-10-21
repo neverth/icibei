@@ -140,6 +140,11 @@ export function wordsCet4ListParse(wordsCet4List) {
             wp['ciyi'][0]['liju'] = []
           }
           if (e2['tag'] === 'x') {
+            // 如果不存在词义，就默认构造一个词义
+            if (wp['ciyi'].length === 0){
+              wp['ciyi'].push({chText: '---'})
+              wp['ciyi'][0]['liju'] = []
+            }
             wp['ciyi'][0]['liju'].push(e2)
           }
           // 部分有

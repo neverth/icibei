@@ -4,6 +4,9 @@
       正在加载...
     </div>
     <div v-if="!loading" style="width: fit-content; margin: 20px auto;">
+      <audio ref="audio">
+        <source type="audio/mpeg">
+      </audio>
       <div style="font-size: 30px; text-align: center" :class="needPracticeStringsIndex === 0 ? 'active_line': ''">
         <span
           v-for="(e, idx) in words['wordsCet4List'][needPracticeStringsArrIndex]['word']"
@@ -25,12 +28,18 @@
                 <div class="liju-word-mean">{{ idx1 + 1 + '. ' + e1['chText'] }}</div>
                 <div class="liju-wrapper">
                   <!-- 只显示一句 -->
-                  <div :class="isActiveLine(e1['liju'][0]['enText'])" class="liju-english">
-                    <template v-for="(ens, ensI) in e1['liju'][0]['enText']">
-                      <span :class="isActive(ensI, e1['liju'][0]['enText'])">{{ ens === ' ' ? '_' : ens }}</span>
-                    </template>
-                  </div>
-                  <div class="liju-chinese">{{ e1['liju'][0]['chText'] }}</div>
+                  <template v-for="(e2, idx2) in e1['liju']">
+                    <div v-if="idx2 < 1" :class="isActiveLine(e2['enText'])" class="liju-english">
+                      <template v-for="(ens, ensI) in e2['enText']">
+                        <span
+                          :class="isActive(ensI, e2['enText'])"
+                          v-bind:style="{margin: ens === ' ' ? '0 3px': '' }"
+                        >{{ ens === ' ' ? '·' : ens }}</span>
+                      </template>
+                    </div>
+                    <div v-if="idx2 < 1" class="liju-chinese">{{ e2['chText'] }}</div>
+                  </template>
+
                 </div>
               </div>
             </template>
@@ -55,14 +64,11 @@ export default {
   },
   data() {
     return {
+      // 加载
       loading: true,
 
-      practiceWordIndex: 0,
-      practiceWords: undefined,
-      wordSplitIndex: 0,
-
+      // 下一个字符必须为空格
       mustSpaceKey: false,
-
       // 正在练习的单词或句子
       practiceString: '',
       // 正在练习的单词或句子的单个字母为单位的数组
@@ -70,37 +76,41 @@ export default {
       // 当前匹配practiceStringArr的下标
       practiceStringArrIndex: 0,
 
-      // 需要练习的单词数组
+      // 需要练习的单词数组 [[], []...]
       needPracticeStringsArr: [],
-      // 当前正在练习的单词下标
+      // 当前正在练习的单词下标，第一层下标
       needPracticeStringsArrIndex: 0,
-      // 当前正在练习的单词的例句下标
+      // 当前正在练习的单词的例句下标，第二层下标
       needPracticeStringsIndex: 0,
 
       // 从后端获取的单词列表
       words: undefined,
       // 解析之后的单词列表
       wordsParsed: undefined,
+      // 第一次播放读音
+      firstTimeAudioPlay: true,
     }
   },
   computed: {
     isActive() {
       return (index, word) => {
+        let cls = []
         // 让前面一条例句也在active状态
         let wordIndex = this.needPracticeStringsArr[this.needPracticeStringsArrIndex].indexOf(word)
         if (wordIndex !== -1 && wordIndex < this.needPracticeStringsIndex) {
-          return 'active'
+          cls.push('active')
+          return cls
         }
         if (word === this.practiceString) {
           if (index <= this.practiceStringArrIndex - 1) {
-            return 'active'
+            cls.push('active')
+            return cls
           }
         }
       }
     },
     isActiveLine() {
       return (word) => {
-        debugger
         let wordIndex = this.needPracticeStringsArr[this.needPracticeStringsArrIndex].indexOf(word)
         if (wordIndex !== -1 && wordIndex === this.needPracticeStringsIndex) {
           return 'active_line'
@@ -108,23 +118,21 @@ export default {
       }
     }
   },
+  watch: {
+    practiceString(newV, oldV) {
+      // 第一次不读，等第一次敲击键盘时再读
+      this.$nextTick(() => {
+        if (oldV !== '') {
+          this.$refs.audio.src = `http://localhost:8443/organization/translate/tss/${newV}`
+          this.$refs.audio.load()
+          this.$refs.audio.play()
+        }
+      })
+    }
+  },
   created() {
     console.log('created')
-    queryWords({ size: 3 }).then(response => {
-
-      this.practiceWords = response.data
-
-      this.words = response.data
-      this.wordsParsed = wordsCet4ListParse(this.words['wordsCet4List'])
-      this.needPracticeStringsArr = this.$options.methods.genNeedPracticeStrings(this.wordsParsed)
-      // 将单词插入第一位，后面是例句
-      this.needPracticeStringsArr.forEach((e, idx) => {
-        e.unshift(this.words['wordsCet4List'][idx]['word'])
-      })
-      this.practiceString = this.needPracticeStringsArr[this.needPracticeStringsArrIndex][this.needPracticeStringsIndex]
-      this.practiceStringArr = this.$options.methods.splitString(this.practiceString)
-      this.loading = false
-    })
+    this.$options.methods.prepareWords(this)
   },
   mounted() {
     console.log('mounted')
@@ -135,23 +143,38 @@ export default {
   },
   methods: {
     handleKeyDown(key) {
+      // -----------匹配单词部分-------------
       // 下一个输入必须为空格并且输入已经是空格
       if (this.mustSpaceKey && key === ' ') {
-        // 切换到下一个单词并重置状态并处理练习完成
-        // this.$options.methods.handleWordExeOk(this)
-        this.mustSpaceKey = false
+        // 切换到下一个例句并重置状态
         this.needPracticeStringsIndex++
-        this.practiceStringArrIndex = 0
-        this.practiceString = this.needPracticeStringsArr[this.needPracticeStringsArrIndex][this.needPracticeStringsIndex]
-        this.practiceStringArr = this.$options.methods.splitString(this.practiceString)
+        this.mustSpaceKey = false
+
+        // 当前单词的所有例句已经匹配完成，切换到下一个单词
+        if (this.needPracticeStringsIndex === this.needPracticeStringsArr[this.needPracticeStringsArrIndex].length) {
+          this.$options.methods.handleWordExeOk(this)
+          this.needPracticeStringsArrIndex++
+          this.needPracticeStringsIndex = 0
+
+          // 单词列表已经用完，准备下一个单词列表
+          if (this.needPracticeStringsArrIndex === this.needPracticeStringsArr.length) {
+            this.$options.methods.prepareWords(this)
+          }
+        }
+        // 等待切换到下一个单词之后更新状态
+        if (!this.loading) {
+          this.practiceString = this.needPracticeStringsArr[this.needPracticeStringsArrIndex][this.needPracticeStringsIndex]
+          this.practiceStringArr = this.$options.methods.splitString(this.practiceString)
+          this.practiceStringArrIndex = 0
+        }
       }
       // 正确的匹配字母
-      if (this.practiceStringArr[this.practiceStringArrIndex].toLowerCase() === key) {
+      else if (!this.mustSpaceKey && this.practiceStringArr[this.practiceStringArrIndex].toLowerCase() === key) {
         this.practiceStringArrIndex++
       }
       // 匹配特殊字符，直接空格就可以
       else {
-        if (['.', '\'', '"', '(', ')'].indexOf(this.practiceStringArr[this.practiceStringArrIndex]) !== -1) {
+        if (['.', '\'', '"', '(', ')', ','].indexOf(this.practiceStringArr[this.practiceStringArrIndex]) !== -1) {
           if (key === ' ') {
             this.practiceStringArrIndex++
           }
@@ -162,18 +185,18 @@ export default {
       if (this.practiceStringArrIndex === this.practiceStringArr.length) {
         this.mustSpaceKey = true
       }
-      // // 单词list用完，请求下一个单词list并重置状态
-      // if (this.practiceWordIndex === this.practiceWords['size']) {
-      //   queryWords({ current: this.practiceWords['current'] + 1, size: 3 }).then(response => {
-      //     this.practiceWordIndex = 0
-      //     this.practiceWords = response.data
-      //   })
-      // }
+
+      // // 只用于加载页面之后读第一个单词
+      if (this.needPracticeStringsIndex === 0 && this.firstTimeAudioPlay){
+        this.firstTimeAudioPlay = false
+        this.$refs.audio.src = `http://localhost:8443/organization/translate/tss/${this.practiceString}`
+        this.$refs.audio.load()
+        this.$refs.audio.play()
+      }
     },
     handleWordExeOk(that) {
       // 当切换单词的时候，自增单词的练习次数
-      let word = ''
-      that.practiceWords['wordsCet4List'][that.practiceWordIndex]['word'].forEach(e => word += e)
+      let word = that.words['wordsCet4List'][that.needPracticeStringsArrIndex]['word']
       incrementWordExeTimes({
         userId: store.getters.userInfo['userId'],
         word: word
@@ -188,17 +211,30 @@ export default {
       let needPracticeStrings = []
       wordsParsed.forEach(e => {
         let a = []
-        e.forEach(e1 => {
-          e1['ciyi'].every((e2, idx) => {
-            // 只拿前3条词义
-            if (idx >= 3) {
-              return false
-            } else {
-              // 只拿一条例句
-              a.push(e2['liju'][0]['enText'])
-              return true
-            }
-          })
+        e.every((e1, idx1) => {
+          // 值拿前2天词型
+          if (idx1 < 2) {
+            e1['ciyi'].every((e2, idx2) => {
+              // 只拿前3条词义
+              if (idx2 >= 3) {
+                return false
+              } else {
+                // 只拿一条例句
+                e2['liju'].every((e3, idx3) => {
+                  if (idx3 < 1) {
+                    a.push(e3['enText'])
+                    return true
+                  } else {
+                    return false
+                  }
+                })
+                return true
+              }
+            })
+            return true
+          } else {
+            return false
+          }
         })
         needPracticeStrings.push(a)
       })
@@ -207,6 +243,35 @@ export default {
     splitString(str) {
       // str.replace('.', '')
       return str.split('')
+    },
+    // 准备单词
+    prepareWords(that) {
+      that.loading = true
+      let param = {
+        current: 5,
+        size: 5
+      }
+      if (that.words !== undefined) {
+        param.current = that.words['current'] + 1
+      }
+      queryWords(param).then(response => {
+        // 重置状态
+        that.mustSpaceKey = false
+        that.practiceStringArrIndex = 0
+        that.needPracticeStringsArrIndex = 0
+        that.needPracticeStringsIndex = 0
+
+        that.words = response.data
+        that.wordsParsed = wordsCet4ListParse(that.words['wordsCet4List'])
+        that.needPracticeStringsArr = that.$options.methods.genNeedPracticeStrings(that.wordsParsed)
+        // 将单词插入第一位，后面是例句
+        that.needPracticeStringsArr.forEach((e, idx) => {
+          e.unshift(that.words['wordsCet4List'][idx]['word'])
+        })
+        that.practiceString = that.needPracticeStringsArr[that.needPracticeStringsArrIndex][that.needPracticeStringsIndex]
+        that.practiceStringArr = that.$options.methods.splitString(that.practiceString)
+        that.loading = false
+      })
     }
   }
 }
@@ -275,6 +340,7 @@ document.onkeydown = function(event) {
   border-radius: 20px;
 
 }
+
 span {
   margin-left: 0.5px;
 }
