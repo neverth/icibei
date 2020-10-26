@@ -248,7 +248,7 @@ export default {
     prepareWords(that) {
       that.loading = true
       let param = {
-        current: 5,
+        current: 1,
         size: 5
       }
       if (that.words !== undefined) {
