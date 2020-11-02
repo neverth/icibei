@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
-    <UserSiderbar/>
-    <WordDisplay/>
+    <UserSiderbar @toggled="toggled"/>
+    <WordDisplay :toggled="toggledVal"/>
   </div>
 </template>>
 
@@ -16,9 +16,16 @@ export default {
     WordDisplay
   },
   data() {
-    return {}
+    return {
+      toggledVal: false
+    }
   },
   computed: {},
+  methods: {
+    toggled(data){
+      this.toggledVal = data
+    }
+  },
   created() {
     console.log('created')
   },
@@ -43,6 +50,7 @@ body, html {
   background-color: #082730;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   color: white;
-  height: auto;
+  height: 100%;
+  overflow-y: hidden;
 }
 </style>

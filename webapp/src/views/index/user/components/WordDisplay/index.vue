@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="word-display" :class="{toggled: toggled}">
     <div v-if="loading">
       正在加载...
     </div>
@@ -62,6 +62,7 @@ export default {
   components: {
     KeyBoard
   },
+  props: ['toggled'],
   data() {
     return {
       // 加载
@@ -343,6 +344,14 @@ document.onkeydown = function(event) {
 
 span {
   margin-left: 0.5px;
+}
+
+.toggled{
+  padding-left: 300px;
+}
+
+.word-display{
+  transition: all 0.3s;
 }
 
 </style>

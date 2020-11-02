@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-wrapper" :class="{toggled: toggled}">
     <!-- 侧边栏切换按钮 -->
-    <a class="toggle-sidebar" style="cursor:pointer" @click="toggled = !toggled">
+    <a class="toggle-sidebar" style="cursor:pointer" @click="toggledSiderBar">
       <i class="el-icon-menu" />
     </a>
     <!-- 侧边栏商标 -->
@@ -45,6 +45,11 @@ export default {
   created() {
   },
   methods: {
+    toggledSiderBar(){
+      this.toggled = !this.toggled
+      // 向父组件传值
+      this.$emit("toggled", this.toggled)
+    },
   }
 }
 </script>

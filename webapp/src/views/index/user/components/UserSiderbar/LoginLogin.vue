@@ -15,7 +15,7 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button size="medium" type="primary" @click.native.prevent="handleLogin">登录</el-button>
+        <el-button :loading="loading" size="medium" type="primary" @click.native.prevent="handleLogin">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -33,7 +33,8 @@ export default {
         password: '123',
         grant_type: 'password'
       },
-      isRouterAlive: true
+      isRouterAlive: true,
+      loading: false,
     }
   },
   created() {
@@ -47,7 +48,7 @@ export default {
   },
   methods: {
     handleLogin() {
-      debugger
+      this.loading = true
       this.$store.dispatch('user/login', this.loginForm).then((tokenInfo) => {
         this.$store.dispatch('user/getInfo', tokenInfo['userId']).then((userInfo) => {
           this.$router.push({ path: this.redirect || '/' })
