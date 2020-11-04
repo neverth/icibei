@@ -29,8 +29,6 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     }
   }
-  console.log(store.getters.tokenInfo)
-  console.log(store.getters.userInfo)
 
   next()
 

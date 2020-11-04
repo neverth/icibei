@@ -86,7 +86,7 @@ $(window).keyup(function (event) {
 .keyboard-wrapper ul {
   text-align: center;
   white-space: nowrap;
-  margin-top: 1em;
+  margin-top: 0.5em !important;
 }
 
 .keyboard-wrapper li {

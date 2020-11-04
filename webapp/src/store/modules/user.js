@@ -2,6 +2,8 @@ import {login, logout, getInfo, register} from '@/api/user'
 import {getTokenInfo, getUserInfo, setTokenInfo, removeTokenInfo, setUserInfo, removeUserInfo} from '@/utils/auth'
 import {resetRouter} from '@/router'
 import da from "element-ui/src/locale/lang/da";
+import {Message, MessageBox} from "element-ui";
+import store from "@/store";
 
 const getDefaultState = () => {
   return {
@@ -34,6 +36,11 @@ const actions = {
         const {data} = response
 
         if (!data['access_token']) {
+          Message({
+            message: "用户不存在或密码错误",
+            type: 'error',
+            duration: 2 * 1000
+          })
           reject('登录失败')
         }
 
@@ -49,12 +56,10 @@ const actions = {
   },
 
   register({commit, state}, registerForm) {
-    debugger
     const {username, password} = registerForm
     return new Promise((resolve, reject) => {
       // 立即执行
       register({username: username.trim(), password: password}).then(response => {
-        debugger
         const {data} = response
 
         if (!data) {
@@ -73,7 +78,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(userId).then(response => {
         const {data} = response
-        debugger
         if (!data) {
           reject('Verification failed, please Login again.')
         }
@@ -88,12 +92,20 @@ const actions = {
 
   // user logout
   logout({commit, state}) {
+
     return new Promise((resolve, reject) => {
       removeTokenInfo() // must remove  token  first
       removeUserInfo()
       resetRouter()
       commit('RESET_STATE')
       resolve()
+      // MessageBox.confirm('您确定要退出登录吗？', 'Confirm logout', {
+      //   confirmButtonText: 'Re-Login',
+      //   cancelButtonText: 'Cancel',
+      //   type: 'warning'
+      // }).then(() => {
+      // }).catch(() => {
+      // });
     })
   },
 

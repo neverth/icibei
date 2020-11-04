@@ -5,19 +5,33 @@
         <img :src="userInfo['avatar']" alt="">
       </div>
       <div class="user-info">
-        <span class="user-name">{{ userInfo['nickName'] ? userInfo['nickName'] : userInfo['accountId']}}</span>
-        <span class="user-role">{{ userInfo['signature'] }}</span>
+        <div class="user-nick-name">
+          <span>{{ userInfo['nickName'] ? userInfo['nickName'] : userInfo['accountId'] }}</span>
+        </div>
+        <div class="user-signature"><span>{{ userInfo['signature'] }}</span></div>
       </div>
-      <div style="clear:both;" />
+      <div style="clear:both;"/>
     </div>
     <div class="sidebar-menu">
       <ul>
         <li class="header-menu">
           <span>action</span>
         </li>
+        <li>
+          <a href="#/home">
+            <i class="el-icon-user-solid"/>
+            <span>练习</span>
+          </a>
+        </li>
+        <li>
+          <a href="#/statistics">
+            <i class="el-icon-user-solid"/>
+            <span>练习统计</span>
+          </a>
+        </li>
         <li class="sidebar-dropdown">
           <a href="#">
-            <i class="fa fa-align-center" aria-hidden="true" />
+            <i class="el-icon-user-solid"/>
             <span>单词本</span>
           </a>
           <div class="sidebar-submenu" style="display: none;">
@@ -40,30 +54,17 @@
             </ul>
           </div>
         </li>
-        <li>
-          <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"/>
-            <span>练习统计</span>
-          </a>
-        </li>
 
         <li>
-          <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"/>
-            <span>个性化</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            <i class="fa fa-circle-o-notch" aria-hidden="true"/>
+          <a href="#/user">
+            <i class="el-icon-user-solid"/>
             <span>我的</span>
           </a>
         </li>
 
         <li>
           <a href="#" @click="logout">
-            <i class="fa fa-circle-o-notch" aria-hidden="true" />
+            <i class="el-icon-user-solid"/>
             <span>注销</span>
           </a>
         </li>
@@ -92,23 +93,32 @@ export default {
 
 <style scoped>
 .sidebar-header {
-  padding: 20px;
+  padding: 10px 20px;
   overflow: hidden;
   border-top: 1px solid #b46236;
 }
 
 .sidebar-header .user-pic {
   float: left;
-  width: 60px;
-  padding: 2px;
+  width: 70px;
+  height: 70px;
   border: 1px solid #585858;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .sidebar-header .user-info {
   margin-left: 15px;
   float: left;
   color: #f8f1f1;
+}
+
+.sidebar-header .user-info .user-nick-name{
+  font-weight: bold;
+}
+
+.sidebar-header .user-info .user-signature{
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 .sidebar-header .user-pic img {
@@ -135,18 +145,24 @@ export default {
 }
 
 .sidebar-menu ul li a {
-  display: inline-block;
+  display: block;
   width: 100%;
   color: #ffffff;
   text-decoration: none;
-  transition: color .3s;
   position: relative;
   padding: 5px 30px 5px 20px;
+  border-bottom: solid 1px #b46236;
+  transition: color .2s linear, background .2s linear;
+  font-size: 14px;
+}
+
+.sidebar-menu ul li a:hover {
+  background-color: #b46236;
 }
 
 .sidebar-menu ul li a i {
   margin-right: 10px;
-  font-size: 20px;
+  font-size: 14px;
   /* background: #94582c; */
   width: 30px;
   height: 30px;

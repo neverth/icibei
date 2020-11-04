@@ -1,24 +1,29 @@
 #app {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  color: whitesmoke;
 
   .main-container {
     min-height: 100%;
-    transition: margin-left .28s;
+    transition: all 0.3s;
     margin-left: $sideBarWidth;
     position: relative;
   }
 
   .sidebar-container {
-    transition: width 0.28s;
+    transition: all 0.3s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
     height: 100%;
     position: fixed;
-    font-size: 0px;
     top: 0;
     bottom: 0;
     left: 0;
     z-index: 1001;
     overflow: hidden;
+    background: #ce6d39;
 
     // reset element-ui css
     .horizontal-collapse-transition {
@@ -45,12 +50,6 @@
 
     .is-horizontal {
       display: none;
-    }
-
-    a {
-      display: inline-block;
-      width: 100%;
-      overflow: hidden;
     }
 
     .svg-icon {
@@ -93,11 +92,12 @@
 
   .hideSidebar {
     .sidebar-container {
-      width: 54px !important;
+      left: -300px !important;
+      //width: 54px !important;
     }
 
     .main-container {
-      margin-left: 54px;
+      margin-left: 0;
     }
 
     .submenu-title-noDropdown {
@@ -154,26 +154,6 @@
 
   .el-menu--collapse .el-menu .el-submenu {
     min-width: $sideBarWidth !important;
-  }
-
-  // mobile responsive
-  .mobile {
-    .main-container {
-      margin-left: 0px;
-    }
-
-    .sidebar-container {
-      transition: transform .28s;
-      width: $sideBarWidth !important;
-    }
-
-    &.hideSidebar {
-      .sidebar-container {
-        pointer-events: none;
-        transition-duration: 0.3s;
-        transform: translate3d(-$sideBarWidth, 0, 0);
-      }
-    }
   }
 
   .withoutAnimation {

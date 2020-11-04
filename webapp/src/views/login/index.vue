@@ -113,7 +113,6 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          debugger
           this.$store.dispatch('user/login', this.loginForm).then((tokenInfo) => {
             this.$store.dispatch('user/getInfo', tokenInfo['userId']).then((userInfo) => {
               this.$router.push({ path: this.redirect || '/' })
