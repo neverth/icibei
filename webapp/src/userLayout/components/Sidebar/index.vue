@@ -14,7 +14,7 @@
     <!-- 底部说明 -->
     <div class="siderbar-footer">
       <p>
-        © 2020<a href="#">NEVERTH.FUN</a> · 赣ICP备19000765号.
+        © 2020 <a href="#">NEVERTH.FUN</a> · 赣ICP备19000765号.
       </p>
       <p>TRY YOU DO · <a href="#">关于作者</a> </p>
     </div>
@@ -52,6 +52,7 @@ export default {
 /* 整个侧边栏 */
 .sidebar-wrapper {
   list-style: none;
+  box-shadow: 0 0 7px #ff5900;
 }
 
 /* 侧边栏切换按钮 */
@@ -81,7 +82,7 @@ export default {
   position: absolute;
   bottom: 2px;
   text-align: center;
-  width: 300px;
+  width: 100%;
   font-size: 12px;
   font-family: sofia, "Microsoft YaHei", serif;
 }

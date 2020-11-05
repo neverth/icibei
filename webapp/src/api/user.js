@@ -30,6 +30,14 @@ export function getInfo(userId) {
   })
 }
 
+export function updateInfo(userId, userInfo) {
+  return request({
+    url: 'http://localhost:8443/organization/userInfo/' + userId,
+    method: 'put',
+    data: userInfo
+  })
+}
+
 export function logout() {
   return request({
     url: '/vue-admin-template/user/logout',

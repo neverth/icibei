@@ -110,6 +110,7 @@ export default {
   margin-left: 15px;
   float: left;
   color: #f8f1f1;
+  width: 150px;
 }
 
 .sidebar-header .user-info .user-nick-name{
@@ -118,7 +119,7 @@ export default {
 
 .sidebar-header .user-info .user-signature{
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .sidebar-header .user-pic img {

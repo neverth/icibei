@@ -14,6 +14,7 @@ import fun.neverth.icibei.organization.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,10 +39,15 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Autowired
     private RoleService roleService;
 
+    /**
+     * 根据userId取最近的一条userInfo
+     */
     @Override
     public UserInfo getByUserId(String userId) {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
+        queryWrapper.orderByDesc("id");
+        queryWrapper.last("limit 1");
         return this.getOne(queryWrapper);
     }
 
@@ -64,5 +70,23 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Override
     public boolean add(UserInfo userInfo) {
         return this.save(userInfo);
+    }
+
+    @Override
+    public boolean update(String userId, UserInfo userInfo) {
+        UserInfo oldUserInfo = this.getByUserId(userId);
+        // 暂时只能修改这三个
+        oldUserInfo.setNickName(userInfo.getNickName());
+        oldUserInfo.setSignature(userInfo.getSignature());
+        oldUserInfo.setAvatar(userInfo.getAvatar());
+
+        oldUserInfo.setId(null);
+        return this.add(oldUserInfo);
+    }
+
+    @Override
+    public boolean uploadAvatar(String userId, MultipartFile file) {
+
+        return false;
     }
 }

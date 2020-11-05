@@ -1,4 +1,4 @@
-import {login, logout, getInfo, register} from '@/api/user'
+import {login, logout, getInfo, updateInfo, register} from '@/api/user'
 import {getTokenInfo, getUserInfo, setTokenInfo, removeTokenInfo, setUserInfo, removeUserInfo} from '@/utils/auth'
 import {resetRouter} from '@/router'
 import da from "element-ui/src/locale/lang/da";
@@ -84,6 +84,21 @@ const actions = {
         setUserInfo(data)
         commit('RESET_STATE')
         resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // update user info
+  updateInfo({commit, state}, userInfo) {
+    return new Promise((resolve, reject) => {
+      updateInfo(userInfo['userId'], userInfo).then(response => {
+        const {data} = response
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+        resolve()
       }).catch(error => {
         reject(error)
       })

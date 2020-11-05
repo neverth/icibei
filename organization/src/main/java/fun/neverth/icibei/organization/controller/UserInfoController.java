@@ -7,11 +7,8 @@ import fun.neverth.icibei.organization.entity.po.UserInfo;
 import fun.neverth.icibei.organization.entity.vo.UserInfoVO;
 import fun.neverth.icibei.organization.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -31,5 +28,15 @@ public class UserInfoController {
     @GetMapping(value = "/{userId}")
     public Result<UserInfoVO> get(@PathVariable String userId){
         return Result.success(userInfoService.getVoByUserId(userId));
+    }
+
+    @PutMapping(value = "/{userId}")
+    public Result<Boolean> update(@PathVariable String userId, @RequestBody UserInfo userInfo){
+        return Result.success(userInfoService.update(userId, userInfo));
+    }
+
+    @PostMapping("/{userId}/avatar/upload")
+    public Result<Boolean> uploadAvatar(@PathVariable String userId, @RequestParam("file")MultipartFile file){
+        return Result.success(userInfoService.uploadAvatar(userId, file));
     }
 }

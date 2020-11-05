@@ -109,6 +109,7 @@ export default {
   margin-left: 15px;
   float: left;
   color: #f8f1f1;
+  width: 150px;
 }
 
 .sidebar-header .user-pic img {
