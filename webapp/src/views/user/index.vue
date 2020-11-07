@@ -58,6 +58,7 @@
 
 <script>
 import myUpload from 'vue-image-crop-upload';
+const qiniu = require('qiniu-js')
 
 export default {
   name: "user",
