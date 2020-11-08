@@ -60,13 +60,13 @@
 
 <script>
 import myUpload from 'vue-image-crop-upload';
-const qiniu = require('qiniu-js')
 
 export default {
   name: "user",
   components: {
     myUpload
   },
+  inject: ['reloadApp', 'reloadAppMain'],
   data() {
     return {
       form: {
@@ -121,7 +121,9 @@ export default {
       })
     },
     cropSuccess(imgDataUrl, field) {},
-    cropUploadSuccess(jsonData, field) {},
+    cropUploadSuccess(jsonData, field) {
+      this.reloadAppMain()
+    },
     cropUploadFail(status, field) {}
   }
 }
