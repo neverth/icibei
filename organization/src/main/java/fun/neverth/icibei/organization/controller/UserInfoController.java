@@ -32,11 +32,11 @@ public class UserInfoController {
 
     @PutMapping(value = "/{userId}")
     public Result<Boolean> update(@PathVariable String userId, @RequestBody UserInfo userInfo){
-        return Result.success(userInfoService.update(userId, userInfo));
+        return Result.success(userInfoService.update(userId, userInfo, true));
     }
 
     @PostMapping("/{userId}/avatar/upload")
-    public Result<Boolean> uploadAvatar(@PathVariable String userId, @RequestParam("file")MultipartFile file){
+    public Result<Boolean> uploadAvatar(@PathVariable String userId, @RequestParam("avatar")MultipartFile file){
         return Result.success(userInfoService.uploadAvatar(userId, file));
     }
 }

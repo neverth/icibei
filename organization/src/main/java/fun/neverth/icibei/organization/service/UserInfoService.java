@@ -20,7 +20,7 @@ public interface UserInfoService extends IService<UserInfo> {
 
     boolean add(UserInfo userInfo);
 
-    boolean update(String userId, UserInfo userInfo);
+    boolean update(String userId, UserInfo userInfo, boolean allowNull);
 
     boolean uploadAvatar(String userId, MultipartFile file);
 }

@@ -44,15 +44,17 @@
       </div>
       <div style="clear: both"></div>
     </div>
-    <my-upload url="https://httpbin.org/post"
+    <my-upload :url="uploadUrl"
                img-format="jpg" img-bgc="#fff"
                v-model="myUploadShow"
-               field="avatar1"
                ki="0"
                @crop-success="cropSuccess"
                @crop-upload-success="cropUploadSuccess"
                @crop-upload-fail="cropUploadFail"
-               :no-rotate="false" />
+               :no-rotate="false"
+               :width="200"
+               :height="200"
+    />
   </div>
 </template>
 
@@ -76,6 +78,7 @@ export default {
       avatarUrl: '',
       updateInfoLoading: false,
       myUploadShow: false,
+      uploadUrl: `http://localhost:8443/organization/userInfo/${this.$store.getters.tokenInfo['userId']}/avatar/upload`,
     }
   },
   created() {
@@ -117,20 +120,9 @@ export default {
         this.updateInfoLoading = false
       })
     },
-    cropSuccess(imgDataUrl, field) {
-      console.log('-------- crop success --------');
-      this.imgDataUrl = imgDataUrl;
-    },
-    cropUploadSuccess(jsonData, field) {
-      console.log('-------- upload success --------');
-      console.log(jsonData);
-      console.log('field: ' + field);
-    },
-    cropUploadFail(status, field) {
-      console.log('-------- upload fail --------');
-      console.log(status);
-      console.log('field: ' + field);
-    }
+    cropSuccess(imgDataUrl, field) {},
+    cropUploadSuccess(jsonData, field) {},
+    cropUploadFail(status, field) {}
   }
 }
 </script>
