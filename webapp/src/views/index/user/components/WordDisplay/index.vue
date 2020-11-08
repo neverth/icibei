@@ -134,6 +134,20 @@ export default {
   created() {
     console.log('created')
     this.$options.methods.prepareWords(this)
+    if (!this.$store.getters.tokenInfo){
+      this.$nextTick(() => {
+        this.$notify({
+          title: '注意',
+          message: '为了能保存您的练习数据，请登录！',
+          offset: 100,
+          type: 'info',
+          duration: 2000
+        });
+      })
+    }
+    setInterval(() => {
+
+    },1000)
   },
   mounted() {
     console.log('mounted')

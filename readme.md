@@ -10,7 +10,7 @@ ICIBEI爱词贝，源于个人的一个小小idea，旨在帮助用户通过眼�
 
 是一个基于微服务架构的前后端分离系统。前台使用Vue + Element , 后端使用spring boot + spring cloud + mybatis-plus进行开发，使用 Jwt + Spring Security + OAuth2 实现登录授权和访问鉴权，使用 SpringCloud Gateway 实现动态网关，引入 Nacos（服务发现和配置中心）、 Feign（基于Http协议的RPC）、 Sentinel(分布式系统的流量防卫兵)、 RabbitMQ（消息队列）、 Redis 等中间件。[在线预览](http://www.neverth.fun)
 
-![1.png](./doc/imgs/20201026183715.png)
+![1.png](./doc/imgs/QQ图片20201108154330.png)
 ## ICIBEI目录结构
 
 ```

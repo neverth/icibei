@@ -58,12 +58,26 @@
         <li>
           <a href="#/user">
             <i class="el-icon-user-solid"/>
+            <span>排行榜</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#/user">
+            <i class="el-icon-user-solid"/>
             <span>我的</span>
           </a>
         </li>
 
         <li>
-          <a href="#" @click="logout">
+          <a href="#/user">
+            <i class="el-icon-user-solid"/>
+            <span>帮助</span>
+          </a>
+        </li>
+
+        <li>
+          <a @click="logout">
             <i class="el-icon-user-solid"/>
             <span>注销</span>
           </a>
@@ -83,9 +97,17 @@ export default {
     }
   },
   methods: {
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/`)
+    logout() {
+      this.$confirm('您确定要退出登录吗？', '注销', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('user/logout')
+        this.$router.push('/')
+      }).catch(() => {
+        // do nothing
+      });
     }
   }
 }
