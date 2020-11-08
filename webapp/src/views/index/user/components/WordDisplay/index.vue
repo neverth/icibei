@@ -3,7 +3,7 @@
     <div v-if="loading">
       正在加载...
     </div>
-    <div v-if="!loading" style="width: fit-content; margin: 20px auto;">
+    <div v-if="!loading" style="width: fit-content; margin: 20px auto;" :class="{twinkle: isTwinkle}">
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
@@ -53,9 +53,9 @@
 
 <script>
 import KeyBoard from '@/views/index/user/components/KeyBoard/KeyBoard'
-import { queryWords, incrementWordExeTimes } from '@/api/words'
+import {queryWords, incrementWordExeTimes} from '@/api/words'
 import store from '@/store'
-import { wordsCet4ListParse } from '@/utils'
+import {wordsCet4ListParse} from '@/utils'
 
 export default {
   name: 'WordDisplay',
@@ -90,6 +90,9 @@ export default {
       wordsParsed: undefined,
       // 第一次播放读音
       firstTimeAudioPlay: true,
+      // 光标闪烁
+      isTwinkle: true,
+      twinkleInterval: '',
     }
   },
   computed: {
@@ -105,8 +108,11 @@ export default {
         if (word === this.practiceString) {
           if (index <= this.practiceStringArrIndex - 1) {
             cls.push('active')
-            return cls
           }
+          if (index === this.practiceStringArrIndex) {
+            cls.push('now-practice')
+          }
+          return cls
         }
       }
     },
@@ -134,7 +140,7 @@ export default {
   created() {
     console.log('created')
     this.$options.methods.prepareWords(this)
-    if (!this.$store.getters.tokenInfo){
+    if (!this.$store.getters.tokenInfo) {
       this.$nextTick(() => {
         this.$notify({
           title: '注意',
@@ -145,9 +151,9 @@ export default {
         });
       })
     }
-    setInterval(() => {
-
-    },1000)
+    this.twinkleInterval = setInterval(() => {
+      this.isTwinkle = !this.isTwinkle
+    }, 500)
   },
   mounted() {
     console.log('mounted')
@@ -158,6 +164,8 @@ export default {
   },
   methods: {
     handleKeyDown(key) {
+      // 重置光标闪烁状态
+      this.resetTwinkleInterval()
       // -----------匹配单词部分-------------
       // 下一个输入必须为空格并且输入已经是空格
       if (this.mustSpaceKey && key === ' ') {
@@ -202,7 +210,7 @@ export default {
       }
 
       // // 只用于加载页面之后读第一个单词
-      if (this.needPracticeStringsIndex === 0 && this.firstTimeAudioPlay){
+      if (this.needPracticeStringsIndex === 0 && this.firstTimeAudioPlay) {
         this.firstTimeAudioPlay = false
         this.$refs.audio.src = `http://localhost:8443/organization/translate/tss/${this.practiceString}`
         this.$refs.audio.load()
@@ -287,11 +295,18 @@ export default {
         that.practiceStringArr = that.$options.methods.splitString(that.practiceString)
         that.loading = false
       })
+    },
+    resetTwinkleInterval() {
+      this.isTwinkle = true
+      clearInterval(this.twinkleInterval)
+      this.twinkleInterval = setInterval(() => {
+        this.isTwinkle = !this.isTwinkle
+      }, 500)
     }
   }
 }
 
-document.onkeydown = function(event) {
+document.onkeydown = function (event) {
   handleKeyDown(event.key)
 }
 
@@ -357,15 +372,21 @@ document.onkeydown = function(event) {
 }
 
 span {
-  margin-left: 0.5px;
+  /*margin-left: 1px;*/
+  transition: background-color 0.1s ease-out;
 }
 
-.toggled{
+.toggled {
   padding-left: 300px;
 }
 
-.word-display{
+.word-display {
   transition: all 0.3s;
+  font-family: sourceCodePro, Ubuntu Mono, Lucida Console, monospace;
+}
+
+.twinkle .now-practice {
+  background-color: #ce6d39;
 }
 
 </style>
