@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import WordDisplay from '@/views/index/user/components/WordDisplay'
+import WordDisplay from './components/WordDisplay'
 export default {
   name: 'Home',
   components: {

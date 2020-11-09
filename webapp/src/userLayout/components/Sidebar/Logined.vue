@@ -18,7 +18,7 @@
           <span>action</span>
         </li>
         <li>
-          <a href="#/home">
+          <a href="#/">
             <i class="el-icon-user-solid"/>
             <span>练习</span>
           </a>
@@ -26,7 +26,7 @@
         <li>
           <a href="#/statistics">
             <i class="el-icon-user-solid"/>
-            <span>练习统计</span>
+            <span>统计</span>
           </a>
         </li>
         <li class="sidebar-dropdown">
@@ -59,6 +59,13 @@
           <a href="#/user">
             <i class="el-icon-user-solid"/>
             <span>排行榜</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#/user">
+            <i class="el-icon-user-solid"/>
+            <span>多人竞速</span>
           </a>
         </li>
 
@@ -135,11 +142,11 @@ export default {
   width: 150px;
 }
 
-.sidebar-header .user-info .user-nick-name{
+.sidebar-header .user-info .user-nick-name {
   font-weight: bold;
 }
 
-.sidebar-header .user-info .user-signature{
+.sidebar-header .user-info .user-signature {
   margin-top: 10px;
   font-size: 12px;
 }

@@ -1,8 +1,8 @@
 {
-  "name": "vue-admin-template",
-  "version": "4.4.0",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "name": "icibei",
+  "version": "0.1.1",
+  "description": "",
+  "author": "NeverTh <Neverth0@foxmail.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
@@ -42,7 +42,6 @@
     "eslint": "6.7.2",
     "eslint-plugin-vue": "6.2.2",
     "html-webpack-plugin": "3.2.0",
-    "jquery": "^3.5.1",
     "mockjs": "1.0.1-beta3",
     "qs": "6.9.4",
     "runjs": "4.3.2",

@@ -80,7 +80,6 @@ export const constantRoutes = [
         path: '/user',
         component: () => import('@/views/user/index'),
       }
-
     ]
   },
 

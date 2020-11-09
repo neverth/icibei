@@ -1,5 +1,5 @@
 <template>
-  <div class="word-display" :class="{toggled: toggled}">
+  <div class="word-display">
     <div v-if="loading">
       正在加载...
     </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import KeyBoard from '@/views/index/user/components/KeyBoard/KeyBoard'
+import KeyBoard from '../KeyBoard'
 import {queryWords, incrementWordExeTimes} from '@/api/words'
 import store from '@/store'
 import {wordsCet4ListParse} from '@/utils'
@@ -62,7 +62,6 @@ export default {
   components: {
     KeyBoard
   },
-  props: ['toggled'],
   data() {
     return {
       // 加载
@@ -92,6 +91,7 @@ export default {
       firstTimeAudioPlay: true,
       // 光标闪烁
       isTwinkle: true,
+      // 定时器 object
       twinkleInterval: '',
     }
   },
@@ -156,11 +156,13 @@ export default {
     }, 500)
   },
   mounted() {
-    console.log('mounted')
-    window.handleKeyDown = this.handleKeyDown
+    console.log('mounted WordDisplay')
+    window.handleKeyDownWordDisplay = this.handleKeyDown
   },
   beforeDestroy() {
-    console.log('beforeDestroy')
+    console.log('beforeDestroy WordDisplay')
+    // 取消注册到window
+    window.handleKeyDownWordDisplay = undefined
   },
   methods: {
     handleKeyDown(key) {
@@ -209,7 +211,7 @@ export default {
         this.mustSpaceKey = true
       }
 
-      // // 只用于加载页面之后读第一个单词
+      // 只用于加载页面之后读第一个单词
       if (this.needPracticeStringsIndex === 0 && this.firstTimeAudioPlay) {
         this.firstTimeAudioPlay = false
         this.$refs.audio.src = `http://localhost:8443/organization/translate/tss/${this.practiceString}`
@@ -306,10 +308,6 @@ export default {
   }
 }
 
-document.onkeydown = function (event) {
-  handleKeyDown(event.key)
-}
-
 </script>
 
 <style scoped>
@@ -374,10 +372,6 @@ document.onkeydown = function (event) {
 span {
   /*margin-left: 1px;*/
   transition: background-color 0.1s ease-out;
-}
-
-.toggled {
-  padding-left: 300px;
 }
 
 .word-display {
