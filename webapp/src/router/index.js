@@ -80,6 +80,11 @@ export const constantRoutes = [
         path: '/user',
         component: () => import('@/views/user/index'),
       }
+      ,
+      {
+        path: '/multiplayer',
+        component: () => import('@/views/multiplayer/index'),
+      }
     ]
   },
 

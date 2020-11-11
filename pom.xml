@@ -18,6 +18,7 @@
         <module>common/web</module>
         <module>organization</module>
         <module>icibei-web</module>
+        <module>game-server</module>
     </modules>
 
     <properties>

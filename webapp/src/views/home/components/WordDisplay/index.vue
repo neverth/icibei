@@ -34,7 +34,7 @@
                         <span
                           :class="isActive(ensI, e2['enText'])"
                           v-bind:style="{margin: ens === ' ' ? '0 3px': '' }"
-                        >{{ ens === ' ' ? '·' : ens }}</span>
+                        >{{ ens }}</span>
                       </template>
                     </div>
                     <div v-if="idx2 < 1" class="liju-chinese">{{ e2['chText'] }}</div>
@@ -47,21 +47,17 @@
         </template>
       </div>
     </div>
-    <KeyBoard v-if="!loading"/>
   </div>
 </template>
 
 <script>
-import KeyBoard from '../KeyBoard'
 import {queryWords, incrementWordExeTimes} from '@/api/words'
 import store from '@/store'
 import {wordsCet4ListParse} from '@/utils'
 
 export default {
   name: 'WordDisplay',
-  components: {
-    KeyBoard
-  },
+
   data() {
     return {
       // 加载

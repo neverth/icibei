@@ -63,7 +63,7 @@
         </li>
 
         <li>
-          <a href="#/user">
+          <a href="#/multiplayer">
             <i class="el-icon-user-solid"/>
             <span>多人竞速</span>
           </a>
