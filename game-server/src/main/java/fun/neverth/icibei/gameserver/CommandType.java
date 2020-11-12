@@ -11,6 +11,13 @@ import org.springframework.util.StringUtils;
  */
 @Getter
 public enum CommandType {
+    PendingResp("游戏进行中", "1008"),
+    GameWordListResp("游戏需要练习的单词", "1007"),
+    DuplicateLoginResp("重复登录被下线", "1006"),
+    LoginResp("连接服务器响应", "1005"),
+    UserEnterRoomResp("其他用户连接房间响应", "1004"),
+    EnterRoomResp("连接房间响应", "1003"),
+    CreateRoomResp("创建房间响应", "1002"),
     GameStartResp("游戏开始响应", "1001"),
 
     Pending("游戏进行中", "5"),

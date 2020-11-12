@@ -3,6 +3,9 @@ package fun.neverth.icibei.organization.service;
 import fun.neverth.icibei.organization.entity.param.WordsCet4QueryParam;
 import fun.neverth.icibei.organization.entity.po.WordsCet4;
 import fun.neverth.icibei.organization.entity.vo.WordsCet4Page;
+import fun.neverth.icibei.organization.entity.vo.WordsCet4VO;
+
+import java.util.List;
 
 /**
  * @author neverth.li
@@ -19,6 +22,8 @@ public interface WordsCet4Service {
     boolean update(WordsCet4 wordsCet4);
 
     boolean delete(String id);
+
+    List<WordsCet4VO> getFromWords(String[] words);
 
     WordsCet4Page query(WordsCet4QueryParam param);
 }

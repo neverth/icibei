@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import fun.neverth.icibei.organization.dao.WordDetailMapper;
 import fun.neverth.icibei.organization.dao.WordsCet4Mapper;
 import fun.neverth.icibei.organization.entity.param.WordsCet4QueryParam;
 import fun.neverth.icibei.organization.entity.po.WordDetail;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,5 +99,32 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
         QueryWrapper<WordsCet4> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("word", word);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public List<WordsCet4VO> getFromWords(String[] words) {
+        List<WordsCet4VO> res = new ArrayList<>();
+        QueryWrapper<WordsCet4> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.in("word", Arrays.asList(words));
+        List<WordsCet4> wordsCet4s = wordsCet4Mapper.selectList(queryWrapper);
+
+        for (WordsCet4 wordsCet4 : wordsCet4s) {
+            WordsCet4VO wordsCet4VO = new WordsCet4VO();
+            BeanUtils.copyProperties(wordsCet4, wordsCet4VO);
+            res.add(wordsCet4VO);
+        }
+
+        // 填充百度翻译信息
+        List<WordDetail> wordDetailList = wordDetailService.getByWordList(Arrays.asList(words));
+        for (WordsCet4VO w : res) {
+            for (WordDetail wordDetail : wordDetailList) {
+                if (w.getWord().equals(wordDetail.getWord())){
+                    w.setBaidu(JSON.parseObject( wordDetail.getBaidu()));
+                    break;
+                }
+            }
+        }
+
+        return res;
     }
 }

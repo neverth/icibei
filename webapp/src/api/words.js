@@ -8,6 +8,22 @@ export function queryWords(params) {
   })
 }
 
+export function getWords(wordsArray) {
+  let s = wordsArray[0]
+  if (wordsArray.length > 1){
+    for (let i = 1; i < wordsArray.length; i++) {
+      s += `,${wordsArray[i]}`
+    }
+  }
+  return request({
+    url: 'http://localhost:8443/organization/words',
+    method: 'get',
+    params: {
+      words: s
+    }
+  })
+}
+
 // 自增单词练习练习，没有用户关系时会自动创建
 export function incrementWordExeTimes(params) {
   return request({
