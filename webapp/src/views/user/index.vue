@@ -78,7 +78,7 @@ export default {
       avatarUrl: '',
       updateInfoLoading: false,
       myUploadShow: false,
-      uploadUrl: `http://localhost:8443/organization/userInfo/${this.$store.getters.tokenInfo['userId']}/avatar/upload`,
+      uploadUrl: `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/userInfo/${this.$store.getters.tokenInfo['userId']}/avatar/upload`,
     }
   },
   created() {

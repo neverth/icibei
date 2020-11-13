@@ -114,14 +114,10 @@ export default {
       }
     }
   },
-  computed: {
-    moveAvatar() {
-
-    }
-  },
+  computed: {},
   methods: {
     initWebSocket() {
-      this.ws = new WebSocket("ws://localhost:8899/ws");
+      this.ws = new WebSocket(`ws://${process.env.VUE_APP_ICIBEI_GAME_SERVER}/ws`);
       this.ws.onmessage = this.wsOnMessage;
       this.ws.onopen = this.wsOnopen;
       this.ws.onerror = this.wsOnerror;

@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryWords(params) {
   return request({
-    url: 'http://localhost:8443/organization/words/query',
+    url: '/organization/words/query',
     method: 'get',
     params: params
   })
@@ -16,7 +16,7 @@ export function getWords(wordsArray) {
     }
   }
   return request({
-    url: 'http://localhost:8443/organization/words',
+    url: '/organization/words',
     method: 'get',
     params: {
       words: s
@@ -27,7 +27,7 @@ export function getWords(wordsArray) {
 // 自增单词练习练习，没有用户关系时会自动创建
 export function incrementWordExeTimes(params) {
   return request({
-    url: 'http://localhost:8443/organization/userWord/exeTimes',
+    url: '/organization/userWord/exeTimes',
     method: 'put',
     params: params
   })
@@ -35,7 +35,7 @@ export function incrementWordExeTimes(params) {
 
 export function updateRelation(params) {
   return request({
-    url: 'http://localhost:8443/organization/userWord/relation',
+    url: '/organization/userWord/relation',
     method: 'put',
     params: params
   })
@@ -43,7 +43,7 @@ export function updateRelation(params) {
 
 export function addUserWord(params) {
   return request({
-    url: 'http://localhost:8443/organization/userWord',
+    url: '/organization/userWord',
     method: 'post',
     data: params
   })
@@ -51,7 +51,7 @@ export function addUserWord(params) {
 
 export function getUserWord(params) {
   return request({
-    url: 'http://localhost:8443/organization/userWord',
+    url: '/organization/userWord',
     method: 'get',
     params: params
   })

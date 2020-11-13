@@ -5,7 +5,7 @@ export function login(data) {
   // 转为x-www-form-urlencoded
   data = qs.stringify(data)
   return request({
-    url: 'http://localhost:8443/authorization-server/oauth/token',
+    url: '/authorization-server/oauth/token',
     method: 'post',
     data,
     auth: {
@@ -17,7 +17,7 @@ export function login(data) {
 
 export function register(data) {
   return request({
-    url: 'http://localhost:8443/organization/user',
+    url: '/organization/user',
     method: 'post',
     data
   })
@@ -25,14 +25,14 @@ export function register(data) {
 
 export function getInfo(userId) {
   return request({
-    url: 'http://localhost:8443/organization/userInfo/' + userId,
+    url: '/organization/userInfo/' + userId,
     method: 'get'
   })
 }
 
 export function updateInfo(userId, userInfo) {
   return request({
-    url: 'http://localhost:8443/organization/userInfo/' + userId,
+    url: '/organization/userInfo/' + userId,
     method: 'put',
     data: userInfo
   })

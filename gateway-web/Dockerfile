@@ -8,4 +8,6 @@ VOLUME /tmp
 # 将jar包添加到容器中并更名为app.jar
 ADD target/gateway-web-1.0-SNAPSHOT.jar app.jar
 
+EXPOSE 8443
+
 ENTRYPOINT ["java","-jar","/app.jar"]

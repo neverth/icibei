@@ -126,7 +126,7 @@ export default {
       // 第一次不读，等第一次敲击键盘时再读
       this.$nextTick(() => {
         if (oldV !== '') {
-          this.$refs.audio.src = `http://localhost:8443/organization/translate/tss/${newV}`
+          this.$refs.audio.src = `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/translate/tss/${newV}`
           this.$refs.audio.load()
           this.$refs.audio.play()
         }
@@ -210,7 +210,7 @@ export default {
       // 只用于加载页面之后读第一个单词
       if (this.needPracticeStringsIndex === 0 && this.firstTimeAudioPlay) {
         this.firstTimeAudioPlay = false
-        this.$refs.audio.src = `http://localhost:8443/organization/translate/tss/${this.practiceString}`
+        this.$refs.audio.src = `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/translate/tss/${this.practiceString}`
         this.$refs.audio.load()
         this.$refs.audio.play()
       }
