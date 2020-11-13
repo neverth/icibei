@@ -93,7 +93,8 @@ export default {
       pending: {
         totalCharsLen: 0,
         practicedCharsLen: 0,
-      }
+      },
+      end: false
     }
   },
   computed: {
@@ -158,6 +159,7 @@ export default {
   },
   methods: {
     handleKeyDown(key) {
+      if (this.end) return
       // 重置光标闪烁状态
       this.resetTwinkleInterval()
       // -----------匹配单词部分-------------
@@ -175,6 +177,8 @@ export default {
 
           // 单词列表已经用完，通知父组件
           if (this.needPracticeStringsArrIndex === this.needPracticeStringsArr.length) {
+            this.end = true
+            clearInterval(this.twinkleInterval)
             this.$emit("practiceWordsOk")
             return
           }

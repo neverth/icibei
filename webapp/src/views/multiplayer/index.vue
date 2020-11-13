@@ -4,21 +4,31 @@
       <span>多人竞速</span>
       <span style="font-size: 12px; margin-left: 10px">{{ wsLogin ? '已连接服务器' : '未连接服务器' }}</span>
     </div>
-    <el-button @click="wsSend(`${command.CreateRoom}`)">创建房间</el-button>
-    <el-button @click="wsSend(`${command.GameStart} ${room.roomId}`)">游戏开始</el-button>
-    <el-button type="text" @click="enterRoom">加入房间</el-button>
+    <el-button @click="createRoom">创建房间</el-button>
+    <el-button @click="enterRoom">加入房间</el-button>
+    <el-button v-if="room.roomId" @click="wsSend(`${command.GameStart} ${room.roomId}`)">游戏开始</el-button>
     <div>房间号：{{ room.roomId }}</div>
-    <template v-for="word in room.wordList">
-      <div>单词：{{ word }}</div>
-    </template>
-
     <div style="width: 80%; margin: 0 auto; padding: 10px">
       <div class="track">
-        <div class="track-ticker"></div>
+        <div class="track-ticker">
+          {{message}}
+        </div>
         <div class="player" v-for="player in room.players">
-          <div class="player-name"><span>{{ player.userId }}</span></div>
-          <div class="player-lane">{{ player.percentage }}</div>
-          <div class="player-details">sdfdsf</div>
+          <template v-if="player.loading">
+            <div class="player-name"><span>...</span></div>
+            <div class="player-lane">...</div>
+            <div class="player-details">...</div>
+          </template>
+          <template v-else>
+            <div class="player-name">
+              <span>{{ player['userInfo']['nickName'] }}</span>
+            </div>
+            <div class="player-lane">
+              <el-avatar :style="{left: `${player['percentage'] * 0.95}%`}" class="player-lane-avatar" size="medium"
+                         :src="player['userInfo']['avatar']"></el-avatar>
+            </div>
+            <div class="player-details">...</div>
+          </template>
         </div>
       </div>
     </div>
@@ -33,6 +43,7 @@
 
 <script>
 import WordPractice from './WordPractice'
+import {getInfo} from '@/api/user'
 
 export default {
   name: "Multiplayer",
@@ -67,7 +78,8 @@ export default {
         roomId: null,
         players: [],
         wordList: []
-      }
+      },
+      message: "创建或者加入房间以开始新的游戏"
     }
   },
   created() {
@@ -77,7 +89,35 @@ export default {
     this.ws.close();
     this.ws = null
   },
+  watch: {
+    room: {
+      deep: true,
+      handler(newV, oldV) {
+        newV.players.forEach(e => {
+          if (!e.userInfo) {
+            getInfo(e.userId).then(response => {
+              const {data} = response
+              if (data) {
+                e.userInfo = data
+                e.loading = false
+              }
+            }).catch(error => {
+              this.$message({
+                message: "获取用户信息失败，请稍后再试",
+                type: 'error',
+                duration: 2 * 1000
+              })
+            })
+          }
+        })
+        console.log(newV)
+      }
+    }
+  },
   computed: {
+    moveAvatar() {
+
+    }
   },
   methods: {
     initWebSocket() {
@@ -104,31 +144,36 @@ export default {
 
         case this.command.CreateRoomResp:
           this.room.roomId = msg[1]
-
-          this.room.players.push({userId: this.$store.getters.tokenInfo['userId'], percentage: 0})
+          this.room.players.push({userId: this.$store.getters.tokenInfo['userId'], percentage: 0, loading: true})
+          this.message = "游戏房间号为：" + this.room.roomId
           break
 
         case this.command.UserEnterRoomResp:
           this.room.players.forEach(e => {
-            if (e.userId !== msg[1]){
-              this.room.players.push({userId: msg[1], percentage: 0})
+            if (e.userId !== msg[1]) {
+              this.room.players.push({
+                userId: msg[1],
+                percentage: 0,
+                loading: true
+              })
             }
           })
           break
 
         case this.command.GameWordListResp:
+          this.message = "游戏开始！比赛单词："+ msg[1]
           this.room.wordList.push(msg[1])
           break
 
         case this.command.EnterRoomResp:
           msg[1].split(',').forEach(e => {
-            this.room.players.push({userId: e, percentage: 0})
+            this.room.players.push({userId: e, percentage: 0, loading: true})
           })
           break
 
         case this.command.PendingResp:
           this.room.players.forEach(e => {
-            if (e.userId === msg[1]){
+            if (e.userId === msg[1]) {
               e.percentage = msg[2]
             }
           })
@@ -150,7 +195,7 @@ export default {
       this.wsSend(`${this.command.Pending} ${this.room.roomId} ${percentage.toFixed(2)}`)
     },
     wpPracticeWordsOk() {
-
+      this.message = "游戏结束，获胜者为："
     },
     enterRoom() {
       this.$prompt('请输入房间号', '提示', {
@@ -162,6 +207,9 @@ export default {
       }).catch(() => {
 
       });
+    },
+    createRoom(){
+      this.wsSend(`${this.command.CreateRoom}`)
     }
   }
 }
@@ -178,14 +226,16 @@ export default {
 
 .track {
   position: relative;
-  border: 1px solid white;
+  border-radius: 5px;
+  border: 2px solid rgb(160 152 152);
 }
 
 .player {
   position: relative;
-  border: 1px solid white;
+  border-bottom: 2px solid rgb(160 152 152);
   height: 40px;
   padding: 2px;
+  border-radius: 5px;
 }
 
 .player-name {
@@ -201,7 +251,7 @@ export default {
   right: 0;
   left: 6rem;
   height: 100%;
-  border-left: 1px solid rgba(0, 10, 20, .1);
+  border-left: 2px solid rgb(160 152 152);
 }
 
 .player-details {
@@ -213,6 +263,20 @@ export default {
   background-color: rgba(233, 222, 222, .8);
   font-size: .8rem;
   line-height: .8rem;
+}
+
+.player-lane-avatar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.track-ticker {
+  height: 40px;
+  border-bottom: 2px solid rgb(160 152 152);
+  font-size: 20px;
+  text-align: center;
+  padding-top: 7px;
 }
 
 </style>

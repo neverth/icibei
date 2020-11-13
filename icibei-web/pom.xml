@@ -70,4 +70,30 @@
         <!--            <artifactId>spring-cloud-starter-bus-amqp</artifactId>-->
         <!--        </dependency>-->
     </dependencies>
+    <properties>
+        <!-- 不执行单元测试，也不编译测试类 -->
+        <maven.test.skip>true</maven.test.skip>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.2.8.RELEASE</version>
+                <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>fun.neverth.icibei.icibeiweb.IcibeiWebMain</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--可以把依赖的包都打包到生成的Jar包中-->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
