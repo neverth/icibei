@@ -8,4 +8,4 @@ VOLUME /tmp
 # 将jar包添加到容器中并更名为app.jar
 ADD target/organization-1.0-SNAPSHOT.jar app.jar
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar", "--spring.profiles.active=prod"]

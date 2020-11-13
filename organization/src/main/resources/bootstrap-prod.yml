@@ -1,0 +1,20 @@
+server:
+  port: 8010
+
+spring:
+  application:
+    name: icibei-organization
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.14.44.108:8848
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
+      config:
+        server-addr: 106.14.44.108:8848
+        file-extension: yml
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
+        prefix: icibei-organization
+
+#    sentinel:
+#      transport:
+#        dashboard: 106.14.44.108}:8021

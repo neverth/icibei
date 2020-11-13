@@ -1,0 +1,16 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: icibei-authentication-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.14.44.108:8848
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
+      config:
+        server-addr: 106.14.44.108:8848
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
+        file-extension: yml
+        prefix: icibei-authentication-server

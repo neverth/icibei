@@ -1,0 +1,14 @@
+security:
+  oauth2:
+    resource:
+      id: ${security.oauth2.resource.id}
+      jwt:
+        key-value: ${security.oauth2.resource.jwt.key-value}
+
+logging:
+  level:
+    org.springframework: debug
+  file:
+    path: /apps/log/${spring.application.name}
+    max-history: 30
+    max-size: 10MB

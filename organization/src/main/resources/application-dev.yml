@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-value: "Y" # 逻辑已删除值(默认为 Y)
+      logic-not-delete-value: "N" # 逻辑未删除值(默认为 N)
+
+logging:
+  level:
+    org.springframework: debug
+    fun.neverth: debug
+    java.sql.PreparedStatement: debug
+  file:
+    path: /apps/log/${spring.application.name}
+    max-history: 30
+    max-size: 10MB

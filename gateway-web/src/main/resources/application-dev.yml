@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+# 网关白名单，无需要签权url
+gate:
+  ignore:
+    authentication:
+      startWith: /oauth,/open,/v2/api-docs,/words,/user,/translate
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    org.springframework: debug
+  file:
+    path: /apps/log/${spring.application.name}
+    max-history: 30
+    max-size: 10MB

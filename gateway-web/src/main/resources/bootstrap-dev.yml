@@ -1,0 +1,16 @@
+server:
+  port: 8443
+
+spring:
+  application:
+    name: icibei-gateway-web
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.14.44.108:8848
+        namespace: 2ae79743-1c6a-4b57-95b3-4c2222d0f915
+      config:
+        server-addr: 106.14.44.108:8848
+        file-extension: yml
+        namespace: 2ae79743-1c6a-4b57-95b3-4c2222d0f915
+        prefix: icibei-gateway-web

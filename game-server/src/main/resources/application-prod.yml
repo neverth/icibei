@@ -1,0 +1,6 @@
+
+logging:
+  file:
+    path: /apps/log/${spring.application.name}
+    max-history: 30
+    max-size: 10MB

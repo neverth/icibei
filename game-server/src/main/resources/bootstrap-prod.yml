@@ -1,16 +1,16 @@
 server:
-  port: 8443
+  port: 8889
 
 spring:
   application:
-    name: icibei-gateway-web
+    name: icibei-game-server
   cloud:
     nacos:
       discovery:
         server-addr: 106.14.44.108:8848
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
       config:
         server-addr: 106.14.44.108:8848
         file-extension: yml
-#    sentinel:
-#      transport:
-#        dashboard: ${SENTINEL_DASHBOARD_HOST:106.14.44.108}:${SENTINEL_DASHBOARD_PORT:8021}
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
+        prefix: icibei-organization

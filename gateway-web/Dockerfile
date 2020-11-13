@@ -10,4 +10,4 @@ ADD target/gateway-web-1.0-SNAPSHOT.jar app.jar
 
 EXPOSE 8443
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar", "--spring.profiles.active=prod"]

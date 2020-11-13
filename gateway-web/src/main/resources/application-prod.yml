@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.14.44.108:3306/icibei_gateway?characterEncoding=UTF-8&useUnicode=true&useSSL=false
-    username: root
-    password: ly19980911
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
 # 网关白名单，无需要签权url
 gate:
@@ -20,3 +20,7 @@ management:
 logging:
   level:
     org.springframework: debug
+  file:
+    path: /apps/log/${spring.application.name}
+    max-history: 30
+    max-size: 10MB

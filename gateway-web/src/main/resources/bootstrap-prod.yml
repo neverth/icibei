@@ -1,13 +1,16 @@
 server:
-  port: 8001
+  port: 8443
 
 spring:
   application:
-    name: icibei-authentication-server
+    name: icibei-gateway-web
   cloud:
     nacos:
       discovery:
         server-addr: 106.14.44.108:8848
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
       config:
         server-addr: 106.14.44.108:8848
         file-extension: yml
+        namespace: 025b544e-1a1d-424c-aee1-d26f9833a41c
+        prefix: icibei-gateway-web
