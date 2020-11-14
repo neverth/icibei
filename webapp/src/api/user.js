@@ -23,6 +23,13 @@ export function register(data) {
   })
 }
 
+export function validateUniqueUserName(userName) {
+  return request({
+    url: `/organization/user/validateUniqueUserName/${userName}`,
+    method: 'get',
+  })
+}
+
 export function getInfo(userId) {
   return request({
     url: '/organization/userInfo/' + userId,

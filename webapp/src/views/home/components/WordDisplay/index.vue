@@ -3,7 +3,7 @@
     <div v-if="loading">
       正在加载...
     </div>
-    <div v-if="!loading" style="width: fit-content; margin: 20px auto;" :class="{twinkle: isTwinkle}">
+    <div @click="toggleFocus" v-if="!loading" style="width: fit-content; margin: 20px auto;" :class="{twinkle: isTwinkle}">
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
@@ -300,6 +300,9 @@ export default {
       this.twinkleInterval = setInterval(() => {
         this.isTwinkle = !this.isTwinkle
       }, 500)
+    },
+    toggleFocus(){
+
     }
   }
 }

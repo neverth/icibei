@@ -26,11 +26,14 @@ export default {
   name: 'LoginLogin',
   components: {
   },
+  props: {
+    username: String
+  },
   data() {
     return {
       loginForm: {
-        username: '123',
-        password: '123',
+        username: this.username,
+        password: '',
         grant_type: 'password'
       },
       isRouterAlive: true,

@@ -55,4 +55,6 @@ public interface UserService {
      * @param id
      */
     boolean delete(String id);
+
+    boolean validateUniqueUserName(String userName);
 }

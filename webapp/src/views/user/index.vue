@@ -124,7 +124,10 @@ export default {
     cropUploadSuccess(jsonData, field) {
       this.reloadAppMain()
     },
-    cropUploadFail(status, field) {}
+    cropUploadFail(status, field) {
+      console.log(status)
+      console.log(field)
+    }
   }
 }
 </script>

@@ -45,6 +45,11 @@ public class UserController {
         return Result.success(userService.get(id));
     }
 
+    @GetMapping(value = "/validateUniqueUserName/{username}")
+    public Result<Boolean> validateUniqueUserName(@PathVariable String username) {
+        return Result.success(userService.validateUniqueUserName(username));
+    }
+
     @GetMapping
     public Result query(@RequestParam String uniqueId) {
         return Result.success(userService.getByUniqueId(uniqueId));

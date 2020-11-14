@@ -3,7 +3,7 @@
     <p>抱歉您还没有登录哦！</p>
     <p>{{viewText[0]}}<el-button size="mini" @click="toggledView" round>{{viewText[1]}}</el-button></p>
     <transition name="component-fade" mode="out-in">
-      <component :is="view"/>
+      <component :username="username" @registerOk="registerOk" :is="view"/>
     </transition>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       view: 'LoginLogin',
-      viewText: ['没有账号？', '点击注册']
+      viewText: ['没有账号？', '点击注册'],
+      username: ''
     }
   },
   computed: {
@@ -35,6 +36,10 @@ export default {
       }
       this.view = this.view === 'LoginLogin' ? 'LoginRegister' : 'LoginLogin'
     },
+    registerOk(registerForm){
+      this.toggledView()
+      this.username = registerForm.username
+    }
   }
 }
 </script>

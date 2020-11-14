@@ -16,7 +16,7 @@
       <p>
         © 2020 <a href="#">NEVERTH.FUN</a> · 赣ICP备19000765号.
       </p>
-      <p>TRY YOU DO · <a href="#">关于作者</a> </p>
+      <p>TRY YOU DO · <a href="https://github.com/neverth">关于作者</a> </p>
     </div>
   </div>
 </template>

@@ -47,10 +47,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return new BCryptPasswordEncoder();
     }
 
+    @Override
     @Transactional(rollbackFor = {Exception.class, Error.class})
-    public boolean add(UserForm userForm){
+    public boolean add(UserForm userForm) {
         User user = userForm.toPO(User.class);
-        if (add(user)){
+        if (add(user)) {
             user = this.getByUniqueId(userForm.getUsername()).toPO(User.class);
         }
         Assert.notNull(user, "用户插入失败");
@@ -81,8 +82,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean update(User user) {
-        if (StringUtils.isNotBlank(user.getPassword()))
+        if (StringUtils.isNotBlank(user.getPassword())) {
             user.setPassword(passwordEncoder().encode(user.getPassword()));
+        }
         boolean isSuccess = this.updateById(user);
         userRoleService.saveBatch(user.getId(), user.getRoleIds());
         return isSuccess;
@@ -121,4 +123,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return iPageUser.convert(UserVO::new);
     }
 
+    @Override
+    public boolean validateUniqueUserName(String userName) {
+        return this.getOne(new QueryWrapper<User>().eq("username", userName)) == null;
+    }
 }
