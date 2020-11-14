@@ -96,15 +96,6 @@ export default {
       }
     }
   },
-  created() {
-    console.log('created')
-  },
-  mounted() {
-    console.log('mounted')
-  },
-  beforeDestroy() {
-    console.log('beforeDestroy')
-  },
   methods: {
     handleRegister(formName) {
       this.$refs[formName].validate((valid) => {
@@ -112,8 +103,8 @@ export default {
           this.$store.dispatch('user/register', this.registerForm).then(() => {
             this.$message.success('注册成功');
             this.$emit('registerOk', this.registerForm)
-          }).catch(() => {
-            this.$message.error('注册失败，请稍后再试！');
+          }).catch((data) => {
+            this.$message.error(data);
           })
         } else {
           this.$message.error('请按照规则填写注册信息！');

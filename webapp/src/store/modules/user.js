@@ -27,29 +27,18 @@ const mutations = {
 }
 
 const actions = {
-  // user login
   login({commit, state}, loginInfo) {
     const {username, password, grant_type} = loginInfo
     return new Promise((resolve, reject) => {
-      // 立即执行
       login({username: username.trim(), password: password, grant_type}).then(response => {
         const {data} = response
-
         if (!data['access_token']) {
-          Message({
-            message: "用户不存在或密码错误",
-            type: 'error',
-            duration: 2 * 1000
-          })
-          reject('登录失败')
+          reject('用户不存在或密码错误')
         }
-
         setTokenInfo(data)
         commit('RESET_STATE')
-        // 将状态改为fulfilled 并将参数传递给then中的回调函数
         resolve(data)
       }).catch(error => {
-        // 将状态改为rejected 并将参数传递给then/catch中的回调函数
         reject(error)
       })
     })
@@ -58,14 +47,11 @@ const actions = {
   register({commit, state}, registerForm) {
     const {username, password} = registerForm
     return new Promise((resolve, reject) => {
-      // 立即执行
       register({username: username.trim(), password: password}).then(response => {
         const {data} = response
-
         if (!data) {
-          reject('注册失败')
+          reject('注册失败，请稍后再试！')
         }
-
         resolve()
       }).catch(error => {
         reject(error)
@@ -79,7 +65,7 @@ const actions = {
       getInfo(userId).then(response => {
         const {data} = response
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('获取用户信息失败，请稍后再试！')
         }
         setUserInfo(data)
         commit('RESET_STATE')
@@ -96,7 +82,7 @@ const actions = {
       updateInfo(userInfo['userId'], userInfo).then(response => {
         const {data} = response
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('修改用户信息失败，请稍后再试！')
         }
         resolve()
       }).catch(error => {
@@ -105,22 +91,13 @@ const actions = {
     })
   },
 
-  // user logout
   logout({commit, state}) {
-
     return new Promise((resolve, reject) => {
       removeTokenInfo() // must remove  token  first
       removeUserInfo()
       resetRouter()
       commit('RESET_STATE')
       resolve()
-      // MessageBox.confirm('您确定要退出登录吗？', 'Confirm logout', {
-      //   confirmButtonText: 'Re-Login',
-      //   cancelButtonText: 'Cancel',
-      //   type: 'warning'
-      // }).then(() => {
-      // }).catch(() => {
-      // });
     })
   },
 
