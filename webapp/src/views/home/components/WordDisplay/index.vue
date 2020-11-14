@@ -3,7 +3,10 @@
     <div v-if="loading">
       正在加载...
     </div>
-    <div @click="toggleFocus" v-if="!loading" style="width: fit-content; margin: 20px auto;" :class="{twinkle: isTwinkle}">
+    <!--  tabindex用于支持 @focus和 @blur-->
+    <div id="word-practice" tabindex="999" @focus="myOnfocus" @blur="myOnblur" v-if="!loading"
+         style="width: fit-content; margin: 0 auto;"
+         :class="{twinkle: isTwinkle}">
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
@@ -86,9 +89,11 @@ export default {
       // 第一次播放读音
       firstTimeAudioPlay: true,
       // 光标闪烁
-      isTwinkle: true,
+      isTwinkle: false,
       // 定时器 object
       twinkleInterval: '',
+      // 自增
+      iii: 0
     }
   },
   computed: {
@@ -147,18 +152,6 @@ export default {
         });
       })
     }
-    this.twinkleInterval = setInterval(() => {
-      this.isTwinkle = !this.isTwinkle
-    }, 500)
-  },
-  mounted() {
-    console.log('mounted WordDisplay')
-    window.handleKeyDownWordDisplay = this.handleKeyDown
-  },
-  beforeDestroy() {
-    console.log('beforeDestroy WordDisplay')
-    // 取消注册到window
-    window.handleKeyDownWordDisplay = undefined
   },
   methods: {
     handleKeyDown(key) {
@@ -301,8 +294,27 @@ export default {
         this.isTwinkle = !this.isTwinkle
       }, 500)
     },
-    toggleFocus(){
-
+    myOnfocus() {
+      // 元素获取焦点
+      // 注册keydown事件
+      let el = document.getElementById("word-practice")
+      el.onkeydown = (event) => {
+        this.$emit('myKeyDown', [this.iii++, event.key])
+        this.handleKeyDown(event.key)
+      }
+      el.onkeyup = (event) => {
+        this.$emit('myKeyUp', [this.iii++, event.key])
+      }
+      this.twinkleInterval = setInterval(() => {
+        this.isTwinkle = !this.isTwinkle
+      }, 500)
+    },
+    myOnblur() {
+      let el = document.getElementById("word-practice")
+      el.onkeydown = undefined
+      el.onkeyup = undefined
+      this.isTwinkle = false
+      clearInterval(this.twinkleInterval)
     }
   }
 }
@@ -310,7 +322,6 @@ export default {
 </script>
 
 <style scoped>
-
 
 .liju-container {
   width: 100%;

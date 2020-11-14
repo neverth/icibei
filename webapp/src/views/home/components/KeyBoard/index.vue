@@ -57,15 +57,23 @@
 
 export default {
   name: 'KeyBoard',
-  mounted() {
-    console.log('KeyBoard mounted')
-    window.handleKeyDownKeyBoard = this.handleKeyDown
-    window.handleKeyUpKeyBoard = this.handleKeyUp
+  props: {
+    keyDown: {
+      type: Array,
+      default: undefined
+    },
+    keyUp: {
+      type: Array,
+      default: undefined
+    }
   },
-  beforeDestroy() {
-    console.log('KeyBoard beforeDestroy')
-    window.handleKeyDownKeyBoard = undefined
-    window.handleKeyUpKeyBoard = undefined
+  watch: {
+    keyDown(n, o) {
+      this.handleKeyDown(n[1])
+    },
+    keyUp(n, o) {
+      this.handleKeyUp(n[1])
+    }
   },
   methods: {
     handleKeyDown(key) {
@@ -85,52 +93,52 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .keyboard-wrapper {
   text-align: center;
   box-sizing: unset;
-}
 
-.keyboard-wrapper ul {
-  text-align: center;
-  white-space: nowrap;
-  margin-top: 0.5em !important;
-}
+  ul {
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 0.5em !important;
+  }
 
-.keyboard-wrapper li {
-  display: inline-block;
-  margin: -0.5vmin 0.75vmin;
-  width: 5vmin;
-  height: 5vmin;
-  padding: 1vmin;
-  border: 0.25vmin solid rgb(75, 75, 75);
-  border-radius: 3vmin;
-  line-height: 5vmin;
-  text-align: center;
-  text-transform: uppercase;
-  user-select: none;
-  transition: 0.3s;
-  color: #7f8c8d;
-}
+  li {
+    display: inline-block;
+    margin: -0.5vmin 0.75vmin;
+    width: 5vmin;
+    height: 5vmin;
+    padding: 1vmin;
+    border: 0.25vmin solid rgb(75, 75, 75);
+    border-radius: 3vmin;
+    line-height: 5vmin;
+    text-align: center;
+    text-transform: uppercase;
+    user-select: none;
+    transition: 0.3s;
+    color: #7f8c8d;
+  }
 
-.keyboard-wrapper li:hover {
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-}
+  li:hover {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+  }
 
-.keyboard-wrapper [data-key=" "] {
-  width: 40vmin;
-  margin-top: 10px;
-}
+  [data-key=" "] {
+    width: 40vmin;
+    margin-top: 10px;
+  }
 
-.active {
-  transition: 0.2s;
-  transform: scale(1.10);
-  background-color: rgb(75, 75, 75);
-}
+  .active {
+    transition: 0.2s;
+    transform: scale(1.10);
+    background-color: rgb(75, 75, 75);
+  }
 
-.effect.active {
-  background-color: #CE6D39;
+  .effect.active {
+    background-color: #CE6D39;
+  }
 }
 </style>
