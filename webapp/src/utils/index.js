@@ -141,7 +141,7 @@ export function wordsCet4ListParse(wordsCet4List) {
           }
           if (e2['tag'] === 'x') {
             // 如果不存在词义，就默认构造一个词义
-            if (wp['ciyi'].length === 0){
+            if (wp['ciyi'].length === 0) {
               wp['ciyi'].push({chText: '---'})
               wp['ciyi'][0]['liju'] = []
             }
@@ -172,4 +172,24 @@ export function wordsCet4ListParse(wordsCet4List) {
     wordDetailList.push(wordDetail)
   })
   return wordDetailList
+}
+
+export function FixedQueue(size) {
+  let list = [];
+  let len = 0;
+  this.push = (data) => {
+    list.push(data)
+    len++
+    if (len > size) {
+      list.shift()
+      len--
+    }
+  }
+  this.array = () => {
+    return list
+  }
+  this.refresh = () => {
+    list = []
+    len = 0;
+  }
 }

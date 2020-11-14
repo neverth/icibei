@@ -10,16 +10,16 @@
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
-      <div style="font-size: 30px; text-align: center" :class="needPracticeStringsIndex === 0 ? 'active_line': ''">
+      <div style="font-size: 30px; text-align: center" :class="wordStringArrIndex[1] === 0 ? 'active_line': ''">
         <span
-          v-for="(e, idx) in words['wordsCet4List'][needPracticeStringsArrIndex]['word']"
-          :class="isActive(idx, words['wordsCet4List'][needPracticeStringsArrIndex]['word'])"
+          v-for="(e, idx) in words['wordsCet4List'][wordsStringArrIndex]['word']"
+          :class="isActive(idx, words['wordsCet4List'][wordsStringArrIndex]['word'])"
         >
           {{ e }}
         </span>
       </div>
       <div class="liju-container">
-        <template v-for="(e, idx) in wordsParsed[needPracticeStringsArrIndex]">
+        <template v-for="(e, idx) in wordsParsed[wordsStringArrIndex]">
           <!-- 词型选前两个 -->
           <div class="cixing_wrapper" v-if="idx < 2">
             <div class="liju-cixing">
@@ -56,7 +56,7 @@
 <script>
 import {queryWords, incrementWordExeTimes} from '@/api/words'
 import store from '@/store'
-import {wordsCet4ListParse} from '@/utils'
+import {wordsCet4ListParse, FixedQueue} from '@/utils'
 
 export default {
   name: 'WordDisplay',
@@ -69,18 +69,19 @@ export default {
       // 下一个字符必须为空格
       mustSpaceKey: false,
       // 正在练习的单词或句子
-      practiceString: '',
-      // 正在练习的单词或句子的单个字母为单位的数组
-      practiceStringArr: [],
-      // 当前匹配practiceStringArr的下标
-      practiceStringArrIndex: 0,
+      string: '',
+      // this.string.split()
+      stringSplit: [],
+      // this.string.split() 下标
+      stringSplitIndex: 0,
 
       // 需要练习的单词数组 [[], []...]
-      needPracticeStringsArr: [],
+      wordsStringArr: [],
       // 当前正在练习的单词下标，第一层下标
-      needPracticeStringsArrIndex: 0,
-      // 当前正在练习的单词的例句下标，第二层下标
-      needPracticeStringsIndex: 0,
+      wordsStringArrIndex: 0,
+      // 当前正在练习的单词的例句下标，第二层下标，
+      // 定义成数组是为了watch能监听相同值，其他index咱不需要
+      wordStringArrIndex: [0, 0],
 
       // 从后端获取的单词列表
       words: undefined,
@@ -92,8 +93,14 @@ export default {
       isTwinkle: false,
       // 定时器 object
       twinkleInterval: '',
+      // 当前按下的key [时间搓, key]
+      wdKeyDown: [],
+      wdKeyUp: [],
+      // 用于空格快捷键
+      blankCount: 0,
+      blankSetTimeout: undefined,
       // 自增
-      iii: 0
+      increment: 0,
     }
   },
   computed: {
@@ -101,16 +108,16 @@ export default {
       return (index, word) => {
         let cls = []
         // 让前面一条例句也在active状态
-        let wordIndex = this.needPracticeStringsArr[this.needPracticeStringsArrIndex].indexOf(word)
-        if (wordIndex !== -1 && wordIndex < this.needPracticeStringsIndex) {
+        let wordIndex = this.wordsStringArr[this.wordsStringArrIndex].indexOf(word)
+        if (wordIndex !== -1 && wordIndex < this.wordStringArrIndex[1]) {
           cls.push('active')
           return cls
         }
-        if (word === this.practiceString) {
-          if (index <= this.practiceStringArrIndex - 1) {
+        if (word === this.string) {
+          if (index <= this.stringSplitIndex - 1) {
             cls.push('active')
           }
-          if (index === this.practiceStringArrIndex) {
+          if (index === this.stringSplitIndex) {
             cls.push('now-practice')
           }
           return cls
@@ -119,28 +126,60 @@ export default {
     },
     isActiveLine() {
       return (word) => {
-        let wordIndex = this.needPracticeStringsArr[this.needPracticeStringsArrIndex].indexOf(word)
-        if (wordIndex !== -1 && wordIndex === this.needPracticeStringsIndex) {
+        let wordIndex = this.wordsStringArr[this.wordsStringArrIndex].indexOf(word)
+        if (wordIndex !== -1 && wordIndex === this.wordStringArrIndex[1]) {
           return 'active_line'
         }
       }
     }
   },
   watch: {
-    practiceString(newV, oldV) {
-      // 第一次不读，等第一次敲击键盘时再读
+    // 这个例句变了
+    string(newV, oldV) {
       this.$nextTick(() => {
+        // 第一次不读，等第一次敲击键盘时再读
         if (oldV !== '') {
           this.$refs.audio.src = `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/translate/tss/${newV}`
           this.$refs.audio.load()
           this.$refs.audio.play()
         }
       })
+      this.stringSplit = this.splitString(newV)
+      this.stringSplitIndex = 0
+    },
+    // 这个例句字符串的下标
+    stringSplitIndex(n, o) {
+      // 这一个例句匹配完
+      if (n >= this.stringSplit.length) {
+        this.$emit('stringOk')
+        this.mustSpaceKey = true
+      }
+    },
+    // 这个单词例句数组下标
+    wordStringArrIndex: {
+      handler: function (n, o){
+        // 这个单词的例句已经匹配玩啦，切换下一个单词
+        if (n[1] >= this.wordsStringArr[this.wordsStringArrIndex].length) {
+          this.$emit('wordStringArrOk')
+          this.wordsStringArrIndex++
+          return
+        }
+        // 切换到下一个例句并更新状态
+        this.string = this.wordsStringArr[this.wordsStringArrIndex][n[1]]
+      },
+      deep: true
+    },
+    // 这些单词数组的下标
+    wordsStringArrIndex(n, o) {
+      if (n >= this.wordsStringArr.length) {
+        this.$emit('wordsStringArrOk')
+        this.prepareWords(this)
+      }
+      this.wordStringArrIndex = [++this.increment, 0]
     }
   },
   created() {
-    console.log('created')
-    this.$options.methods.prepareWords(this)
+    this.prepareWords(this)
     if (!this.$store.getters.tokenInfo) {
       this.$nextTick(() => {
         this.$notify({
@@ -154,63 +193,52 @@ export default {
     }
   },
   methods: {
+    // MAIN
     handleKeyDown(key) {
       // 重置光标闪烁状态
       this.resetTwinkleInterval()
-      // -----------匹配单词部分-------------
-      // 下一个输入必须为空格并且输入已经是空格
-      if (this.mustSpaceKey && key === ' ') {
-        // 切换到下一个例句并重置状态
-        this.needPracticeStringsIndex++
-        this.mustSpaceKey = false
-
-        // 当前单词的所有例句已经匹配完成，切换到下一个单词
-        if (this.needPracticeStringsIndex === this.needPracticeStringsArr[this.needPracticeStringsArrIndex].length) {
-          this.$options.methods.handleWordExeOk(this)
-          this.needPracticeStringsArrIndex++
-          this.needPracticeStringsIndex = 0
-
-          // 单词列表已经用完，准备下一个单词列表
-          if (this.needPracticeStringsArrIndex === this.needPracticeStringsArr.length) {
-            this.$options.methods.prepareWords(this)
-          }
-        }
-        // 等待切换到下一个单词之后更新状态
-        if (!this.loading) {
-          this.practiceString = this.needPracticeStringsArr[this.needPracticeStringsArrIndex][this.needPracticeStringsIndex]
-          this.practiceStringArr = this.$options.methods.splitString(this.practiceString)
-          this.practiceStringArrIndex = 0
-        }
-      }
-      // 正确的匹配字母
-      else if (!this.mustSpaceKey && this.practiceStringArr[this.practiceStringArrIndex].toLowerCase() === key) {
-        this.practiceStringArrIndex++
-      }
-      // 匹配特殊字符，直接空格就可以
-      else {
-        if (['.', '\'', '"', '(', ')', ','].indexOf(this.practiceStringArr[this.practiceStringArrIndex]) !== -1) {
-          if (key === ' ') {
-            this.practiceStringArrIndex++
-          }
-        }
-      }
-
-      // 单词已经匹配完成，等待输入空格后切换到下一个单词
-      if (this.practiceStringArrIndex === this.practiceStringArr.length) {
-        this.mustSpaceKey = true
-      }
-
+      // 快捷键
+      this.shortcutKey(key)
+      // 匹配字符
+      this.matchChar(key)
       // 只用于加载页面之后读第一个单词
-      if (this.needPracticeStringsIndex === 0 && this.firstTimeAudioPlay) {
+      this.firstKeyDownAudioPlay()
+    },
+    // 只用于加载页面之后读第一个单词
+    firstKeyDownAudioPlay(){
+      if (this.wordStringArrIndex[1] === 0 && this.firstTimeAudioPlay) {
         this.firstTimeAudioPlay = false
-        this.$refs.audio.src = `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/translate/tss/${this.practiceString}`
+        this.$refs.audio.src = `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/translate/tss/${this.string}`
         this.$refs.audio.load()
         this.$refs.audio.play()
       }
     },
+    // 匹配字符
+    matchChar(key){
+      if (!this.mustSpaceKey) {
+        if (
+          // 正确的匹配字母
+          (this.stringSplit[this.stringSplitIndex].toLowerCase() === key)
+          ||
+          // 匹配特殊字符，直接空格就可以
+          (['.', '\'', '"', '(', ')', ','].indexOf(this.stringSplit[this.stringSplitIndex]) !== -1 && key === ' ')
+        ) {
+          this.stringSplitIndex++
+        }
+      }
+      // 必须输入空格的时候单独处理
+      else {
+        // 下一个输入必须为空格并且输入已经是空格
+        if (key === ' '){
+          // 切换到下一个例句并重置状态
+          this.wordStringArrIndex = [++this.increment, this.wordStringArrIndex[1] + 1]
+          this.mustSpaceKey = false
+        }
+      }
+    },
     handleWordExeOk(that) {
       // 当切换单词的时候，自增单词的练习次数
-      let word = that.words['wordsCet4List'][that.needPracticeStringsArrIndex]['word']
+      let word = that.words['wordsCet4List'][that.wordsStringArrIndex]['word']
       incrementWordExeTimes({
         userId: store.getters.userInfo['userId'],
         word: word
@@ -255,7 +283,6 @@ export default {
       return needPracticeStrings
     },
     splitString(str) {
-      // str.replace('.', '')
       return str.split('')
     },
     // 准备单词
@@ -271,19 +298,19 @@ export default {
       queryWords(param).then(response => {
         // 重置状态
         that.mustSpaceKey = false
-        that.practiceStringArrIndex = 0
-        that.needPracticeStringsArrIndex = 0
-        that.needPracticeStringsIndex = 0
+        that.stringSplitIndex = 0
+        that.wordsStringArrIndex = 0
+        that.wordStringArrIndex = [++this.increment, 0]
 
         that.words = response.data
         that.wordsParsed = wordsCet4ListParse(that.words['wordsCet4List'])
-        that.needPracticeStringsArr = that.$options.methods.genNeedPracticeStrings(that.wordsParsed)
+        that.wordsStringArr = that.genNeedPracticeStrings(that.wordsParsed)
         // 将单词插入第一位，后面是例句
-        that.needPracticeStringsArr.forEach((e, idx) => {
+        that.wordsStringArr.forEach((e, idx) => {
           e.unshift(that.words['wordsCet4List'][idx]['word'])
         })
-        that.practiceString = that.needPracticeStringsArr[that.needPracticeStringsArrIndex][that.needPracticeStringsIndex]
-        that.practiceStringArr = that.$options.methods.splitString(that.practiceString)
+        that.string = that.wordsStringArr[that.wordsStringArrIndex][that.wordStringArrIndex[1]]
+        that.stringSplit = that.splitString(that.string)
         that.loading = false
       })
     },
@@ -299,11 +326,13 @@ export default {
       // 注册keydown事件
       let el = document.getElementById("word-practice")
       el.onkeydown = (event) => {
-        this.$emit('myKeyDown', [this.iii++, event.key])
+        this.wdKeyDown = [new Date().getTime(), event.key]
+        this.$emit('myKeyDown', this.wdKeyDown)
         this.handleKeyDown(event.key)
       }
       el.onkeyup = (event) => {
-        this.$emit('myKeyUp', [this.iii++, event.key])
+        this.wdKeyUp = [new Date().getTime(), event.key]
+        this.$emit('myKeyUp', this.wdKeyUp)
       }
       this.twinkleInterval = setInterval(() => {
         this.isTwinkle = !this.isTwinkle
@@ -315,6 +344,24 @@ export default {
       el.onkeyup = undefined
       this.isTwinkle = false
       clearInterval(this.twinkleInterval)
+    },
+    shortcutKey(key){
+      // 3次空格跳过本句
+      // 4次空格跳过这个单词
+      if (key === ' ') {
+        clearTimeout(this.blankSetTimeout);
+        this.blankCount++;
+        this.blankSetTimeout = setTimeout(() => {
+          if (this.blankCount === 3) {
+            this.wordStringArrIndex = [++this.increment, this.wordStringArrIndex[1] + 1]
+          }
+          //
+          else if (this.blankCount === 4) {
+            this.wordsStringArrIndex++
+          }
+          this.blankCount = 0
+        }, 300)
+      }
     }
   }
 }
