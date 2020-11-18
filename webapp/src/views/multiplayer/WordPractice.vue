@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {getWords, incrementWordExeTimes} from '@/api/words'
+import {getWordArrayData, incrementWordExeTimes} from '@/api/words'
 import store from '@/store'
 import {wordsCet4ListParse} from '@/utils'
 
@@ -261,7 +261,7 @@ export default {
     // 准备单词
     prepareWords(that) {
       that.loading = true
-      getWords(this.practiceWords).then(response => {
+      getWordArrayData(this.practiceWords).then(response => {
         // 重置状态
         that.mustSpaceKey = false
         that.practiceStringArrIndex = 0

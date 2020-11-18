@@ -4,9 +4,8 @@
       正在加载...
     </div>
     <!--  tabindex用于支持 @focus和 @blur-->
-    <div id="word-practice" tabindex="999" @focus="myOnfocus" @blur="myOnblur" v-if="!loading"
-         style="width: fit-content; margin: 0 auto;"
-         :class="{twinkle: isTwinkle}">
+    <div id="word-practice" tabindex="999" @focus="myOnfocus" @blur="myOnblur" v-if="!loading" :class="{twinkle: isTwinkle}">
+      {{wordList}}
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
@@ -54,9 +53,9 @@
 </template>
 
 <script>
-import {queryWords, incrementWordExeTimes} from '@/api/words'
+import {queryWords, incrementWordExeTimes, getWordArrayData} from '@/api/words'
 import store from '@/store'
-import {wordsCet4ListParse, FixedQueue} from '@/utils'
+import {wordsCet4ListParse} from '@/utils'
 
 export default {
   name: 'WordDisplay',
@@ -103,6 +102,12 @@ export default {
       increment: 0,
     }
   },
+  props: {
+    wordArray: {
+      type: Array,
+      required: true,
+    }
+  },
   computed: {
     isActive() {
       return (index, word) => {
@@ -110,15 +115,15 @@ export default {
         // 让前面一条例句也在active状态
         let wordIndex = this.wordsStringArr[this.wordsStringArrIndex].indexOf(word)
         if (wordIndex !== -1 && wordIndex < this.wordStringArrIndex[1]) {
-          cls.push('active')
+          cls.push('active-item')
           return cls
         }
         if (word === this.string) {
           if (index <= this.stringSplitIndex - 1) {
-            cls.push('active')
+            cls.push('active-item')
           }
           if (index === this.stringSplitIndex) {
-            cls.push('now-practice')
+            cls.push('twinkle-item')
           }
           return cls
         }
@@ -157,7 +162,7 @@ export default {
     },
     // 这个单词例句数组下标
     wordStringArrIndex: {
-      handler: function (n, o){
+      handler: function (n, o) {
         // 这个单词的例句已经匹配玩啦，切换下一个单词
         if (n[1] >= this.wordsStringArr[this.wordsStringArrIndex].length) {
           this.$emit('wordStringArrOk')
@@ -176,6 +181,14 @@ export default {
         this.prepareWords(this)
       }
       this.wordStringArrIndex = [++this.increment, 0]
+    },
+    wordArray: {
+      handler: function (n, o){
+
+
+      },
+      deep: true,
+      immediate: true
     }
   },
   created() {
@@ -205,7 +218,7 @@ export default {
       this.firstKeyDownAudioPlay()
     },
     // 只用于加载页面之后读第一个单词
-    firstKeyDownAudioPlay(){
+    firstKeyDownAudioPlay() {
       if (this.wordStringArrIndex[1] === 0 && this.firstTimeAudioPlay) {
         this.firstTimeAudioPlay = false
         this.$refs.audio.src = `${process.env.VUE_APP_ICIBEI_GATEWAY}/organization/translate/tss/${this.string}`
@@ -214,7 +227,7 @@ export default {
       }
     },
     // 匹配字符
-    matchChar(key){
+    matchChar(key) {
       if (!this.mustSpaceKey) {
         if (
           // 正确的匹配字母
@@ -229,7 +242,7 @@ export default {
       // 必须输入空格的时候单独处理
       else {
         // 下一个输入必须为空格并且输入已经是空格
-        if (key === ' '){
+        if (key === ' ') {
           // 切换到下一个例句并重置状态
           this.wordStringArrIndex = [++this.increment, this.wordStringArrIndex[1] + 1]
           this.mustSpaceKey = false
@@ -345,7 +358,7 @@ export default {
       this.isTwinkle = false
       clearInterval(this.twinkleInterval)
     },
-    shortcutKey(key){
+    shortcutKey(key) {
       // 3次空格跳过本句
       // 4次空格跳过这个单词
       if (key === ' ') {
@@ -362,7 +375,29 @@ export default {
           this.blankCount = 0
         }, 300)
       }
-    }
+    },
+    prepare(wordArray) {
+      this.loading = true
+      getWordArrayData(wordArray).then(response => {
+        // 重置状态
+        this.mustSpaceKey = false
+        this.practiceStringArrIndex = 0
+        this.needPracticeStringsArrIndex = 0
+        this.needPracticeStringsIndex = 0
+
+        this.words = response.data
+        this.wordsParsed = wordsCet4ListParse(this.words)
+        this.needPracticeStringsArr = this.genNeedPracticeStrings(this.wordsParsed)
+        // 将单词插入第一位，后面是例句
+        this.needPracticeStringsArr.forEach((e, idx) => {
+          e.unshift(this.words[idx]['word'])
+        })
+        this.practiceString = this.needPracticeStringsArr[this.needPracticeStringsArrIndex][this.needPracticeStringsIndex]
+        this.practiceStringArr = this.splitString(this.practiceString)
+        this.countTotalChars()
+        this.loading = false
+      })
+    },
   }
 }
 
@@ -415,7 +450,7 @@ export default {
   margin-top: 10px;
 }
 
-.active {
+.active-item {
   color: #ce6d39;
 }
 
@@ -436,7 +471,7 @@ span {
   font-family: sourceCodePro, Ubuntu Mono, Lucida Console, monospace;
 }
 
-.twinkle .now-practice {
+.twinkle .twinkle-item {
   background-color: #ce6d39;
 }
 

@@ -8,7 +8,7 @@ export function queryWords(params) {
   })
 }
 
-export function getWords(wordsArray) {
+export function getWordArrayData(wordsArray) {
   let s = wordsArray[0]
   if (wordsArray.length > 1){
     for (let i = 1; i < wordsArray.length; i++) {
