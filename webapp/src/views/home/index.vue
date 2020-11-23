@@ -1,7 +1,8 @@
 <template>
   <div class="home-container">
     <word-display
-      :word-array="aaa"
+      v-if="!loading"
+      :word-array="wordArray"
       style="width: fit-content; margin: 0 auto;"
       @myKeyDown="keyDown"
       @myKeyUp="keyUp"
@@ -38,6 +39,8 @@
 <script>
 import WordDisplay from './components/WordDisplay'
 import KeyBoard from './components/KeyBoard'
+import {getWords} from '@/api/words'
+
 
 export default {
   name: 'Home',
@@ -47,9 +50,10 @@ export default {
   },
   data() {
     return {
+      wordArray: [],
+      wordArrayHistory: [],
       wdkeyDown: [],
       wdkeyUp: [],
-      aaa: ['abandon'],
       gridData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -59,32 +63,16 @@ export default {
       }, {
         date: '2016-05-01',
         name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-      }]
+      }],
+      loading: true,
     }
+  },
+  created() {
+    getWords(10).then((resp) => {
+      this.wordArray = resp.data
+      this.loading = false
+    })
+
   },
   methods: {
     keyDown(key) {

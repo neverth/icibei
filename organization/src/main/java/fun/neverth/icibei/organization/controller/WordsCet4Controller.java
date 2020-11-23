@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * 已经在网管中配置，/words下面的api都不需要鉴权
@@ -45,5 +42,19 @@ public class WordsCet4Controller {
     @GetMapping("/query")
     public Result<WordsCet4Page> query(@Valid WordsCet4QueryParam param) {
         return Result.success(wordsCet4Service.query(param));
+    }
+
+    @GetMapping("/wordDatas/random")
+    public Result<List<WordsCet4VO>> getWordDatasRandom(
+            @RequestParam(required = false, defaultValue = "10") int size
+    ){
+        return Result.success(wordsCet4Service.getWordDatasRandom(size));
+    }
+
+    @GetMapping("/random")
+    public Result<List<String >> getWordsRandom(
+            @RequestParam(required = false, defaultValue = "10") int size
+    ){
+        return Result.success(wordsCet4Service.getWordsRandom(size));
     }
 }

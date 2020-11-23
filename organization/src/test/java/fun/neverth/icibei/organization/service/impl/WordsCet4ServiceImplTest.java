@@ -1,6 +1,6 @@
 package fun.neverth.icibei.organization.service.impl;
 
-import fun.neverth.icibei.organization.entity.po.WordsCet4;
+import fun.neverth.icibei.organization.entity.vo.WordsCet4VO;
 import fun.neverth.icibei.organization.service.WordsCet4Service;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -22,4 +22,12 @@ class WordsCet4ServiceImplTest {
 //        List<WordsCet4> wordsCet4s = wordsCet4Service.query(null, 1, 10, 0);
 //        System.out.println();
     }
+
+    @Test
+    void getWordsRandomTest() {
+        List<WordsCet4VO> wordsRandom = wordsCet4Service.getWordDatasRandom(10);
+        System.out.println(wordsRandom);
+    }
+
+
 }

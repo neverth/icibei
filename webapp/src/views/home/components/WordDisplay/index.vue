@@ -5,7 +5,6 @@
     </div>
     <!--  tabindex用于支持 @focus和 @blur-->
     <div id="word-practice" tabindex="999" @focus="myOnfocus" @blur="myOnblur" v-if="!loading" :class="{twinkle: isTwinkle}">
-      {{wordList}}
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
@@ -178,21 +177,20 @@ export default {
     wordsStringArrIndex(n, o) {
       if (n >= this.wordsStringArr.length) {
         this.$emit('wordsStringArrOk')
-        this.prepareWords(this)
+        this.prepareWords()
       }
       this.wordStringArrIndex = [++this.increment, 0]
     },
     wordArray: {
       handler: function (n, o){
-
-
+        console.log(n, o)
       },
       deep: true,
       immediate: true
     }
   },
   created() {
-    this.prepareWords(this)
+    this.prepareWords()
     if (!this.$store.getters.tokenInfo) {
       this.$nextTick(() => {
         this.$notify({
@@ -299,32 +297,32 @@ export default {
       return str.split('')
     },
     // 准备单词
-    prepareWords(that) {
-      that.loading = true
+    prepareWords() {
+      this.loading = true
       let param = {
         current: 1,
         size: 5
       }
-      if (that.words !== undefined) {
-        param.current = that.words['current'] + 1
+      if (this.words !== undefined) {
+        param.current = this.words['current'] + 1
       }
       queryWords(param).then(response => {
         // 重置状态
-        that.mustSpaceKey = false
-        that.stringSplitIndex = 0
-        that.wordsStringArrIndex = 0
-        that.wordStringArrIndex = [++this.increment, 0]
+        this.mustSpaceKey = false
+        this.stringSplitIndex = 0
+        this.wordsStringArrIndex = 0
+        this.wordStringArrIndex = [++this.increment, 0]
 
-        that.words = response.data
-        that.wordsParsed = wordsCet4ListParse(that.words['wordsCet4List'])
-        that.wordsStringArr = that.genNeedPracticeStrings(that.wordsParsed)
+        this.words = response.data
+        this.wordsParsed = wordsCet4ListParse(this.words['wordsCet4List'])
+        this.wordsStringArr = this.genNeedPracticeStrings(this.wordsParsed)
         // 将单词插入第一位，后面是例句
-        that.wordsStringArr.forEach((e, idx) => {
-          e.unshift(that.words['wordsCet4List'][idx]['word'])
+        this.wordsStringArr.forEach((e, idx) => {
+          e.unshift(this.words['wordsCet4List'][idx]['word'])
         })
-        that.string = that.wordsStringArr[that.wordsStringArrIndex][that.wordStringArrIndex[1]]
-        that.stringSplit = that.splitString(that.string)
-        that.loading = false
+        this.string = this.wordsStringArr[this.wordsStringArrIndex][this.wordStringArrIndex[1]]
+        this.stringSplit = this.splitString(this.string)
+        this.loading = false
       })
     },
     resetTwinkleInterval() {

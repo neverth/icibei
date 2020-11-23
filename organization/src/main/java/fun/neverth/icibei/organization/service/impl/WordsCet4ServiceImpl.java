@@ -13,6 +13,7 @@ import fun.neverth.icibei.organization.entity.vo.WordsCet4Page;
 import fun.neverth.icibei.organization.entity.vo.WordsCet4VO;
 import fun.neverth.icibei.organization.service.WordDetailService;
 import fun.neverth.icibei.organization.service.WordsCet4Service;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.Objects;
  * @date 2020/10/10 16:13
  */
 @Service
+@Slf4j
 public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4> implements WordsCet4Service {
 
     @Autowired
@@ -38,7 +40,7 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
 
     @Override
     public WordsCet4 get(String id) {
-         return this.getById(id);
+        return this.getById(id);
     }
 
     @Override
@@ -59,8 +61,8 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
     @Override
     public WordsCet4Page query(WordsCet4QueryParam param) {
 
-        if (Objects.isNull(param.getUserId())){
-            QueryWrapper<WordsCet4> queryWrapper =  new QueryWrapper<>();
+        if (Objects.isNull(param.getUserId())) {
+            QueryWrapper<WordsCet4> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("word");
             IPage<WordsCet4> page = new Page<>(param.getCurrent(), param.getSize());
             page = wordsCet4Mapper.selectPage(page, queryWrapper);
@@ -80,8 +82,8 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
             List<WordDetail> wordDetailList = wordDetailService.getByWordList(wordList);
             for (WordsCet4VO wordsCet4VO : wordsCet4VOList) {
                 for (WordDetail wordDetail : wordDetailList) {
-                    if (StringUtils.equals(wordsCet4VO.getWord(), wordDetail.getWord())){
-                        wordsCet4VO.setBaidu(JSON.parseObject( wordDetail.getBaidu()));
+                    if (StringUtils.equals(wordsCet4VO.getWord(), wordDetail.getWord())) {
+                        wordsCet4VO.setBaidu(JSON.parseObject(wordDetail.getBaidu()));
                         break;
                     }
                 }
@@ -104,7 +106,7 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
     @Override
     public List<WordsCet4VO> getFromWords(String[] words) {
         List<WordsCet4VO> res = new ArrayList<>();
-        QueryWrapper<WordsCet4> queryWrapper =  new QueryWrapper<>();
+        QueryWrapper<WordsCet4> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("word", Arrays.asList(words));
         List<WordsCet4> wordsCet4s = wordsCet4Mapper.selectList(queryWrapper);
 
@@ -118,13 +120,39 @@ public class WordsCet4ServiceImpl extends ServiceImpl<WordsCet4Mapper, WordsCet4
         List<WordDetail> wordDetailList = wordDetailService.getByWordList(Arrays.asList(words));
         for (WordsCet4VO w : res) {
             for (WordDetail wordDetail : wordDetailList) {
-                if (w.getWord().equals(wordDetail.getWord())){
-                    w.setBaidu(JSON.parseObject( wordDetail.getBaidu()));
+                if (w.getWord().equals(wordDetail.getWord())) {
+                    try {
+                        w.setBaidu(JSON.parseObject(wordDetail.getBaidu()));
+                    } catch (Exception e) {
+                        log.error("word={}的百度翻译json转义失败，请手动处理！err={}", wordDetail.getWord(), e);
+                    }
                     break;
                 }
             }
         }
 
         return res;
+    }
+
+    @Override
+    public List<WordsCet4VO> getWordDatasRandom(int pageSize) {
+        List<WordsCet4> wordsCet4s = wordsCet4Mapper.selectRandom(pageSize);
+
+        List<String> wordList = new ArrayList<>();
+        for (WordsCet4 wordsCet4 : wordsCet4s) {
+            wordList.add(wordsCet4.getWord());
+        }
+
+        return this.getFromWords(wordList.toArray(new String[0]));
+    }
+
+    @Override
+    public List<String> getWordsRandom(int pageSize) {
+        List<WordsCet4> wordsCet4s = wordsCet4Mapper.selectRandom(pageSize);
+        List<String> wordList = new ArrayList<>();
+        for (WordsCet4 wordsCet4 : wordsCet4s) {
+            wordList.add(wordsCet4.getWord());
+        }
+        return wordList;
     }
 }

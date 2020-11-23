@@ -57,3 +57,25 @@ export function getUserWord(params) {
   })
 }
 
+export function getWords(size) {
+  let params = {
+    size: size
+  }
+  return request({
+    url: '/organization/words/random',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getWordDatas(size) {
+  let params = {
+    size: size
+  }
+  return request({
+    url: '/organization/words/wordDatas/random',
+    method: 'get',
+    params: params
+  })
+}
+
