@@ -4,7 +4,8 @@
       正在加载...
     </div>
     <!--  tabindex用于支持 @focus和 @blur-->
-    <div id="word-practice" tabindex="999" @focus="myOnfocus" @blur="myOnblur" v-if="!loading" :class="{twinkle: isTwinkle}">
+    <div id="word-practice" tabindex="999" @focus="myOnfocus" @blur="myOnblur" v-if="!loading"
+         :class="{twinkle: isTwinkle}">
       <audio ref="audio">
         <source type="audio/mpeg">
       </audio>
@@ -52,9 +53,9 @@
 </template>
 
 <script>
-import {queryWords, incrementWordExeTimes, getWordArrayData} from '@/api/words'
+import { queryWords, incrementWordExeTimes, getWordArrayData } from '@/api/words'
 import store from '@/store'
-import {wordsCet4ListParse} from '@/utils'
+import { wordsCet4ListParse } from '@/utils'
 
 export default {
   name: 'WordDisplay',
@@ -99,12 +100,18 @@ export default {
       blankSetTimeout: undefined,
       // 自增
       increment: 0,
+      // wordArray对应的单词详细数据
+      wordDatasMap: {
+        ex_word: {}
+      },
+      wordArrayIdx: 0
+
     }
   },
   props: {
     wordArray: {
       type: Array,
-      required: true,
+      required: true
     }
   },
   computed: {
@@ -161,7 +168,7 @@ export default {
     },
     // 这个单词例句数组下标
     wordStringArrIndex: {
-      handler: function (n, o) {
+      handler: function(n, o) {
         // 这个单词的例句已经匹配玩啦，切换下一个单词
         if (n[1] >= this.wordsStringArr[this.wordsStringArrIndex].length) {
           this.$emit('wordStringArrOk')
@@ -182,8 +189,29 @@ export default {
       this.wordStringArrIndex = [++this.increment, 0]
     },
     wordArray: {
-      handler: function (n, o){
-        console.log(n, o)
+      handler: function(n, o) {
+        for (let i = 0; i < n.length; i++) {
+          if (i === 3) {
+            break
+          }
+          let word = n[i]
+          if (!this.wordDatasMap[word]) {
+            getWordArrayData([word]).then(response => {
+              // 原始数据
+              this.wordDatasMap[word] = {}
+
+              let originalData = response.data
+              // 解析之后的数据
+              let parsedData = wordsCet4ListParse(originalData)[0]
+              // 将解析数据再次解析成 需要联系例句数组
+              let parsedArrData = this.genNeedPracticeStrings([parsedData])[0]
+              // 将单词插入第一位，后面是例句
+              parsedArrData.unshift(word)
+              this.wordDatasMap[word]['parsedData'] = parsedData
+              this.wordDatasMap[word]['parsedArrData'] = parsedArrData
+            })
+          }
+        }
       },
       deep: true,
       immediate: true
@@ -199,7 +227,7 @@ export default {
           offset: 100,
           type: 'info',
           duration: 2000
-        });
+        })
       })
     }
   },
@@ -335,7 +363,7 @@ export default {
     myOnfocus() {
       // 元素获取焦点
       // 注册keydown事件
-      let el = document.getElementById("word-practice")
+      let el = document.getElementById('word-practice')
       el.onkeydown = (event) => {
         this.wdKeyDown = [new Date().getTime(), event.key]
         this.$emit('myKeyDown', this.wdKeyDown)
@@ -350,7 +378,7 @@ export default {
       }, 500)
     },
     myOnblur() {
-      let el = document.getElementById("word-practice")
+      let el = document.getElementById('word-practice')
       el.onkeydown = undefined
       el.onkeyup = undefined
       this.isTwinkle = false
@@ -360,8 +388,8 @@ export default {
       // 3次空格跳过本句
       // 4次空格跳过这个单词
       if (key === ' ') {
-        clearTimeout(this.blankSetTimeout);
-        this.blankCount++;
+        clearTimeout(this.blankSetTimeout)
+        this.blankCount++
         this.blankSetTimeout = setTimeout(() => {
           if (this.blankCount === 3) {
             this.wordStringArrIndex = [++this.increment, this.wordStringArrIndex[1] + 1]
@@ -395,7 +423,7 @@ export default {
         this.countTotalChars()
         this.loading = false
       })
-    },
+    }
   }
 }
 
