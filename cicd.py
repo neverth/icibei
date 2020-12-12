@@ -22,6 +22,7 @@ def get_modify_project():
 
     tags = os.popen('git tag').read().split('\n')
     tags.sort(reverse=True)
+    print os.popen('git tag').read()
     print tags
 
     modify_files = os.popen('git diff -X --dirstat=files  {} {}'.format(tags[0], tags[1])).read().split('\n')
