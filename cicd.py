@@ -75,10 +75,6 @@ def modify_projects_abspath(mps, tag_version):
 
 
 if __name__ == '__main__':
-    # 打包
-    mvn_str = os.popen('mvn package').read()
-    print mvn_str
-
     # 获得diff之后的子模块列表
     modify_project, tag_version = get_modify_project()
     print modify_project

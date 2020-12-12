@@ -34,7 +34,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -q -B package --file pom.xml
 
       # Runs a set of commands using the runners shell
       - name: upload diff module to qiqianniu
