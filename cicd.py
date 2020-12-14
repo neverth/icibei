@@ -1,7 +1,6 @@
 # coding=utf-8
 import os
 from os.path import dirname, abspath
-
 from qiniu import Auth, put_file
 
 ABSPATH = dirname(abspath(__file__))
