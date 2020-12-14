@@ -14,6 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class OrganizationMain {
     // 1
+    // 2
     public static void main(String[] args) {
         SpringApplication.run(OrganizationMain.class, args);
     }

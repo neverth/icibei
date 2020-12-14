@@ -19,10 +19,16 @@ PROJECTS_DIR = [
 def get_modify_project():
     modify_project = []
 
+    # 修复git tag不全的bug
+    os.popen('git fetch --tags').read()
+
     tags = os.popen('git tag').read().split('\n')
     tags.sort(reverse=True)
+
+    # debug
     print os.popen('git tag').read()
     print tags
+    print os.popen('git diff -X --dirstat=files  {} {}'.format(tags[0], tags[1])).read()
 
     modify_files = os.popen('git diff -X --dirstat=files  {} {}'.format(tags[0], tags[1])).read().split('\n')
 
